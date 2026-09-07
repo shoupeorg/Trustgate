@@ -1,6 +1,6 @@
 import { createClient } from "genlayer-js";
 import { studionet } from "genlayer-js/chains";
-import { ExecutionResult, TransactionHashVariant, TransactionStatus } from "genlayer-js/types";
+import { TransactionHashVariant, TransactionStatus } from "genlayer-js/types";
 
 export const TRUSTGATE_CONTRACT = "0x4acc7623a1a5255b717752601F78D2cf3a99e7F3" as const;
 
@@ -48,6 +48,30 @@ type ContractRevisedDeal = {
   instructions: string;
 };
 
+export type ContractPreviousIssueStatus = {
+  previous_issue_title: string;
+  status: "RESOLVED" | "PARTIALLY_RESOLVED" | "UNRESOLVED";
+  reason: string;
+  current_evidence: string;
+};
+
+export type ContractRevisionContext = {
+  is_revision: boolean;
+  parent_inspection_id: string;
+  previous_overall_risk: string;
+  risk_direction: "INITIAL" | "IMPROVED" | "UNCHANGED" | "WORSENED";
+  previous_issue_statuses: ContractPreviousIssueStatus[];
+  new_issues: Array<{ title: string; reason_new: string }>;
+  all_previous_material_issues_addressed: boolean;
+};
+
+export type ContractCounterproposalClosure = {
+  issue_title: string;
+  addressed: boolean;
+  revised_field: string;
+  closure_explanation: string;
+};
+
 export type ContractInspectionReport = {
   inspection_id: string;
   report: {
@@ -63,6 +87,8 @@ export type ContractInspectionReport = {
     summary: string;
     supporting_evidence: string[];
     unknowns: string[];
+    revision_context?: ContractRevisionContext;
+    counterproposal_closure?: ContractCounterproposalClosure[];
   };
 };
 
@@ -121,6 +147,39 @@ function parseReport(value: unknown): ContractInspectionReport {
   const revisedValue = report.revised_deal_package;
   if (!revisedValue || typeof revisedValue !== "object") throw new Error("Contract report has no revised deal package.");
   const revised = revisedValue as Record<string, unknown>;
+  let revisionContext: ContractRevisionContext | undefined;
+  const revisionValue = report.revision_context;
+  if (revisionValue !== undefined) {
+    if (!revisionValue || typeof revisionValue !== "object") throw new Error("Contract report has invalid revision context.");
+    const revision = revisionValue as Record<string, unknown>;
+    if (typeof revision.is_revision !== "boolean" || typeof revision.all_previous_material_issues_addressed !== "boolean") throw new Error("Contract report has invalid revision flags.");
+    if (!Array.isArray(revision.previous_issue_statuses) || !Array.isArray(revision.new_issues)) throw new Error("Contract report has invalid revision issue lineage.");
+    const previous_issue_statuses = revision.previous_issue_statuses.map((value, index) => {
+      if (!value || typeof value !== "object") throw new Error(`Contract report previous issue ${index + 1} is invalid.`);
+      const item = value as Record<string, unknown>;
+      const status = requireString(item.status, "previous issue status");
+      if (!(["RESOLVED", "PARTIALLY_RESOLVED", "UNRESOLVED"] as string[]).includes(status)) throw new Error("Contract report has an unsupported previous issue status.");
+      return { previous_issue_title: requireString(item.previous_issue_title, "previous issue title"), status: status as ContractPreviousIssueStatus["status"], reason: requireString(item.reason, "previous issue reason"), current_evidence: requireString(item.current_evidence, "previous issue current evidence") };
+    });
+    const new_issues = revision.new_issues.map((value, index) => {
+      if (!value || typeof value !== "object") throw new Error(`Contract report new issue ${index + 1} is invalid.`);
+      const item = value as Record<string, unknown>;
+      return { title: requireString(item.title, "new issue title"), reason_new: requireString(item.reason_new, "new issue reason") };
+    });
+    const riskDirection = requireString(revision.risk_direction, "risk direction");
+    if (!(["INITIAL", "IMPROVED", "UNCHANGED", "WORSENED"] as string[]).includes(riskDirection)) throw new Error("Contract report has an unsupported risk direction.");
+    revisionContext = { is_revision: revision.is_revision, parent_inspection_id: typeof revision.parent_inspection_id === "string" ? revision.parent_inspection_id : "", previous_overall_risk: typeof revision.previous_overall_risk === "string" ? revision.previous_overall_risk : "", risk_direction: riskDirection as ContractRevisionContext["risk_direction"], previous_issue_statuses, new_issues, all_previous_material_issues_addressed: revision.all_previous_material_issues_addressed };
+  }
+  let counterproposalClosure: ContractCounterproposalClosure[] | undefined;
+  if (report.counterproposal_closure !== undefined) {
+    if (!Array.isArray(report.counterproposal_closure)) throw new Error("Contract report has invalid counterproposal closure.");
+    counterproposalClosure = report.counterproposal_closure.map((value, index) => {
+      if (!value || typeof value !== "object") throw new Error(`Contract report closure ${index + 1} is invalid.`);
+      const item = value as Record<string, unknown>;
+      if (typeof item.addressed !== "boolean") throw new Error("Contract report closure has an invalid addressed flag.");
+      return { issue_title: requireString(item.issue_title, "closure issue title"), addressed: item.addressed, revised_field: requireString(item.revised_field, "closure revised field"), closure_explanation: requireString(item.closure_explanation, "closure explanation") };
+    });
+  }
 
   return {
     inspection_id: requireString(root.inspection_id, "inspection ID"),
@@ -143,6 +202,8 @@ function parseReport(value: unknown): ContractInspectionReport {
       summary: requireString(report.summary, "summary"),
       supporting_evidence: requireStrings(report.supporting_evidence, "supporting evidence"),
       unknowns: requireStrings(report.unknowns, "unknowns"),
+      revision_context: revisionContext,
+      counterproposal_closure: counterproposalClosure,
     },
   };
 }
@@ -281,10 +342,29 @@ export class FinalizationPendingError extends Error {
   }
 }
 
-export class FinalizedReportPendingError extends Error {
+export class LifecycleStatusPendingError extends Error {
   constructor() {
-    super("Transaction finalized. Waiting for the finalized TrustGate report.");
-    this.name = "FinalizedReportPendingError";
+    super("Onchain inspection submitted. Network status is temporarily unavailable.");
+    this.name = "LifecycleStatusPendingError";
+  }
+}
+
+export type FinalizedFailureDetails = {
+  inspectionId: string;
+  genLayerTransactionId: string;
+  lifecycleStatus: string;
+  consensusResult: string;
+  executionResult: string;
+  exitCode: number | null;
+};
+
+export class FinalizedInspectionFailedError extends Error {
+  readonly details: FinalizedFailureDetails;
+
+  constructor(details: FinalizedFailureDetails) {
+    super("Inspection finalized without a committed Risk Report.");
+    this.name = "FinalizedInspectionFailedError";
+    this.details = details;
   }
 }
 
@@ -302,7 +382,128 @@ type ReceiptHash = Parameters<typeof readClient.waitForTransactionReceipt>[0]["h
 type InspectionLifecycle = {
   onConsensusAccepted?: () => void;
   onFinalized?: () => void;
+  onNetworkRetry?: () => void;
+  onReportDelayed?: () => void;
+  onReportNetworkInterrupted?: () => void;
+  signal?: AbortSignal;
 };
+
+const LIFECYCLE_TRANSPORT_ATTEMPTS = 3;
+const LIFECYCLE_RETRY_DELAYS = [1000, 2000];
+
+const FINAL_REPORT_REQUEST_TIMEOUT = 12000;
+const FINAL_REPORT_RETRY_INTERVAL = 3000;
+
+function abortError(): Error {
+  const error = new Error("Finalized report recovery was cancelled.");
+  error.name = "AbortError";
+  return error;
+}
+
+async function withBoundedWait<T>(promise: Promise<T>, timeout: number, signal?: AbortSignal): Promise<T> {
+  if (signal?.aborted) throw abortError();
+  return new Promise<T>((resolve, reject) => {
+    const cleanup = () => signal?.removeEventListener("abort", onAbort);
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error("Finalized report read timed out."));
+    }, timeout);
+    const onAbort = () => {
+      clearTimeout(timer);
+      cleanup();
+      reject(abortError());
+    };
+    signal?.addEventListener("abort", onAbort, { once: true });
+    promise.then((value) => {
+      clearTimeout(timer);
+      cleanup();
+      resolve(value);
+    }, (error) => {
+      clearTimeout(timer);
+      cleanup();
+      reject(error);
+    });
+  });
+}
+
+async function waitForDelay(delay: number, signal?: AbortSignal): Promise<void> {
+  if (signal?.aborted) throw abortError();
+  await new Promise<void>((resolve, reject) => {
+    const timer = setTimeout(() => {
+      signal?.removeEventListener("abort", onAbort);
+      resolve();
+    }, delay);
+    const onAbort = () => {
+      clearTimeout(timer);
+      reject(abortError());
+    };
+    signal?.addEventListener("abort", onAbort, { once: true });
+  });
+}
+
+function errorDetails(error: unknown): string {
+  const parts: string[] = [];
+  let current: unknown = error;
+  for (let depth = 0; depth < 5 && current; depth += 1) {
+    if (current instanceof Error) {
+      parts.push(current.message, current.name);
+      current = (current as Error & { cause?: unknown }).cause;
+    } else {
+      parts.push(String(current));
+      break;
+    }
+  }
+  return parts.join(" ").toLowerCase();
+}
+
+function isTransientLifecycleError(error: unknown): boolean {
+  const details = errorDetails(error);
+  return [
+    "failed to fetch",
+    "network error",
+    "networkerror",
+    "timeout",
+    "timed out",
+    "temporary",
+    "transport",
+    "connection",
+    "socket",
+    "econnreset",
+    "econnrefused",
+    "eth_gettransactionbyhash",
+    "status lookup failed",
+    "rpc error",
+  ].some((fragment) => details.includes(fragment));
+}
+
+async function waitForFinalizedTransaction(
+  client: GenLayerClient,
+  genLayerTransactionId: string,
+  onNetworkRetry?: () => void,
+  signal?: AbortSignal,
+) {
+  let lastError: unknown;
+  for (let attempt = 0; attempt < LIFECYCLE_TRANSPORT_ATTEMPTS; attempt += 1) {
+    if (signal?.aborted) throw abortError();
+    const attemptStartedAt = Date.now();
+    try {
+      await client.waitForTransactionReceipt({
+        hash: genLayerTransactionId as ReceiptHash,
+        status: TransactionStatus.FINALIZED,
+        interval: 3000,
+        retries: 120,
+      });
+      return await client.getTransaction({ hash: genLayerTransactionId as ReceiptHash });
+    } catch (error) {
+      lastError = error;
+      const failedQuickly = Date.now() - attemptStartedAt < 30000;
+      if (!isTransientLifecycleError(error) || !failedQuickly || attempt === LIFECYCLE_TRANSPORT_ATTEMPTS - 1) throw error;
+      onNetworkRetry?.();
+      await waitForDelay(LIFECYCLE_RETRY_DELAYS[attempt], signal);
+    }
+  }
+  throw lastError;
+}
 
 async function readFinalReport(inspectionId: string): Promise<ContractInspectionReport> {
   const rawReport = await readClient.readContract({
@@ -318,22 +519,121 @@ async function readFinalReport(inspectionId: string): Promise<ContractInspection
   return parsed;
 }
 
-async function waitForFinalReport(
-  inspectionId: string,
-  options: { interval?: number; attempts?: number } = {},
-): Promise<ContractInspectionReport | null> {
-  const interval = options.interval ?? 3000;
-  const attempts = options.attempts ?? 30;
-  for (let attempt = 0; attempt < attempts; attempt += 1) {
-    try {
-      return await readFinalReport(inspectionId);
-    } catch {
-      // A finalized transaction can briefly precede visibility of its finalized
-      // contract state on Studionet. This is an expected, retryable condition.
+function recordValue(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" ? value as Record<string, unknown> : null;
+}
+
+function firstString(...values: unknown[]): string {
+  const value = values.find((item) => typeof item === "string" && item.length > 0);
+  return typeof value === "string" ? value.toUpperCase() : "";
+}
+
+function resultExitCode(value: unknown, depth = 0): number | null {
+  if (depth > 5 || value === null || value === undefined) return null;
+  if (typeof value === "string") {
+    const match = value.match(/["']?exit_code["']?\s*[:=]\s*(-?\d+)/i);
+    return match ? Number(match[1]) : null;
+  }
+  if (typeof value !== "object") return null;
+  for (const [key, nested] of Object.entries(value as Record<string, unknown>)) {
+    if (/^exit_?code$/i.test(key) && (typeof nested === "number" || typeof nested === "string")) {
+      const parsed = Number(nested);
+      if (Number.isInteger(parsed)) return parsed;
     }
-    if (attempt < attempts - 1) await new Promise((resolve) => setTimeout(resolve, interval));
+    const parsed = resultExitCode(nested, depth + 1);
+    if (parsed !== null) return parsed;
   }
   return null;
+}
+
+function finalizedFailureDetails(
+  receiptValue: unknown,
+  inspectionId: string,
+  genLayerTransactionId: string,
+): FinalizedFailureDetails | null {
+  const receipt = recordValue(receiptValue);
+  if (!receipt) return null;
+
+  const lifecycleStatus = String(receipt.statusName ?? receipt.status ?? "UNKNOWN");
+  const resultName = firstString(receipt.resultName, receipt.result_name);
+  const executionResultNumber = typeof receipt.txExecutionResult === "number"
+    ? receipt.txExecutionResult
+    : null;
+  const consensus = recordValue(receipt.consensus_data);
+  const leaderReceiptsValue = consensus?.leader_receipt;
+  const leaderReceipts = Array.isArray(leaderReceiptsValue)
+    ? leaderReceiptsValue.map(recordValue).filter((item): item is Record<string, unknown> => item !== null)
+    : [recordValue(leaderReceiptsValue)].filter((item): item is Record<string, unknown> => item !== null);
+  const leaderExecutionResult = firstString(...leaderReceipts.map((leader) => leader.execution_result));
+  const executionResultName = firstString(
+    receipt.txExecutionResultName,
+    receipt.tx_execution_result_name,
+    receipt.execution_result,
+    leaderExecutionResult,
+  );
+  const votes = recordValue(consensus?.votes);
+  const voteValues = votes ? Object.values(votes).map((value) => String(value).toUpperCase()) : [];
+  const disagreeCount = voteValues.filter((vote) => vote === "DISAGREE").length;
+  const majorityDisagree = voteValues.length > 0 && disagreeCount > voteValues.length / 2;
+  const exitCode = resultExitCode({
+    result: receipt.execution_result,
+    leaderReceipts: leaderReceipts.map((leader) => ({
+      executionResult: leader.execution_result,
+      genvmResult: leader.genvm_result,
+      result: leader.result,
+      error: leader.error,
+    })),
+  });
+  const terminalConsensusResults = new Set([
+    "MAJORITY_DISAGREE",
+    "NO_MAJORITY",
+    "DETERMINISTIC_VIOLATION",
+    "TIMEOUT",
+  ]);
+  const conclusiveFailure = terminalConsensusResults.has(resultName)
+    || majorityDisagree
+    || executionResultName === "FINISHED_WITH_ERROR"
+    || executionResultName === "ERROR"
+    || executionResultNumber === 2
+    || (exitCode !== null && exitCode !== 0);
+
+  if (!conclusiveFailure) return null;
+
+  return {
+    inspectionId,
+    genLayerTransactionId,
+    lifecycleStatus,
+    consensusResult: resultName || (majorityDisagree ? "MAJORITY_DISAGREE" : "UNKNOWN"),
+    executionResult: executionResultName || ((exitCode !== null && exitCode !== 0) ? "ERROR" : "UNKNOWN"),
+    exitCode,
+  };
+}
+
+async function waitForFinalReport(
+  inspectionId: string,
+  options: { interval?: number; requestTimeout?: number; signal?: AbortSignal; onDelayed?: () => void; onNetworkInterrupted?: () => void } = {},
+): Promise<ContractInspectionReport> {
+  const interval = options.interval ?? FINAL_REPORT_RETRY_INTERVAL;
+  const requestTimeout = options.requestTimeout ?? FINAL_REPORT_REQUEST_TIMEOUT;
+  const startedAt = Date.now();
+  while (true) {
+    if (options.signal?.aborted) throw abortError();
+    try {
+      return await withBoundedWait(readFinalReport(inspectionId), requestTimeout, options.signal);
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") throw error;
+      // A finalized transaction can briefly precede visibility of its finalized
+      // contract state on Studionet. This is an expected, retryable condition.
+      if (isTransientLifecycleError(error)) {
+        options.onNetworkInterrupted?.();
+      } else if (Date.now() - startedAt >= 120000) {
+        options.onDelayed?.();
+      }
+    }
+    const elapsed = Date.now() - startedAt;
+    const retryDelay = elapsed < 120000 ? interval : elapsed < 300000 ? 5000 : 10000;
+    await waitForDelay(retryDelay, options.signal);
+  }
 }
 
 export async function resumeInspectionOnchain(
@@ -342,22 +642,19 @@ export async function resumeInspectionOnchain(
   inspectionId: string,
   lifecycle: InspectionLifecycle = {},
 ): Promise<ContractInspectionReport> {
-  let receipt;
+  let finalizedReceipt: unknown;
   try {
-    receipt = await client.waitForTransactionReceipt({
-      hash: genLayerTransactionId as ReceiptHash,
-      status: TransactionStatus.FINALIZED,
-      interval: 3000,
-      retries: 120,
-    });
+    finalizedReceipt = await waitForFinalizedTransaction(client, genLayerTransactionId, lifecycle.onNetworkRetry, lifecycle.signal);
   } catch (error) {
     let numericStatus: number | string | undefined;
     let statusName: string | undefined;
+    let statusLookupError: unknown;
     try {
       const transaction = await client.getTransaction({ hash: genLayerTransactionId as ReceiptHash });
       numericStatus = transaction.status;
       statusName = transaction.statusName;
     } catch (statusError) {
+      statusLookupError = statusError;
       const message = error instanceof Error ? error.message : String(error);
       if (/current status:\s*5\b/i.test(message)) {
         numericStatus = 5;
@@ -370,19 +667,41 @@ export async function resumeInspectionOnchain(
       lifecycle.onConsensusAccepted?.();
       throw new FinalizationPendingError();
     }
+    if (isTransientLifecycleError(error) || statusLookupError || numericStatus === undefined) {
+      throw new LifecycleStatusPendingError();
+    }
     throw error;
   }
 
   lifecycle.onConsensusAccepted?.();
   lifecycle.onFinalized?.();
+  try {
+    return await withBoundedWait(
+      readFinalReport(inspectionId),
+      FINAL_REPORT_REQUEST_TIMEOUT,
+      lifecycle.signal,
+    );
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") throw error;
+  }
+
+  const terminalFailure = finalizedFailureDetails(
+    finalizedReceipt,
+    inspectionId,
+    genLayerTransactionId,
+  );
+  if (terminalFailure) {
+    console.error("TrustGate inspection finalized without a committed report:", terminalFailure);
+    throw new FinalizedInspectionFailedError(terminalFailure);
+  }
+
   // The inspection-specific durable state is authoritative. Studionet 1.1.8
   // may expose FINALIZED before that state is immediately readable.
-  const finalizedReport = await waitForFinalReport(inspectionId);
-  if (finalizedReport) return finalizedReport;
-  if (receipt.txExecutionResultName === ExecutionResult.FINISHED_WITH_ERROR) {
-    throw new Error("GenLayer finalized the transaction with an explicit execution failure, and no valid finalized TrustGate report is available.");
-  }
-  throw new FinalizedReportPendingError();
+  return waitForFinalReport(inspectionId, {
+    signal: lifecycle.signal,
+    onDelayed: lifecycle.onReportDelayed,
+    onNetworkInterrupted: lifecycle.onReportNetworkInterrupted,
+  });
 }
 
 function extractGenLayerTransactionId(receipt: EvmReceipt): string | null {
@@ -411,14 +730,21 @@ export async function resolveGenLayerTransactionId(
 ): Promise<string | null> {
   const interval = options.interval ?? 3000;
   const retries = options.retries ?? 120;
+  let transientFailure = false;
   for (let attempt = 0; attempt < retries; attempt += 1) {
-    const receipt = await getEvmReceipt(provider, evmTransactionHash);
-    if (receipt) {
-      if (receipt.status === "0x0") throw new Error(`The EVM submission reverted (${evmTransactionHash}).`);
-      return extractGenLayerTransactionId(receipt);
+    try {
+      const receipt = await getEvmReceipt(provider, evmTransactionHash);
+      if (receipt) {
+        if (receipt.status === "0x0") throw new Error(`The EVM submission reverted (${evmTransactionHash}).`);
+        return extractGenLayerTransactionId(receipt);
+      }
+    } catch (error) {
+      if (!isTransientLifecycleError(error)) throw error;
+      transientFailure = true;
     }
     if (attempt < retries - 1) await new Promise((resolve) => setTimeout(resolve, interval));
   }
+  if (transientFailure) throw new LifecycleStatusPendingError();
   return null;
 }
 
@@ -430,8 +756,15 @@ export async function resumeSubmittedInspection(
   onResolved: (genLayerTransactionId: string) => void,
   lifecycle: InspectionLifecycle = {},
 ): Promise<ContractInspectionReport> {
-  const genLayerTransactionId = identifiers.genLayerTransactionId
-    ?? await resolveGenLayerTransactionId(provider, identifiers.evmTransactionHash, { retries: 1 });
+  let genLayerTransactionId = identifiers.genLayerTransactionId;
+  if (!genLayerTransactionId) {
+    try {
+      genLayerTransactionId = await resolveGenLayerTransactionId(provider, identifiers.evmTransactionHash, { retries: 3, interval: 1000 });
+    } catch (error) {
+      if (isTransientLifecycleError(error)) throw new LifecycleStatusPendingError();
+      throw error;
+    }
+  }
   if (!genLayerTransactionId) throw new TransactionIdPendingError(identifiers);
   onResolved(genLayerTransactionId);
   return resumeInspectionOnchain(client, genLayerTransactionId, inspectionId, lifecycle);
@@ -445,13 +778,16 @@ export async function inspectDealOnchain(
   onSubmitted: (identifiers: SubmittedTransaction) => void,
   onFinalizing: () => void,
   lifecycle: InspectionLifecycle = {},
+  parentInspectionId?: string,
 ): Promise<ContractInspectionReport> {
   // genlayer-js 1.1.8 estimates gas internally in writeContract immediately
   // before dispatch; its public write API has no distribution/feeValue inputs.
   const evmTransactionHash = await client.writeContract({
     address: TRUSTGATE_CONTRACT,
-    functionName: "inspect_deal",
-    args: [inspectionId, deal.task, deal.terms, deal.permissions, deal.payment, deal.evidence, deal.instructions],
+    functionName: parentInspectionId ? "inspect_revision" : "inspect_deal",
+    args: parentInspectionId
+      ? [inspectionId, parentInspectionId, deal.task, deal.terms, deal.permissions, deal.payment, deal.evidence, deal.instructions]
+      : [inspectionId, deal.task, deal.terms, deal.permissions, deal.payment, deal.evidence, deal.instructions],
     value: BigInt(0),
   });
   if (typeof evmTransactionHash !== "string") throw new Error("The wallet did not return an EVM transaction hash.");

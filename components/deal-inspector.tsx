@@ -8,16 +8,17 @@ import {
   discoverWalletProviders,
   getStudionetBalance,
   inspectDealOnchain,
+  resumeSubmittedInspection,
   restoreStudionetWallet,
   STUDIONET_CHAIN_ID,
-  resumeSubmittedInspection,
   walletConnectionErrorMessage,
   type ConnectedWallet,
   type ContractInspectionReport,
   type DiscoveredWallet,
   type SubmittedTransaction,
+  FinalizedInspectionFailedError,
   FinalizationPendingError,
-  FinalizedReportPendingError,
+  LifecycleStatusPendingError,
   TransactionIdPendingError,
 } from "@/lib/genlayer";
 
@@ -27,11 +28,13 @@ type Risk = "LOW" | "MEDIUM" | "HIGH";
 type Deal = { task: string; terms: string; permissions: string; payment: string; evidence: string; instructions: string };
 type RevisedDeal = Omit<Deal, "task">;
 type Issue = { title: string; detail: string; evidence: string; consequence: string };
-type Report = { risk: Risk; summary: string; issues: Issue[]; evidence: string[]; consequences: string[]; confidence: string; unknowns: string; actions: string[]; constraints: string[]; revision: RevisedDeal };
+type RevisionProgress = { parentInspectionId: string; previousRisk: Risk; direction: "IMPROVED" | "UNCHANGED" | "WORSENED"; previousIssues: Array<{ title: string; status: "RESOLVED" | "PARTIALLY_RESOLVED" | "UNRESOLVED"; reason: string; evidence: string }>; newIssues: Array<{ title: string; reason: string }>; allAddressed: boolean };
+type Report = { risk: Risk; summary: string; issues: Issue[]; evidence: string[]; consequences: string[]; confidence: string; unknowns: string; actions: string[]; constraints: string[]; revision: RevisedDeal; revisionProgress?: RevisionProgress; counterproposalClosure?: Array<{ issueTitle: string; field: string; explanation: string }> };
 type Demo = { name: string; note: string; deal: Deal; report: Report };
 type DealExample = { title: string; deal: Deal };
 type Decision = "accept" | "renegotiate" | "reject" | null;
-type OnchainPhase = "submitting" | "submitted" | "identified" | "consensus" | "finalization" | "report" | "complete";
+type OnchainPhase = "submitting" | "submitted" | "identified" | "consensus" | "finalization" | "report" | "failed" | "complete";
+type PendingInspection = { inspectionId: string; identifiers: SubmittedTransaction; finalized: boolean; operation: "inspect_deal" | "inspect_revision"; parentInspectionId: string | null };
 
 const demos: Record<CuratedKey, Demo> = {
   safe: {
@@ -318,6 +321,20 @@ function adaptContractReport(payload: ContractInspectionReport): Report {
   if (source.overall_risk !== "LOW" && source.overall_risk !== "MEDIUM" && source.overall_risk !== "HIGH") {
     throw new Error(`The contract returned an unsupported risk level (${source.overall_risk}).`);
   }
+  const revisionContext = source.revision_context;
+  const previousRisk = revisionContext?.previous_overall_risk;
+  const revisionProgress = revisionContext?.is_revision
+    && (previousRisk === "LOW" || previousRisk === "MEDIUM" || previousRisk === "HIGH")
+    && revisionContext.risk_direction !== "INITIAL"
+    ? {
+        parentInspectionId: revisionContext.parent_inspection_id,
+        previousRisk: previousRisk as Risk,
+        direction: revisionContext.risk_direction,
+        previousIssues: revisionContext.previous_issue_statuses.map((issue) => ({ title: issue.previous_issue_title, status: issue.status, reason: issue.reason, evidence: issue.current_evidence })),
+        newIssues: revisionContext.new_issues.map((issue) => ({ title: issue.title, reason: issue.reason_new })),
+        allAddressed: revisionContext.all_previous_material_issues_addressed,
+      }
+    : undefined;
   return {
     risk: source.overall_risk,
     summary: source.summary,
@@ -340,6 +357,8 @@ function adaptContractReport(payload: ContractInspectionReport): Report {
       evidence: source.revised_deal_package.evidence_requirements,
       instructions: source.revised_deal_package.instructions,
     },
+    revisionProgress,
+    counterproposalClosure: source.counterproposal_closure?.map((item) => ({ issueTitle: item.issue_title, field: item.revised_field, explanation: item.closure_explanation })),
   };
 }
 
@@ -366,16 +385,57 @@ function RiskBadge({ risk, context }: { risk: Risk; context?: "original" | "curr
   return <span className={`risk-badge risk-${risk.toLowerCase()}`}>{label}</span>;
 }
 
-const displayText = (value: string) => value.replace(/[—–]/g, "-");
+function displayText(value: string): string {
+  return value
+    .replace(/[\u2010-\u2015\u2212]/g, "-")
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .replace(/…/g, "...")
+    .replace(/\*\*|##+|`+/g, "")
+    .replace(/(^|\s)[•▪◦]+\s*/g, "$1")
+    .replace(/(^|\s)(?:[-*+]\s+)+/g, "$1")
+    .replace(/\s+-{2,}\s+/g, ". ")
+    .replace(/\s+[|¦]\s+/g, ". ")
+    .replace(/([!?.,])\1+/g, "$1")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function summarySentences(value: string): string[] {
+  const normalized = displayText(value).replace(/\s+/g, " ").trim();
+  if (!normalized) return [];
+  return normalized
+    .split(/(?<=[.!?])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean)
+    .map((sentence) => /[.!?]$/.test(sentence) ? sentence : `${sentence}.`);
+}
 
 function ListPanel({ title, items }: { title: string; items: string[] }) {
-  return <section className="report-panel"><h3>{title}</h3><ul>{items.map((item) => <li key={item}>{displayText(item)}</li>)}</ul></section>;
+  return <section className="report-panel"><h3>{title}</h3>{items.length > 0
+    ? <ul>{items.map((item, index) => <li key={`${item}-${index}`}>{displayText(item)}</li>)}</ul>
+    : <p className="report-empty">No separate entries were included in this finalized report. Review the detected issues and their evidence above.</p>}</section>;
+}
+
+function RenegotiationProgress({ progress, currentRisk }: { progress: RevisionProgress; currentRisk: Risk }) {
+  const counts = progress.previousIssues.reduce((result, issue) => ({ ...result, [issue.status]: result[issue.status] + 1 }), { RESOLVED: 0, PARTIALLY_RESOLVED: 0, UNRESOLVED: 0 });
+  return <section className="renegotiation-progress" aria-labelledby="renegotiation-title">
+    <div className="renegotiation-heading"><div><p className="eyebrow">Revision comparison</p><h3 id="renegotiation-title">Renegotiation Progress</h3></div><strong className={`direction direction-${progress.direction.toLowerCase()}`}>{progress.direction}</strong></div>
+    <div className="risk-comparison"><div><span>Previous risk</span><b>{progress.previousRisk}</b></div><i aria-hidden="true">→</i><div><span>Current risk</span><b>{currentRisk}</b></div></div>
+    <div className="lineage-summary"><span className="resolved"><b>{counts.RESOLVED}</b>Resolved</span><span className="partially-resolved"><b>{counts.PARTIALLY_RESOLVED}</b>Partially resolved</span><span className="unresolved"><b>{counts.UNRESOLVED}</b>Unresolved</span><span className="material"><b>{progress.newIssues.length}</b>New material</span></div>
+    <div className="lineage-list">{progress.previousIssues.map((issue, index) => <article key={`${issue.title}-${index}`}><header><span>PREVIOUS ISSUE {String(index + 1).padStart(2, "0")}</span><span className={`lineage-status status-${issue.status.toLowerCase().replace("_", "-")}`}>{issue.status.replace("_", " ")}</span></header><h4>{displayText(issue.title)}</h4><div className="lineage-detail"><div><b>Assessment</b><p>{displayText(issue.reason)}</p></div><div><b>Current evidence</b><p>{displayText(issue.evidence)}</p></div></div></article>)}</div>
+    {progress.newIssues.length > 0 && <div className="new-issues"><h4>New material issues</h4>{progress.newIssues.map((issue, index) => <article key={`${issue.title}-${index}`}><span>NEW ISSUE {String(index + 1).padStart(2, "0")}</span><h5>{displayText(issue.title)}</h5><div><b>Why this is new</b><p>{displayText(issue.reason)}</p></div></article>)}</div>}
+  </section>;
 }
 
 function ReportView({ report, decision, onApply, onDecision, source }: { report: Report; decision: Decision; onApply: (revision: RevisedDeal) => void; onDecision: (decision: Exclude<Decision, null>) => void; source: "local" | "onchain" }) {
+  const summary = summarySentences(report.summary);
+  const keyExposures = report.issues.slice(0, 4).map((issue) => displayText(issue.title));
   return <section className="report-shell" aria-labelledby="report-title">
     <header className="report-header"><div><p className="eyebrow">{source === "onchain" ? "Onchain inspection complete" : "Local mock inspection"}</p><h2 id="report-title">Risk Report</h2></div><div className="risk-overview"><span>Overall risk</span><RiskBadge risk={report.risk} /></div></header>
-    <p className="report-summary">{displayText(report.summary)}</p>
+    <section className="report-summary" aria-labelledby="executive-summary-title"><span id="executive-summary-title">Executive summary</span><div className="summary-assessment"><small>Primary assessment</small>{summary.map((sentence, index) => <p key={`${sentence}-${index}`}>{sentence}</p>)}</div>{keyExposures.length > 0 && <div className="summary-findings"><small>Key exposures</small><ul>{keyExposures.map((finding, index) => <li key={`${finding}-${index}`}>{finding}</li>)}</ul></div>}<div className="summary-judgment"><small>Concluding judgment</small><p>This finalized report classifies the package as <strong>{report.risk}</strong> risk and identifies <strong>{report.issues.length}</strong> detected {report.issues.length === 1 ? "issue" : "issues"} for the commitment decision.</p></div></section>
+    {report.revisionProgress && <RenegotiationProgress currentRisk={report.risk} progress={report.revisionProgress} />}
     <section className="issues"><div className="section-row"><h3>Detected Issues</h3><span>{String(report.issues.length).padStart(2, "0")}</span></div>
       {report.issues.length === 0 ? <div className="clear-state"><b>PASS</b><div><strong>No material risk detected</strong><p>No issue crossed the current inspection threshold.</p></div></div> :
         <div className="issue-grid">{report.issues.map((issue, i) => <article className="issue-card" key={`${issue.title}-${i}`}>
@@ -413,7 +473,7 @@ function formatGenBalance(value: bigint): string {
 }
 
 function InspectionProgress({ phase, identifiers, elapsed }: { phase: OnchainPhase; identifiers: SubmittedTransaction | null; elapsed: number }) {
-  const phaseIndex: Record<OnchainPhase, number> = { submitting: 0, submitted: 1, identified: 2, consensus: 2, finalization: 3, report: 4, complete: 5 };
+  const phaseIndex: Record<OnchainPhase, number> = { submitting: 0, submitted: 1, identified: 2, consensus: 2, finalization: 3, report: 4, failed: 4, complete: 5 };
   const activeIndex = phaseIndex[phase];
   const overallPercent = activeIndex * 20;
   const items = [
@@ -424,14 +484,14 @@ function InspectionProgress({ phase, identifiers, elapsed }: { phase: OnchainPha
     { title: "Building risk report", detail: "Transaction finalized. Waiting for the finalized TrustGate report." },
   ];
   return <section className="inspection-progress" aria-live="polite" aria-label="Onchain inspection progress">
-    <header><div><span>LIVE ONCHAIN LIFECYCLE</span><h3>{phase === "complete" ? "TRUSTGATE INSPECTION COMPLETE" : "TRUSTGATE INSPECTION IN PROGRESS"}</h3></div><div className="overall-progress"><span>ONCHAIN INSPECTION PROGRESS</span><strong>{overallPercent}%</strong><time>Elapsed {formatElapsed(elapsed)}</time></div></header>
-    {phase !== "complete" && <div className="judge-waiting"><strong>GenLayer validators are evaluating this deal onchain. Consensus and finalization can take a few minutes. TrustGate is still actively processing.</strong><span>Keep this tab open while the inspection completes.</span></div>}
+    <header><div><span>LIVE ONCHAIN LIFECYCLE</span><h3>{phase === "complete" ? "TRUSTGATE INSPECTION COMPLETE" : phase === "failed" ? "TRUSTGATE INSPECTION FAILED" : "TRUSTGATE INSPECTION IN PROGRESS"}</h3></div><div className="overall-progress"><span>ONCHAIN INSPECTION PROGRESS</span><strong>{overallPercent}%</strong><time>Elapsed {formatElapsed(elapsed)}</time></div></header>
+    {phase !== "complete" && phase !== "failed" && <div className="judge-waiting"><div><span>ACTIVE PROCESSING</span><strong>GenLayer validators are reviewing this deal onchain.</strong><p>Consensus and finalization can take a few minutes. TrustGate will continue automatically when the finalized result is available.</p><small>Keep this tab open. No action is required.</small></div><i aria-hidden="true" /></div>}
     <ol>{items.map((item, index) => {
-      const state = index < activeIndex ? "complete" : index === activeIndex ? "active" : "pending";
-      const stagePercent = state === "complete" ? 100 : state === "pending" ? 0 : 50;
-      return <li className={state} key={item.title}><span className="step-number">{String(index + 1).padStart(2, "0")}</span><i aria-hidden="true" /><div className="step-content"><div className="step-heading"><strong>{item.title}</strong><b>{stagePercent}%</b></div><p>{item.detail}</p>{index > 0 && <div aria-label={`${item.title}: ${stagePercent}%`} aria-valuemax={100} aria-valuemin={0} aria-valuenow={stagePercent} className="stage-progress" role="progressbar"><span style={{ width: `${stagePercent}%` }} /></div>}</div><b>{state}</b></li>;
+      const state = index < activeIndex ? "complete" : phase === "failed" && index === activeIndex ? "failed" : index === activeIndex ? "active" : "pending";
+      const stagePercent = state === "complete" ? 100 : 0;
+      return <li className={state} key={item.title}><span className="step-number">{String(index + 1).padStart(2, "0")}</span><i aria-hidden="true" /><div className="step-content"><div className="step-heading"><strong>{item.title}</strong><b>{state === "active" ? "ACTIVE" : state === "failed" ? "NO REPORT" : `${stagePercent}%`}</b></div><p>{item.detail}</p>{index > 0 && <div aria-label={`${item.title}: ${state}`} aria-valuemax={100} aria-valuemin={0} aria-valuenow={state === "active" ? undefined : stagePercent} aria-valuetext={state === "active" ? "Active, awaiting confirmed lifecycle milestone" : undefined} className="stage-progress" role="progressbar"><span style={{ width: state === "active" ? "100%" : `${stagePercent}%` }} /></div>}</div><b>{state}</b></li>;
     })}</ol>
-    {phase !== "complete" && <footer><span>Progress advances only when an onchain lifecycle milestone is confirmed.</span><strong>TrustGate will continue automatically.</strong></footer>}
+    {phase !== "complete" && phase !== "failed" && <footer><span>Progress advances only when an onchain lifecycle milestone is confirmed.</span><strong>TrustGate will continue automatically.</strong></footer>}
   </section>;
 }
 
@@ -439,7 +499,7 @@ export function DealInspector() {
   const [selected, setSelected] = useState<DemoKey>("safe");
   const [deal, setDeal] = useState<Deal>(demos.safe.deal);
   const [exampleIndexes, setExampleIndexes] = useState<Record<CuratedKey, number>>({ safe: 0, permission: 0, multi: 0 });
-  const [status, setStatus] = useState<"idle" | "inspecting" | "pending" | "complete">("idle");
+  const [status, setStatus] = useState<"idle" | "inspecting" | "pending" | "failed" | "complete">("idle");
   const [activeReport, setActiveReport] = useState<Report | null>(null);
   const [decision, setDecision] = useState<Decision>(null);
   const [appliedNotice, setAppliedNotice] = useState(false);
@@ -456,15 +516,26 @@ export function DealInspector() {
   const [inspectionLabel, setInspectionLabel] = useState(initialInspectionLabel);
   const [inspectionError, setInspectionError] = useState("");
   const [transactionIds, setTransactionIds] = useState<SubmittedTransaction | null>(null);
-  const [pendingInspection, setPendingInspection] = useState<{ inspectionId: string; identifiers: SubmittedTransaction } | null>(null);
+  const [pendingInspection, setPendingInspection] = useState<PendingInspection | null>(null);
+  const [currentInspectionId, setCurrentInspectionId] = useState<string | null>(null);
+  const [revisionParentInspectionId, setRevisionParentInspectionId] = useState<string | null>(null);
   const [finalizationMessage, setFinalizationMessage] = useState("");
   const [onchainPhase, setOnchainPhase] = useState<OnchainPhase>("submitting");
   const [inspectionStartedAt, setInspectionStartedAt] = useState<number | null>(null);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const reportRef = useRef<HTMLDivElement>(null);
   const inFlightRef = useRef(false);
+  const operationRef = useRef(0);
+  const recoveryAbortRef = useRef<AbortController | null>(null);
+  const invalidateInspectionOperation = () => {
+    operationRef.current += 1;
+    recoveryAbortRef.current?.abort();
+    recoveryAbortRef.current = null;
+    inFlightRef.current = false;
+  };
   const choose = (key: DemoKey) => {
     if (inFlightRef.current || pendingInspection) return;
+    invalidateInspectionOperation();
     setSelected(key);
     if (key === "custom") {
       setDeal(customDeal);
@@ -481,6 +552,8 @@ export function DealInspector() {
     setInspectionError("");
     setTransactionIds(null);
     setPendingInspection(null);
+    setCurrentInspectionId(null);
+    setRevisionParentInspectionId(null);
     setFinalizationMessage("");
     setOnchainPhase("submitting");
     setInspectionStartedAt(null);
@@ -489,6 +562,7 @@ export function DealInspector() {
   };
   const loadAnotherExample = () => {
     if (selected === "custom" || inFlightRef.current || pendingInspection) return;
+    invalidateInspectionOperation();
     const examples = examplesFor(selected);
     const nextIndex = randomExampleIndex(examples.length, exampleIndexes[selected]);
     setExampleIndexes((current) => ({ ...current, [selected]: nextIndex }));
@@ -500,6 +574,8 @@ export function DealInspector() {
     setInspectionError("");
     setTransactionIds(null);
     setPendingInspection(null);
+    setCurrentInspectionId(null);
+    setRevisionParentInspectionId(null);
     setFinalizationMessage("");
     setOnchainPhase("submitting");
     setInspectionStartedAt(null);
@@ -507,11 +583,24 @@ export function DealInspector() {
     setInspectionLabel(initialInspectionLabel);
   };
   const applyRevision = (revision: RevisedDeal) => {
+    if (!currentInspectionId) {
+      setInspectionError("This report has no inspection ID and cannot start a revision chain.");
+      return;
+    }
+    setRevisionParentInspectionId(currentInspectionId);
+    invalidateInspectionOperation();
+    setCurrentInspectionId(null);
     setDeal((current) => ({ ...current, ...revision }));
     setStatus("idle");
     setActiveReport(null);
     setDecision(null);
     setAppliedNotice(true);
+    setTransactionIds(null);
+    setPendingInspection(null);
+    setFinalizationMessage("");
+    setOnchainPhase("submitting");
+    setInspectionStartedAt(null);
+    setElapsedSeconds(0);
     window.setTimeout(() => document.getElementById("deal-package")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   };
   const openWalletSelector = () => {
@@ -628,61 +717,93 @@ export function DealInspector() {
     setTransactionIds(null);
     setActiveReport(null);
     setDecision(null);
+    setCurrentInspectionId(null);
     setOnchainPhase("submitting");
     setInspectionStartedAt(null);
     setElapsedSeconds(0);
 
     inFlightRef.current = true;
+    const operationId = operationRef.current + 1;
+    operationRef.current = operationId;
+    const recoveryController = new AbortController();
+    recoveryAbortRef.current?.abort();
+    recoveryAbortRef.current = recoveryController;
     setInspectionMode("onchain");
     setOnchainPhase("submitting");
     setInspectionStartedAt(Date.now());
     setElapsedSeconds(0);
     setInspectionLabel("Preparing onchain inspection");
     setStatus("inspecting");
+    let submittedIdentifiers: SubmittedTransaction | null = null;
     try {
       const inspectionId = createInspectionId();
+      const parentInspectionId = revisionParentInspectionId ?? undefined;
+      const operation = parentInspectionId ? "inspect_revision" : "inspect_deal";
       setInspectionLabel("Awaiting wallet approval");
       const contractReport = await inspectDealOnchain(
         wallet.client,
         wallet.provider,
         inspectionId,
         deal,
-        (identifiers) => { setTransactionIds(identifiers); setPendingInspection({ inspectionId, identifiers }); setOnchainPhase(identifiers.genLayerTransactionId ? "identified" : "submitted"); setInspectionLabel("Transaction submitted"); },
-        () => { setOnchainPhase("consensus"); setInspectionLabel("AI validator consensus in progress"); },
-        { onConsensusAccepted: () => setOnchainPhase("finalization"), onFinalized: () => { setOnchainPhase("report"); setInspectionLabel("Reading finalized report"); } },
+        (identifiers) => { submittedIdentifiers = identifiers; if (operationRef.current !== operationId) return; setTransactionIds(identifiers); setPendingInspection({ inspectionId, identifiers, finalized: false, operation, parentInspectionId: parentInspectionId ?? null }); setOnchainPhase(identifiers.genLayerTransactionId ? "identified" : "submitted"); setInspectionLabel("Transaction submitted"); },
+        () => { if (operationRef.current !== operationId) return; setOnchainPhase("consensus"); setInspectionLabel("AI validator consensus in progress"); },
+        { signal: recoveryController.signal, onNetworkRetry: () => { if (operationRef.current !== operationId) return; setInspectionLabel("Retrying onchain status"); setFinalizationMessage("Network connection interrupted. TrustGate is retrying the existing onchain inspection."); }, onConsensusAccepted: () => { if (operationRef.current === operationId) setOnchainPhase("finalization"); }, onFinalized: () => { if (operationRef.current !== operationId) return; setPendingInspection((current) => current?.inspectionId === inspectionId ? { ...current, finalized: true } : current); setFinalizationMessage("Transaction is finalized. TrustGate is fetching the final report automatically."); setOnchainPhase("report"); setInspectionLabel("Reading finalized report"); }, onReportDelayed: () => { if (operationRef.current !== operationId) return; setFinalizationMessage("Transaction is finalized. The final TrustGate report is taking longer than usual to become readable. TrustGate is still retrying automatically."); }, onReportNetworkInterrupted: () => { if (operationRef.current !== operationId) return; setFinalizationMessage("Network connection interrupted. TrustGate will continue automatically when connectivity is restored."); } },
+        parentInspectionId,
       );
+      if (operationRef.current !== operationId) return;
       setInspectionLabel("Reading finalized report");
       setDecision(null);
       setActiveReport(adaptContractReport(contractReport));
+      setCurrentInspectionId(inspectionId);
+      setRevisionParentInspectionId(null);
       setOnchainPhase("complete");
       setPendingInspection(null);
       setStatus("complete");
       window.setTimeout(() => reportRef.current?.scrollIntoView({ behavior: "smooth" }), 80);
     } catch (error) {
-      if (error instanceof FinalizationPendingError || error instanceof FinalizedReportPendingError) {
-        setOnchainPhase(error instanceof FinalizationPendingError ? "finalization" : "report");
+      if (operationRef.current !== operationId || (error instanceof Error && error.name === "AbortError")) return;
+      if (error instanceof FinalizedInspectionFailedError) {
+        setStatus("failed");
+        setOnchainPhase("failed");
+        setCurrentInspectionId(error.details.inspectionId);
+        setPendingInspection(null);
+        setInspectionLabel("Finalized without committed report");
+        setFinalizationMessage("GenLayer finalized the transaction, but validator consensus or contract execution did not commit a TrustGate report.");
+      } else if (error instanceof FinalizationPendingError || error instanceof LifecycleStatusPendingError) {
+        if (error instanceof FinalizationPendingError) setOnchainPhase("finalization");
         setStatus("pending");
         setFinalizationMessage(error.message);
       } else if (error instanceof TransactionIdPendingError) {
         setTransactionIds(error.identifiers);
         setStatus("pending");
         setFinalizationMessage(error.message);
+      } else if (submittedIdentifiers && !/reverted|explicit execution failure|\brejected\b/i.test(errorMessage(error))) {
+        setStatus("pending");
+        setFinalizationMessage("Onchain inspection submitted. Network status is temporarily unavailable.");
       } else {
         setStatus("idle");
         setInspectionError(errorMessage(error));
       }
     } finally {
-      inFlightRef.current = false;
+      if (operationRef.current === operationId) {
+        inFlightRef.current = false;
+        recoveryAbortRef.current = null;
+      }
     }
   };
 
-  const checkFinalization = async () => {
-    if (!pendingInspection || inFlightRef.current) return;
+  const checkInspectionStatus = async () => {
+    if (!pendingInspection || pendingInspection.finalized || inFlightRef.current) return;
+    const recovery = pendingInspection;
+    const operationId = operationRef.current + 1;
+    operationRef.current = operationId;
+    const recoveryController = new AbortController();
+    recoveryAbortRef.current?.abort();
+    recoveryAbortRef.current = recoveryController;
     inFlightRef.current = true;
     setStatus("inspecting");
     setInspectionMode("onchain");
-    setOnchainPhase(pendingInspection.identifiers.genLayerTransactionId ? "consensus" : "submitted");
-    setInspectionLabel("Checking existing transaction finalization");
+    setInspectionLabel("Checking existing onchain inspection");
     setInspectionError("");
     setFinalizationMessage("");
     try {
@@ -690,40 +811,84 @@ export function DealInspector() {
       const contractReport = await resumeSubmittedInspection(
         wallet.client,
         wallet.provider,
-        pendingInspection.identifiers,
-        pendingInspection.inspectionId,
+        recovery.identifiers,
+        recovery.inspectionId,
         (genLayerTransactionId) => {
-          const identifiers = { ...pendingInspection.identifiers, genLayerTransactionId };
+          if (operationRef.current !== operationId) return;
+          const identifiers = { ...recovery.identifiers, genLayerTransactionId };
           setTransactionIds(identifiers);
-          setPendingInspection({ ...pendingInspection, identifiers });
+          setPendingInspection({ ...recovery, identifiers });
           setOnchainPhase("consensus");
         },
-        { onConsensusAccepted: () => setOnchainPhase("finalization"), onFinalized: () => { setOnchainPhase("report"); setInspectionLabel("Reading finalized report"); } },
+        {
+          signal: recoveryController.signal,
+          onNetworkRetry: () => {
+            if (operationRef.current !== operationId) return;
+            setInspectionLabel("Retrying onchain status");
+            setFinalizationMessage("Network connection interrupted. TrustGate is retrying the existing onchain inspection.");
+          },
+          onConsensusAccepted: () => {
+            if (operationRef.current === operationId) setOnchainPhase("finalization");
+          },
+          onFinalized: () => {
+            if (operationRef.current !== operationId) return;
+            setPendingInspection((current) => current?.inspectionId === recovery.inspectionId ? { ...current, finalized: true } : current);
+            setFinalizationMessage("Transaction is finalized. TrustGate is fetching the final report automatically.");
+            setOnchainPhase("report");
+            setInspectionLabel("Reading finalized report");
+          },
+          onReportDelayed: () => {
+            if (operationRef.current !== operationId) return;
+            setFinalizationMessage("Transaction is finalized. The final TrustGate report is taking longer than usual to become readable. TrustGate is still retrying automatically.");
+          },
+          onReportNetworkInterrupted: () => {
+            if (operationRef.current !== operationId) return;
+            setFinalizationMessage("Network connection interrupted. TrustGate will continue automatically when connectivity is restored.");
+          },
+        },
       );
+      if (operationRef.current !== operationId) return;
       setDecision(null);
       setActiveReport(adaptContractReport(contractReport));
+      setCurrentInspectionId(recovery.inspectionId);
+      setRevisionParentInspectionId(null);
       setOnchainPhase("complete");
       setPendingInspection(null);
       setStatus("complete");
       window.setTimeout(() => reportRef.current?.scrollIntoView({ behavior: "smooth" }), 80);
     } catch (error) {
-      if (error instanceof FinalizationPendingError || error instanceof FinalizedReportPendingError) {
-        setOnchainPhase(error instanceof FinalizationPendingError ? "finalization" : "report");
+      if (operationRef.current !== operationId || (error instanceof Error && error.name === "AbortError")) return;
+      if (error instanceof FinalizedInspectionFailedError) {
+        setStatus("failed");
+        setOnchainPhase("failed");
+        setCurrentInspectionId(error.details.inspectionId);
+        setPendingInspection(null);
+        setInspectionLabel("Finalized without committed report");
+        setFinalizationMessage("GenLayer finalized the transaction, but validator consensus or contract execution did not commit a TrustGate report.");
+      } else if (error instanceof FinalizationPendingError) {
         setStatus("pending");
+        setOnchainPhase("finalization");
         setFinalizationMessage(error.message);
-      } else if (error instanceof TransactionIdPendingError) {
+      } else if (error instanceof LifecycleStatusPendingError || error instanceof TransactionIdPendingError) {
         setStatus("pending");
-        setFinalizationMessage(error.message);
+        setFinalizationMessage(error instanceof LifecycleStatusPendingError
+          ? error.message
+          : "Onchain inspection submitted. The GenLayer transaction ID is not available yet.");
       } else {
-        setStatus("idle");
+        setStatus("pending");
         setInspectionError(errorMessage(error));
       }
     } finally {
-      inFlightRef.current = false;
+      if (operationRef.current === operationId) {
+        inFlightRef.current = false;
+        recoveryAbortRef.current = null;
+      }
     }
   };
 
   useEffect(() => discoverWalletProviders(setWalletOptions), []);
+
+  useEffect(() => () => recoveryAbortRef.current?.abort(), []);
 
   useEffect(() => {
     if (!wallet || !selectedWallet) return;
@@ -776,13 +941,13 @@ export function DealInspector() {
       {(Object.entries(demos) as Array<[CuratedKey, Demo]>).map(([key, demo], i) => <button aria-pressed={selected === key} className={`demo-card category-${key} ${selected === key ? "selected" : ""}`} disabled={status === "inspecting" || Boolean(pendingInspection)} key={key} onClick={() => choose(key)} type="button"><span className="demo-index">0{i + 1}</span><span className="demo-copy"><strong>{demo.name}</strong><small>{demo.note}</small></span><span className="demo-kind">CURATED INPUT</span></button>)}
       <button aria-pressed={selected === "custom"} className={`demo-card custom-card ${selected === "custom" ? "selected" : ""}`} disabled={status === "inspecting" || Boolean(pendingInspection)} onClick={() => choose("custom")} type="button"><span className="demo-index">04</span><span className="demo-copy"><strong>Custom Deal</strong><small>Write an original transaction for GenLayer inspection</small></span><span className="demo-kind">CUSTOM INPUT</span></button>
     </div><div className="example-toolbar"><div><strong>{selected === "custom" ? "Custom Input" : examplesFor(selected)[exampleIndexes[selected]].title}</strong><span>{selected === "custom" ? "Enter your own terms in the editable fields below." : "Every field is editable. Change this starting point before inspection if you want."}</span></div>{selected !== "custom" && <button disabled={status === "inspecting" || Boolean(pendingInspection)} onClick={loadAnotherExample} type="button">Load Random Example</button>}</div></section>
-    <section className="deal-section" id="deal-package"><div className="deal-heading"><div><p className="eyebrow">Structured input / 02</p><h2>Deal Package</h2></div><div className="deal-heading-status">{status === "complete" && activeReport ? <RiskBadge context="current" risk={activeReport.risk} /> : <span className="current-pending">CURRENT PACKAGE: {status === "inspecting" ? "INSPECTING" : status === "pending" ? "FINALIZATION PENDING" : "AWAITING INSPECTION"}</span>}<p>Review or amend the selected package before inspection.</p></div></div>
+    <section className="deal-section" id="deal-package"><div className="deal-heading"><div><p className="eyebrow">Structured input / 02</p><h2>Deal Package</h2></div><div className="deal-heading-status">{status === "complete" && activeReport ? <RiskBadge context="current" risk={activeReport.risk} /> : <span className="current-pending">CURRENT PACKAGE: {status === "failed" ? "FINALIZED / NO REPORT COMMITTED" : status === "inspecting" ? onchainPhase === "report" ? "FINALIZED / FETCHING REPORT" : "INSPECTING" : status === "pending" ? onchainPhase === "report" ? "FINALIZED / FETCHING REPORT" : onchainPhase === "finalization" ? "FINALIZATION PENDING" : "INSPECTION SUBMITTED" : "AWAITING INSPECTION"}</span>}<p>Review or amend the selected package before inspection.</p></div></div>
       {appliedNotice && <div className="applied-banner" role="status"><b>COUNTERPROPOSAL LOADED</b><span>The proposed terms are now editable in the active deal package. They have not been accepted or submitted; inspect again when ready.</span></div>}
-      <form onSubmit={(e) => { e.preventDefault(); void runInspection(); }}><div className="form-grid">{fields.map(([key, label, rows], i) => <label className={i === 0 || i === 5 ? "wide" : ""} key={key}><span><b>{String(i + 1).padStart(2, "0")}</b>{label}</span><textarea rows={rows} value={deal[key]} onChange={(e) => { setDeal((current) => ({ ...current, [key]: e.target.value })); setStatus("idle"); setActiveReport(null); setDecision(null); setAppliedNotice(false); setInspectionError(""); setTransactionIds(null); }} /></label>)}</div>
-        <div className="inspect-bar"><div><span>{wallet ? "ONCHAIN / STABLE STUDIONET" : "ONCHAIN WALLET REQUIRED"}</span><p>{wallet ? "Inspection will be submitted to the deployed TrustGate contract." : "Connect a compatible wallet to inspect this package through GenLayer."}</p></div><button disabled={walletStatus === "connecting" || status === "inspecting" || Boolean(pendingInspection)} type="submit"><span>{!wallet ? walletStatus === "connecting" ? "Connecting Wallet…" : "Connect Wallet to Inspect" : status === "inspecting" ? inspectionLabel : status === "pending" ? "Finalization Pending" : "Inspect Before Commitment"}</span><b>{!wallet ? walletStatus === "connecting" ? "WAIT" : "CONNECT" : status === "inspecting" ? "ACTIVE" : "RUN"}</b></button></div>
-        {inspectionMode === "onchain" && (status === "inspecting" || status === "pending" || status === "complete") && <InspectionProgress elapsed={elapsedSeconds} identifiers={transactionIds} phase={onchainPhase} />}
+      <form onSubmit={(e) => { e.preventDefault(); void runInspection(); }}><div className="form-grid">{fields.map(([key, label, rows], i) => <label className={i === 0 || i === 5 ? "wide" : ""} key={key}><span><b>{String(i + 1).padStart(2, "0")}</b>{label}</span><textarea disabled={status === "inspecting" || Boolean(pendingInspection)} rows={rows} value={deal[key]} onChange={(e) => { setDeal((current) => ({ ...current, [key]: e.target.value })); setStatus("idle"); setActiveReport(null); setDecision(null); setAppliedNotice(false); setInspectionError(""); setTransactionIds(null); }} /></label>)}</div>
+        <div className="inspect-bar"><div><span>{wallet ? "ONCHAIN / STABLE STUDIONET" : "ONCHAIN WALLET REQUIRED"}</span><p>{wallet ? "Inspection will be submitted to the deployed TrustGate contract." : "Connect a compatible wallet to inspect this package through GenLayer."}</p></div><button disabled={walletStatus === "connecting" || status === "inspecting" || Boolean(pendingInspection)} type="submit"><span>{!wallet ? walletStatus === "connecting" ? "Connecting Wallet…" : "Connect Wallet to Inspect" : status === "inspecting" ? inspectionLabel : status === "pending" ? onchainPhase === "report" ? "Finalized / Fetching Report" : onchainPhase === "finalization" ? "Finalization Pending" : "Inspection Submitted" : "Inspect Before Commitment"}</span><b>{!wallet ? walletStatus === "connecting" ? "WAIT" : "CONNECT" : status === "inspecting" ? "ACTIVE" : "RUN"}</b></button></div>
+        {inspectionMode === "onchain" && (status === "inspecting" || status === "pending" || status === "failed" || status === "complete") && <InspectionProgress elapsed={elapsedSeconds} identifiers={transactionIds} phase={onchainPhase} />}
         {transactionIds && <div className="integration-message submitted transaction-identifiers" role="status"><span>EVM submission hash: <code>{transactionIds.evmTransactionHash}</code></span><span>GenLayer transaction ID: <code>{transactionIds.genLayerTransactionId ?? "Pending resolution"}</code></span></div>}
-        {finalizationMessage && <div className="integration-message pending" role="status"><span>{finalizationMessage}</span><button onClick={() => void checkFinalization()} type="button">Check Finalization</button></div>}
+        {finalizationMessage && <div className={`integration-message ${status === "failed" ? "error" : "pending"}`} role="status"><span>{finalizationMessage}</span>{pendingInspection && !pendingInspection.finalized ? <button onClick={() => void checkInspectionStatus()} type="button">Check Inspection Status</button> : null}</div>}
         {inspectionError && <div className="integration-message error" role="alert">{inspectionError}</div>}
       </form>
     </section>
