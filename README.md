@@ -16,7 +16,7 @@ The goal is simple:
 
 ### Live Demo
 
-**https://trustgate.shoupeorg.workers.dev**
+**https://trustgatecheck.xyz**
 
 ### GenLayer Studionet Contract
 
