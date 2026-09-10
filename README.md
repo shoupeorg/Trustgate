@@ -24,6 +24,18 @@ The goal is simple:
 
 [Project Thesis](https://x.com/eam__sha/status/2094519952233398337)
 
+## Demo Video
+
+Watch TrustGate inspect an autonomous-agent commitment through GenLayer, produce an onchain Risk Report, and demonstrate the pre-commitment decision flow.
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=7iBmyO9R34Y">
+    <img src="https://img.youtube.com/vi/7iBmyO9R34Y/maxresdefault.jpg" alt="TrustGate Demo - Pre Commitment Risk for Autonomous Agents on GenLayer" width="100%">
+  </a>
+</p>
+
+[**Watch the full TrustGate demo on YouTube →**](https://www.youtube.com/watch?v=7iBmyO9R34Y)
+
 ---
 
 ![TrustGate](public/trustgate-hero-magenta.png)
