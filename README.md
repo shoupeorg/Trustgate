@@ -520,7 +520,7 @@ That is where pre-commitment judgment matters.
 
 ## Current Scope
 
-TrustGate is a working hackathon MVP being prepared for GenLayer Studio Next.
+TrustGate is a working hackathon MVP deployed and tested on GenLayer Studio Next / Studio Dev.
 
 Implemented today:
 
