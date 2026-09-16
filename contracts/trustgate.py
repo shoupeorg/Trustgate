@@ -1,11 +1,11 @@
-# { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
+# { "Depends": "py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng" }
 
-from genlayer import *
+import genlayer as gl
 import json
 
 
-class TrustGate(gl.Contract):
-    reports: TreeMap[str, str]
+class TrustGate(gl.contract.Contract):
+    reports: gl.storage.TreeMap[str, str]
     last_inspection_id: str
 
     def __init__(self):
@@ -961,7 +961,7 @@ UNTRUSTED_PARENT_REPORT_JSON =
 
             return True
 
-        report = gl.vm.run_nondet_unsafe(
+        report = gl.vm.run_nondet_default(
             leader_fn,
             validator_fn,
         )

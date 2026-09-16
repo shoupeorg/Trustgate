@@ -1,8 +1,12 @@
 import { createClient } from "genlayer-js";
-import { studionet } from "genlayer-js/chains";
-import { TransactionHashVariant, TransactionStatus } from "genlayer-js/types";
+import { studioDevnet } from "genlayer-js/chains";
+import { TransactionHashVariant, type TransactionHash } from "genlayer-js/types";
+import { createTransactionKit, type PolicyQuote, type SubmitInput, type TrackedStatus, type TransactionKit } from "@genlayer/transaction-kit";
 
-export const TRUSTGATE_CONTRACT = "0x4acc7623a1a5255b717752601F78D2cf3a99e7F3" as const;
+const configuredContractAddress = process.env.NEXT_PUBLIC_TRUSTGATE_CONTRACT_ADDRESS;
+export const TRUSTGATE_CONTRACT = configuredContractAddress && /^0x[0-9a-fA-F]{40}$/.test(configuredContractAddress)
+  ? configuredContractAddress as `0x${string}`
+  : null;
 
 type ClientOptions = NonNullable<Parameters<typeof createClient>[0]>;
 export type BrowserProvider = NonNullable<ClientOptions["provider"]> & {
@@ -19,9 +23,10 @@ export type DiscoveredWallet = {
   provider: BrowserProvider;
 };
 
-export const STUDIONET_CHAIN_ID = `0x${studionet.id.toString(16)}`;
-const STUDIONET_RPC = studionet.rpcUrls.default.http[0];
-const STUDIONET_EXPLORER = studionet.blockExplorers?.default.url;
+export const STUDIO_NEXT_CHAIN_ID = `0x${studioDevnet.id.toString(16)}`;
+const STUDIO_NEXT_RPC = studioDevnet.rpcUrls.default.http[0];
+const STUDIO_NEXT_EXPLORER = studioDevnet.blockExplorers?.default.url;
+const STUDIO_NEXT_TRANSACTION_URL = "https://explorer-studio-dev.genlayer.com/tx";
 
 export type InspectionDeal = {
   task: string;
@@ -98,18 +103,16 @@ declare global {
   }
 }
 
-const readClient = createClient({ chain: studionet });
-// Exact topics for NewTransaction(bytes32,address,address) and
-// CreatedTransaction(bytes32,uint256), the two events decoded by genlayer-js 1.1.8.
-const NEW_TRANSACTION_TOPIC = "0xdab9102861c7483a187584d6371d88316f005af507982ccf95c110879f3ed5a5";
-const CREATED_TRANSACTION_TOPIC = "0x8620e7f03a280a3d2aa84bd41ba19524c2d7f1dbfa9d79cb81877b0f8c963f9b";
-
-type EvmReceipt = { status?: string; logs?: Array<{ address?: string; topics?: string[] }> };
+const readClient = createClient({ chain: studioDevnet });
 
 export type SubmittedTransaction = {
-  evmTransactionHash: string;
-  genLayerTransactionId: string | null;
+  evmTransactionHash: string | null;
+  genLayerTransactionId: string;
 };
+
+export function studioNextTransactionUrl(transactionHash: string): string {
+  return `${STUDIO_NEXT_TRANSACTION_URL}/${transactionHash}`;
+}
 
 function requireString(value: unknown, field: string): string {
   if (typeof value !== "string" || value.length === 0) throw new Error(`Contract report is missing ${field}.`);
@@ -240,54 +243,54 @@ export function discoverWalletProviders(onChange: (wallets: DiscoveredWallet[]) 
   };
 }
 
-async function ensureStudionetNetwork(provider: BrowserProvider): Promise<void> {
+async function ensureStudioNextNetwork(provider: BrowserProvider): Promise<void> {
   const current = await provider.request({ method: "eth_chainId" });
-  if (current === STUDIONET_CHAIN_ID) return;
+  if (current === STUDIO_NEXT_CHAIN_ID) return;
   try {
-    await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: STUDIONET_CHAIN_ID }] } as never);
+    await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: STUDIO_NEXT_CHAIN_ID }] } as never);
   } catch (error) {
     const { code } = providerErrorDetails(error);
     if (code !== 4902) throw error;
-    await provider.request({ method: "wallet_addEthereumChain", params: [{ chainId: STUDIONET_CHAIN_ID, chainName: studionet.name, rpcUrls: [STUDIONET_RPC], nativeCurrency: studionet.nativeCurrency, blockExplorerUrls: STUDIONET_EXPLORER ? [STUDIONET_EXPLORER] : [] }] } as never);
-    await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: STUDIONET_CHAIN_ID }] } as never);
+    await provider.request({ method: "wallet_addEthereumChain", params: [{ chainId: STUDIO_NEXT_CHAIN_ID, chainName: studioDevnet.name, rpcUrls: [STUDIO_NEXT_RPC], nativeCurrency: studioDevnet.nativeCurrency, blockExplorerUrls: STUDIO_NEXT_EXPLORER ? [STUDIO_NEXT_EXPLORER] : [] }] } as never);
+    await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId: STUDIO_NEXT_CHAIN_ID }] } as never);
   }
 }
 
 function walletForAccount(provider: BrowserProvider, address: `0x${string}`) {
-  return { address, client: createClient({ chain: studionet, account: address, provider }), provider };
+  return { address, client: createClient({ chain: studioDevnet, account: address, provider }), provider };
 }
 
-export async function connectStudionetWallet(provider: BrowserProvider) {
+export async function connectStudioNextWallet(provider: BrowserProvider) {
   if (!provider || typeof provider.request !== "function") throw new Error("No compatible EIP-1193 browser wallet provider is available.");
   const accounts = await provider.request({ method: "eth_requestAccounts" });
   if (!Array.isArray(accounts) || typeof accounts[0] !== "string" || !/^0x[0-9a-fA-F]{40}$/.test(accounts[0])) {
     throw new Error("The wallet did not return a valid account address.");
   }
   const address = accounts[0] as `0x${string}`;
-  await ensureStudionetNetwork(provider);
+  await ensureStudioNextNetwork(provider);
   return walletForAccount(provider, address);
 }
 
-export async function restoreStudionetWallet(provider: BrowserProvider, address: string) {
+export async function restoreStudioNextWallet(provider: BrowserProvider, address: string) {
   if (!/^0x[0-9a-fA-F]{40}$/.test(address)) throw new Error("The wallet did not expose a valid account address.");
-  await ensureStudionetNetwork(provider);
+  await ensureStudioNextNetwork(provider);
   return walletForAccount(provider, address as `0x${string}`);
 }
 
-export type ConnectedWallet = Awaited<ReturnType<typeof connectStudionetWallet>>;
+export type ConnectedWallet = Awaited<ReturnType<typeof connectStudioNextWallet>>;
 
-async function studionetRpc(method: string, params: unknown[]): Promise<unknown> {
-  if (studionet.id !== 61999 || STUDIONET_RPC !== "https://studio.genlayer.com/api") throw new Error("TrustGate is not configured for stable GenLayer Studionet.");
-  const response = await fetch(STUDIONET_RPC, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: Date.now(), method, params }) });
-  if (!response.ok) throw new Error(`Studionet RPC request failed with HTTP ${response.status}.`);
+async function studioNextRpc(method: string, params: unknown[]): Promise<unknown> {
+  if (studioDevnet.id !== 61997) throw new Error("TrustGate is not configured for GenLayer Studio Next.");
+  const response = await fetch(STUDIO_NEXT_RPC, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: Date.now(), method, params }) });
+  if (!response.ok) throw new Error(`Studio Next RPC request failed with HTTP ${response.status}.`);
   const payload = await response.json() as { result?: unknown; error?: { message?: string; code?: number } };
-  if (payload.error) throw new Error(payload.error.message || `Studionet RPC error ${payload.error.code ?? "unknown"}.`);
+  if (payload.error) throw new Error(payload.error.message || `Studio Next RPC error ${payload.error.code ?? "unknown"}.`);
   return payload.result;
 }
 
-export async function getStudionetBalance(address: string): Promise<bigint> {
-  const result = await studionetRpc("eth_getBalance", [address, "latest"]);
-  if (typeof result !== "string" || !/^0x[0-9a-fA-F]+$/.test(result)) throw new Error("Studionet returned an invalid wallet balance.");
+export async function getStudioNextBalance(address: string): Promise<bigint> {
+  const result = await studioNextRpc("eth_getBalance", [address, "latest"]);
+  if (typeof result !== "string" || !/^0x[0-9a-fA-F]+$/.test(result)) throw new Error("Studio Next returned an invalid wallet balance.");
   return BigInt(result);
 }
 
@@ -318,15 +321,15 @@ function providerErrorDetails(error: unknown): { code?: number; message?: string
 
 export function walletConnectionErrorMessage(error: unknown): string {
   const { code, message } = providerErrorDetails(error);
-  if (code === 4001) return "Wallet connection was rejected. Click Connect Wallet when you are ready to approve account access and the Studionet network.";
+  if (code === 4001) return "Wallet connection was rejected. Click Connect Wallet when you are ready to approve account access and the Studio Next network.";
   if (code === -32002) return "A wallet connection request is already pending. Open your wallet extension and approve or reject the existing request.";
-  if (code === 4902) return "Stable Studionet is not available in the wallet and could not be added automatically. Allow the wallet to add the network, then try again.";
-  if (code === 4900 || code === 4901) return "The wallet is disconnected from Stable Studionet. Reconnect the wallet and try again.";
+  if (code === 4902) return "Studio Next is not available in the wallet and could not be added automatically. Allow the wallet to add the network, then try again.";
+  if (code === 4900 || code === 4901) return "The wallet is disconnected from Studio Next. Reconnect the wallet and try again.";
   if (code === 4200 || message?.toLowerCase().includes("wallet_getsnaps") || message?.toLowerCase().includes("wallet_requestsnaps")) {
     return "This wallet does not support the GenLayer wallet methods required by genlayer-js. Use a compatible MetaMask wallet and try again.";
   }
   if (message?.toLowerCase().includes("switch") || message?.toLowerCase().includes("addethereumchain")) {
-    return `The wallet could not add or switch to Stable Studionet. ${message}`;
+    return `The wallet could not add or switch to Studio Next. ${message}`;
   }
   return message ? `Wallet connection failed: ${message}` : "Wallet connection failed with an unknown provider error. Check the browser console for the original exception.";
 }
@@ -368,17 +371,6 @@ export class FinalizedInspectionFailedError extends Error {
   }
 }
 
-export class TransactionIdPendingError extends Error {
-  readonly identifiers: SubmittedTransaction;
-
-  constructor(identifiers: SubmittedTransaction) {
-    super("Transaction submitted, but the GenLayer transaction ID could not yet be resolved.");
-    this.name = "TransactionIdPendingError";
-    this.identifiers = identifiers;
-  }
-}
-
-type ReceiptHash = Parameters<typeof readClient.waitForTransactionReceipt>[0]["hash"];
 type InspectionLifecycle = {
   onConsensusAccepted?: () => void;
   onFinalized?: () => void;
@@ -393,6 +385,27 @@ const LIFECYCLE_RETRY_DELAYS = [1000, 2000];
 
 const FINAL_REPORT_REQUEST_TIMEOUT = 12000;
 const FINAL_REPORT_RETRY_INTERVAL = 3000;
+
+export type InspectionFeeQuote = PolicyQuote;
+
+function requireContractAddress(): `0x${string}` {
+  if (!TRUSTGATE_CONTRACT) {
+    throw new Error("Studio Next TrustGate contract is not configured. Set NEXT_PUBLIC_TRUSTGATE_CONTRACT_ADDRESS to the deployed chain 61997 contract address.");
+  }
+  return TRUSTGATE_CONTRACT;
+}
+
+async function accountFromProvider(provider: BrowserProvider): Promise<`0x${string}`> {
+  const accounts = await provider.request({ method: "eth_accounts" });
+  if (!Array.isArray(accounts) || typeof accounts[0] !== "string" || !/^0x[0-9a-fA-F]{40}$/.test(accounts[0])) {
+    throw new Error("Reconnect the submitting wallet before continuing this inspection.");
+  }
+  return accounts[0] as `0x${string}`;
+}
+
+function kitFor(provider: BrowserProvider, account: `0x${string}`): TransactionKit {
+  return createTransactionKit({ chain: studioDevnet, provider, account });
+}
 
 function abortError(): Error {
   const error = new Error("Finalized report recovery was cancelled.");
@@ -476,38 +489,9 @@ function isTransientLifecycleError(error: unknown): boolean {
   ].some((fragment) => details.includes(fragment));
 }
 
-async function waitForFinalizedTransaction(
-  client: GenLayerClient,
-  genLayerTransactionId: string,
-  onNetworkRetry?: () => void,
-  signal?: AbortSignal,
-) {
-  let lastError: unknown;
-  for (let attempt = 0; attempt < LIFECYCLE_TRANSPORT_ATTEMPTS; attempt += 1) {
-    if (signal?.aborted) throw abortError();
-    const attemptStartedAt = Date.now();
-    try {
-      await client.waitForTransactionReceipt({
-        hash: genLayerTransactionId as ReceiptHash,
-        status: TransactionStatus.FINALIZED,
-        interval: 3000,
-        retries: 120,
-      });
-      return await client.getTransaction({ hash: genLayerTransactionId as ReceiptHash });
-    } catch (error) {
-      lastError = error;
-      const failedQuickly = Date.now() - attemptStartedAt < 30000;
-      if (!isTransientLifecycleError(error) || !failedQuickly || attempt === LIFECYCLE_TRANSPORT_ATTEMPTS - 1) throw error;
-      onNetworkRetry?.();
-      await waitForDelay(LIFECYCLE_RETRY_DELAYS[attempt], signal);
-    }
-  }
-  throw lastError;
-}
-
 async function readFinalReport(inspectionId: string): Promise<ContractInspectionReport> {
   const rawReport = await readClient.readContract({
-    address: TRUSTGATE_CONTRACT,
+    address: requireContractAddress(),
     functionName: "get_report",
     args: [inspectionId],
     transactionHashVariant: TransactionHashVariant.LATEST_FINAL,
@@ -517,96 +501,6 @@ async function readFinalReport(inspectionId: string): Promise<ContractInspection
     throw new Error(`The finalized report belongs to a different inspection (${parsed.inspection_id}).`);
   }
   return parsed;
-}
-
-function recordValue(value: unknown): Record<string, unknown> | null {
-  return value && typeof value === "object" ? value as Record<string, unknown> : null;
-}
-
-function firstString(...values: unknown[]): string {
-  const value = values.find((item) => typeof item === "string" && item.length > 0);
-  return typeof value === "string" ? value.toUpperCase() : "";
-}
-
-function resultExitCode(value: unknown, depth = 0): number | null {
-  if (depth > 5 || value === null || value === undefined) return null;
-  if (typeof value === "string") {
-    const match = value.match(/["']?exit_code["']?\s*[:=]\s*(-?\d+)/i);
-    return match ? Number(match[1]) : null;
-  }
-  if (typeof value !== "object") return null;
-  for (const [key, nested] of Object.entries(value as Record<string, unknown>)) {
-    if (/^exit_?code$/i.test(key) && (typeof nested === "number" || typeof nested === "string")) {
-      const parsed = Number(nested);
-      if (Number.isInteger(parsed)) return parsed;
-    }
-    const parsed = resultExitCode(nested, depth + 1);
-    if (parsed !== null) return parsed;
-  }
-  return null;
-}
-
-function finalizedFailureDetails(
-  receiptValue: unknown,
-  inspectionId: string,
-  genLayerTransactionId: string,
-): FinalizedFailureDetails | null {
-  const receipt = recordValue(receiptValue);
-  if (!receipt) return null;
-
-  const lifecycleStatus = String(receipt.statusName ?? receipt.status ?? "UNKNOWN");
-  const resultName = firstString(receipt.resultName, receipt.result_name);
-  const executionResultNumber = typeof receipt.txExecutionResult === "number"
-    ? receipt.txExecutionResult
-    : null;
-  const consensus = recordValue(receipt.consensus_data);
-  const leaderReceiptsValue = consensus?.leader_receipt;
-  const leaderReceipts = Array.isArray(leaderReceiptsValue)
-    ? leaderReceiptsValue.map(recordValue).filter((item): item is Record<string, unknown> => item !== null)
-    : [recordValue(leaderReceiptsValue)].filter((item): item is Record<string, unknown> => item !== null);
-  const leaderExecutionResult = firstString(...leaderReceipts.map((leader) => leader.execution_result));
-  const executionResultName = firstString(
-    receipt.txExecutionResultName,
-    receipt.tx_execution_result_name,
-    receipt.execution_result,
-    leaderExecutionResult,
-  );
-  const votes = recordValue(consensus?.votes);
-  const voteValues = votes ? Object.values(votes).map((value) => String(value).toUpperCase()) : [];
-  const disagreeCount = voteValues.filter((vote) => vote === "DISAGREE").length;
-  const majorityDisagree = voteValues.length > 0 && disagreeCount > voteValues.length / 2;
-  const exitCode = resultExitCode({
-    result: receipt.execution_result,
-    leaderReceipts: leaderReceipts.map((leader) => ({
-      executionResult: leader.execution_result,
-      genvmResult: leader.genvm_result,
-      result: leader.result,
-      error: leader.error,
-    })),
-  });
-  const terminalConsensusResults = new Set([
-    "MAJORITY_DISAGREE",
-    "NO_MAJORITY",
-    "DETERMINISTIC_VIOLATION",
-    "TIMEOUT",
-  ]);
-  const conclusiveFailure = terminalConsensusResults.has(resultName)
-    || majorityDisagree
-    || executionResultName === "FINISHED_WITH_ERROR"
-    || executionResultName === "ERROR"
-    || executionResultNumber === 2
-    || (exitCode !== null && exitCode !== 0);
-
-  if (!conclusiveFailure) return null;
-
-  return {
-    inspectionId,
-    genLayerTransactionId,
-    lifecycleStatus,
-    consensusResult: resultName || (majorityDisagree ? "MAJORITY_DISAGREE" : "UNKNOWN"),
-    executionResult: executionResultName || ((exitCode !== null && exitCode !== 0) ? "ERROR" : "UNKNOWN"),
-    exitCode,
-  };
 }
 
 async function waitForFinalReport(
@@ -623,7 +517,7 @@ async function waitForFinalReport(
     } catch (error) {
       if (error instanceof Error && error.name === "AbortError") throw error;
       // A finalized transaction can briefly precede visibility of its finalized
-      // contract state on Studionet. This is an expected, retryable condition.
+      // contract state on Studio Next. This is an expected, retryable condition.
       if (isTransientLifecycleError(error)) {
         options.onNetworkInterrupted?.();
       } else if (Date.now() - startedAt >= 120000) {
@@ -636,67 +530,80 @@ async function waitForFinalReport(
   }
 }
 
-export async function resumeInspectionOnchain(
-  client: GenLayerClient,
-  genLayerTransactionId: string,
+function notifyTrackedStatus(status: TrackedStatus, lifecycle: InspectionLifecycle): void {
+  if (status.statusName?.toUpperCase() === "ACCEPTED") lifecycle.onConsensusAccepted?.();
+}
+
+export function finalizedTransactionDecision(input: {
+  trackedPhase: TrackedStatus["phase"];
+  lifecycleState: "processing" | "decided" | "finalized" | "canceled";
+  consensusOutcome?: "accepted" | "undetermined" | "validators-timeout" | "leader-timeout";
+  executionResultName?: string;
+}): "pending" | "read-final-report" | "failed" {
+  if (input.trackedPhase !== "finalized" || input.lifecycleState !== "finalized") return "pending";
+  return input.consensusOutcome === "accepted" && input.executionResultName?.toUpperCase() === "FINISHED_WITH_RETURN"
+    ? "read-final-report"
+    : "failed";
+}
+
+async function trackExistingInspection(
+  kit: TransactionKit,
+  genLayerTransactionId: `0x${string}`,
   inspectionId: string,
-  lifecycle: InspectionLifecycle = {},
+  lifecycle: InspectionLifecycle,
 ): Promise<ContractInspectionReport> {
-  let finalizedReceipt: unknown;
-  try {
-    finalizedReceipt = await waitForFinalizedTransaction(client, genLayerTransactionId, lifecycle.onNetworkRetry, lifecycle.signal);
-  } catch (error) {
-    let numericStatus: number | string | undefined;
-    let statusName: string | undefined;
-    let statusLookupError: unknown;
+  let tracked: TrackedStatus | undefined;
+  let lastError: unknown;
+  for (let attempt = 0; attempt < LIFECYCLE_TRANSPORT_ATTEMPTS; attempt += 1) {
+    if (lifecycle.signal?.aborted) throw abortError();
     try {
-      const transaction = await client.getTransaction({ hash: genLayerTransactionId as ReceiptHash });
-      numericStatus = transaction.status;
-      statusName = transaction.statusName;
-    } catch (statusError) {
-      statusLookupError = statusError;
-      const message = error instanceof Error ? error.message : String(error);
-      if (/current status:\s*5\b/i.test(message)) {
-        numericStatus = 5;
-        statusName = TransactionStatus.ACCEPTED;
-      }
-      console.error("GenLayer transaction status lookup failed:", statusError);
+      tracked = await kit.track(genLayerTransactionId, (status) => {
+        if (lifecycle.signal?.aborted) throw abortError();
+        notifyTrackedStatus(status, lifecycle);
+      }, { until: "finalized" });
+      break;
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") throw error;
+      lastError = error;
+      if (!isTransientLifecycleError(error) || attempt === LIFECYCLE_TRANSPORT_ATTEMPTS - 1) break;
+      lifecycle.onNetworkRetry?.();
+      await waitForDelay(LIFECYCLE_RETRY_DELAYS[attempt], lifecycle.signal);
     }
-    console.error("GenLayer finalization polling failed:", { error, status: numericStatus, statusName });
-    if (numericStatus === 5 || numericStatus === TransactionStatus.ACCEPTED || statusName === TransactionStatus.ACCEPTED) {
-      lifecycle.onConsensusAccepted?.();
-      throw new FinalizationPendingError();
-    }
-    if (isTransientLifecycleError(error) || statusLookupError || numericStatus === undefined) {
-      throw new LifecycleStatusPendingError();
-    }
-    throw error;
+  }
+
+  if (!tracked) {
+    if (isTransientLifecycleError(lastError)) throw new LifecycleStatusPendingError();
+    throw lastError;
+  }
+
+  const transaction = await readClient.getTransaction({ hash: genLayerTransactionId as TransactionHash });
+  const lifecycleState = transaction.lifecycle.state;
+  const consensusOutcome = lifecycleState === "decided" || lifecycleState === "finalized"
+    ? transaction.lifecycle.outcome
+    : undefined;
+  const executionResult = transaction.txExecutionResultName?.toUpperCase()
+    ?? tracked.executionResultName?.toUpperCase()
+    ?? "UNKNOWN";
+  const decision = finalizedTransactionDecision({
+    trackedPhase: tracked.phase,
+    lifecycleState,
+    consensusOutcome,
+    executionResultName: executionResult,
+  });
+
+  if (decision !== "read-final-report") {
+    throw new FinalizedInspectionFailedError({
+      inspectionId,
+      genLayerTransactionId,
+      lifecycleStatus: lifecycleState.toUpperCase(),
+      consensusResult: consensusOutcome?.toUpperCase() ?? transaction.resultName ?? "UNKNOWN",
+      executionResult,
+      exitCode: null,
+    });
   }
 
   lifecycle.onConsensusAccepted?.();
   lifecycle.onFinalized?.();
-  try {
-    return await withBoundedWait(
-      readFinalReport(inspectionId),
-      FINAL_REPORT_REQUEST_TIMEOUT,
-      lifecycle.signal,
-    );
-  } catch (error) {
-    if (error instanceof Error && error.name === "AbortError") throw error;
-  }
-
-  const terminalFailure = finalizedFailureDetails(
-    finalizedReceipt,
-    inspectionId,
-    genLayerTransactionId,
-  );
-  if (terminalFailure) {
-    console.error("TrustGate inspection finalized without a committed report:", terminalFailure);
-    throw new FinalizedInspectionFailedError(terminalFailure);
-  }
-
-  // The inspection-specific durable state is authoritative. Studionet 1.1.8
-  // may expose FINALIZED before that state is immediately readable.
   return waitForFinalReport(inspectionId, {
     signal: lifecycle.signal,
     onDelayed: lifecycle.onReportDelayed,
@@ -704,74 +611,26 @@ export async function resumeInspectionOnchain(
   });
 }
 
-function extractGenLayerTransactionId(receipt: EvmReceipt): string | null {
-  for (const log of receipt.logs ?? []) {
-    const eventTopic = log.topics?.[0]?.toLowerCase();
-    const txId = log.topics?.[1];
-    if ((eventTopic === NEW_TRANSACTION_TOPIC || eventTopic === CREATED_TRANSACTION_TOPIC) && /^0x[0-9a-fA-F]{64}$/.test(txId ?? "")) {
-      return txId!;
-    }
-  }
-  return null;
-}
-
-async function getEvmReceipt(provider: BrowserProvider, evmTransactionHash: string): Promise<EvmReceipt | null> {
-  const receipt = await provider.request({
-    method: "eth_getTransactionReceipt",
-    params: [evmTransactionHash],
-  } as Parameters<BrowserProvider["request"]>[0]);
-  return receipt && typeof receipt === "object" ? receipt as EvmReceipt : null;
-}
-
-export async function resolveGenLayerTransactionId(
-  provider: BrowserProvider,
-  evmTransactionHash: string,
-  options: { interval?: number; retries?: number } = {},
-): Promise<string | null> {
-  const interval = options.interval ?? 3000;
-  const retries = options.retries ?? 120;
-  let transientFailure = false;
-  for (let attempt = 0; attempt < retries; attempt += 1) {
-    try {
-      const receipt = await getEvmReceipt(provider, evmTransactionHash);
-      if (receipt) {
-        if (receipt.status === "0x0") throw new Error(`The EVM submission reverted (${evmTransactionHash}).`);
-        return extractGenLayerTransactionId(receipt);
-      }
-    } catch (error) {
-      if (!isTransientLifecycleError(error)) throw error;
-      transientFailure = true;
-    }
-    if (attempt < retries - 1) await new Promise((resolve) => setTimeout(resolve, interval));
-  }
-  if (transientFailure) throw new LifecycleStatusPendingError();
-  return null;
-}
-
 export async function resumeSubmittedInspection(
-  client: GenLayerClient,
+  _client: GenLayerClient,
   provider: BrowserProvider,
   identifiers: SubmittedTransaction,
   inspectionId: string,
   onResolved: (genLayerTransactionId: string) => void,
   lifecycle: InspectionLifecycle = {},
 ): Promise<ContractInspectionReport> {
-  let genLayerTransactionId = identifiers.genLayerTransactionId;
-  if (!genLayerTransactionId) {
-    try {
-      genLayerTransactionId = await resolveGenLayerTransactionId(provider, identifiers.evmTransactionHash, { retries: 3, interval: 1000 });
-    } catch (error) {
-      if (isTransientLifecycleError(error)) throw new LifecycleStatusPendingError();
-      throw error;
-    }
-  }
-  if (!genLayerTransactionId) throw new TransactionIdPendingError(identifiers);
-  onResolved(genLayerTransactionId);
-  return resumeInspectionOnchain(client, genLayerTransactionId, inspectionId, lifecycle);
+  const account = await accountFromProvider(provider);
+  onResolved(identifiers.genLayerTransactionId);
+  return trackExistingInspection(
+    kitFor(provider, account),
+    identifiers.genLayerTransactionId as `0x${string}`,
+    inspectionId,
+    lifecycle,
+  );
 }
 
 export async function inspectDealOnchain(
-  client: ReturnType<typeof createClient>,
+  _client: GenLayerClient,
   provider: BrowserProvider,
   inspectionId: string,
   deal: InspectionDeal,
@@ -779,24 +638,31 @@ export async function inspectDealOnchain(
   onFinalizing: () => void,
   lifecycle: InspectionLifecycle = {},
   parentInspectionId?: string,
+  approveFee?: (quote: InspectionFeeQuote) => boolean | Promise<boolean>,
 ): Promise<ContractInspectionReport> {
-  // genlayer-js 1.1.8 estimates gas internally in writeContract immediately
-  // before dispatch; its public write API has no distribution/feeValue inputs.
-  const evmTransactionHash = await client.writeContract({
-    address: TRUSTGATE_CONTRACT,
-    functionName: parentInspectionId ? "inspect_revision" : "inspect_deal",
+  if (!approveFee) throw new Error("Studio Next transaction fees require explicit user approval.");
+  const account = await accountFromProvider(provider);
+  const kit = kitFor(provider, account);
+  const transaction: SubmitInput = {
+    kind: "write",
+    address: requireContractAddress(),
+    method: parentInspectionId ? "inspect_revision" : "inspect_deal",
     args: parentInspectionId
       ? [inspectionId, parentInspectionId, deal.task, deal.terms, deal.permissions, deal.payment, deal.evidence, deal.instructions]
       : [inspectionId, deal.task, deal.terms, deal.permissions, deal.payment, deal.evidence, deal.instructions],
-    value: BigInt(0),
-  });
-  if (typeof evmTransactionHash !== "string") throw new Error("The wallet did not return an EVM transaction hash.");
-  let identifiers: SubmittedTransaction = { evmTransactionHash, genLayerTransactionId: null };
-  onSubmitted(identifiers);
-  const genLayerTransactionId = await resolveGenLayerTransactionId(provider, evmTransactionHash);
-  if (!genLayerTransactionId) throw new TransactionIdPendingError(identifiers);
-  identifiers = { evmTransactionHash, genLayerTransactionId };
+  };
+  const quote = await kit.estimate({ preset: "standard" }, transaction);
+  if (quote.verification.status === "mismatch") {
+    throw new Error("The Studio Next fee policy changed. Re-estimate before approving the transaction.");
+  }
+  if (!await approveFee(quote)) throw new Error("Studio Next fee approval was cancelled.");
+
+  const submitted = await kit.submit(quote, transaction);
+  const identifiers: SubmittedTransaction = {
+    evmTransactionHash: submitted.evmTxHash ?? null,
+    genLayerTransactionId: submitted.genlayerTxId,
+  };
   onSubmitted(identifiers);
   onFinalizing();
-  return resumeInspectionOnchain(client, genLayerTransactionId, inspectionId, lifecycle);
+  return trackExistingInspection(kit, submitted.genlayerTxId, inspectionId, lifecycle);
 }

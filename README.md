@@ -18,9 +18,11 @@ The goal is simple:
 
 **https://trustgatecheck.xyz**
 
-### GenLayer Studionet Contract
+### GenLayer Studio Next Contract
 
-`0x4acc7623a1a5255b717752601F78D2cf3a99e7F3`
+`0xf6F2108C8eD388699F382203b6eb93F6DC8a6584`
+
+The frontend reads this deployment from `NEXT_PUBLIC_TRUSTGATE_CONTRACT_ADDRESS`.
 
 [Project Thesis](https://x.com/eam__sha/status/2094519952233398337)
 
@@ -348,11 +350,11 @@ The system evaluates these risks as part of one commitment rather than as isolat
 
 ## Intelligent Contract
 
-**Network:** GenLayer Studionet
+**Network:** GenLayer Studio Next / Studio Dev (chain ID `61997`)
 
 **Contract address:**
 
-`0x4acc7623a1a5255b717752601F78D2cf3a99e7F3`
+`0xf6F2108C8eD388699F382203b6eb93F6DC8a6584`
 
 **Source:**
 
@@ -383,7 +385,7 @@ The current application supports wallet flows including:
 
 The selected wallet is used for:
 
-- GenLayer Studionet network handling
+- GenLayer Studio Next network handling
 - transaction submission
 - EVM receipt resolution
 - GenLayer transaction tracking
@@ -392,13 +394,13 @@ A wallet connection establishes the session but does not automatically submit a 
 
 ---
 
-## Studionet Faucet
+## Studio Next Faucet
 
-The live hackathon application includes an integrated GenLayer Studionet faucet.
+The live hackathon application includes an integrated GenLayer Studio Next faucet.
 
 It allows users to request test GEN required for onchain inspections without leaving TrustGate.
 
-The faucet is a demo convenience for Studionet and is not presented as a production token-distribution system.
+The faucet is a demo convenience for Studio Next and is not presented as a production token-distribution system.
 
 ---
 
@@ -408,7 +410,7 @@ The faucet is a demo convenience for Studionet and is not presented as a product
 | --- | --- |
 | Judgment Layer | GenLayer |
 | Intelligent Contract | Python |
-| Network | GenLayer Studionet |
+| Network | GenLayer Studio Next / Studio Dev (61997) |
 | Validator Layer | GenLayer AI Validator Consensus |
 | Frontend | Next.js |
 | UI | React + TypeScript |
@@ -447,7 +449,23 @@ npm run lint
 npm run build
 ```
 
-The Studionet faucet requires server-side credentials that are intentionally not stored in source control.
+The Studio Next faucet requires server-side credentials that are intentionally not stored in source control.
+
+Before starting the frontend, configure the freshly deployed contract locally:
+
+```bash
+NEXT_PUBLIC_TRUSTGATE_CONTRACT_ADDRESS=0xf6F2108C8eD388699F382203b6eb93F6DC8a6584
+```
+
+### Studio Next deployment verification
+
+1. Set `NEXT_PUBLIC_TRUSTGATE_CONTRACT_ADDRESS` in `.env.local` to `0xf6F2108C8eD388699F382203b6eb93F6DC8a6584`.
+2. Start the frontend and connect a wallet to Studio Next on chain `61997`.
+3. Submit one initial inspection and record its inspection ID and transaction hash.
+4. Confirm `get_report(initial_inspection_id)` returns the finalized stored report.
+5. Apply the generated Counterproposal and explicitly submit it as a revision whose parent is the initial inspection.
+6. Record the revision inspection ID and transaction hash.
+7. Confirm `get_report(revision_inspection_id)` returns the finalized revision report and its parent lineage references the initial inspection.
 
 ---
 
@@ -457,7 +475,7 @@ A typical judge or user can test TrustGate in a few steps:
 
 1. Open the live application.
 2. Connect a supported wallet.
-3. Switch to GenLayer Studionet when prompted.
+3. Switch to GenLayer Studio Next (chain ID `61997`) when prompted.
 4. Request test GEN if required.
 5. Select a curated scenario or Custom Deal.
 6. Review or edit all six commitment fields.
@@ -502,11 +520,11 @@ That is where pre-commitment judgment matters.
 
 ## Current Scope
 
-TrustGate is a working hackathon MVP on GenLayer Studionet.
+TrustGate is a working hackathon MVP being prepared for GenLayer Studio Next.
 
 Implemented today:
 
-- deployed GenLayer Intelligent Contract
+- environment-configured GenLayer Intelligent Contract deployment
 - wallet-submitted onchain inspections
 - GenLayer AI validator evaluation
 - consensus and finalization tracking
@@ -518,7 +536,7 @@ Implemented today:
 - 72 curated scenarios
 - manually authored Custom Deals
 - multi-wallet discovery
-- integrated Studionet faucet
+- integrated Studio Next faucet
 - live Cloudflare deployment
 
 TrustGate does not claim production security readiness or completion of a formal security audit.

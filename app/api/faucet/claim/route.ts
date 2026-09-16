@@ -17,8 +17,8 @@ import { privateKeyToAccount } from "viem/accounts";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const RPC_URL = "https://studio.genlayer.com/api";
-const CHAIN_ID = 61999;
+const RPC_URL = "https://studio-dev.genlayer.com/api";
+const CHAIN_ID = 61997;
 const EXPECTED_TREASURY = getAddress("0x223CaA499378cE57BD5754F1cB66336f04ae20a4");
 const FAUCET_AMOUNT = parseEther("2");
 const BALANCE_POLL_ATTEMPTS = 10;
@@ -28,9 +28,9 @@ const SUBMISSION_LOOKUP_ATTEMPTS = 6;
 const RECEIPT_POLL_INTERVAL = 3000;
 const RECEIPT_TIMEOUT = 180_000;
 
-const studionet = defineChain({
+const studioNext = defineChain({
   id: CHAIN_ID,
-  name: "GenLayer Studionet",
+  name: "GenLayer Studio Next",
   nativeCurrency: { name: "GEN", symbol: "GEN", decimals: 18 },
   rpcUrls: { default: { http: [RPC_URL] } },
 });
@@ -193,11 +193,11 @@ export async function POST(request: NextRequest) {
     }
 
     stage = "rpc-connectivity";
-    const publicClient = createPublicClient({ chain: studionet, transport: http(RPC_URL) });
-    const walletClient = createWalletClient({ account: treasury, chain: studionet, transport: http(RPC_URL) });
+    const publicClient = createPublicClient({ chain: studioNext, transport: http(RPC_URL) });
+    const walletClient = createWalletClient({ account: treasury, chain: studioNext, transport: http(RPC_URL) });
     const activeChainId = await readWithRetry(() => publicClient.getChainId());
     stage = "chain-validation";
-    if (activeChainId !== CHAIN_ID) throw new FaucetRequestError("The faucet RPC is not connected to GenLayer Studionet.", 503);
+    if (activeChainId !== CHAIN_ID) throw new FaucetRequestError("The faucet RPC is not connected to GenLayer Studio Next.", 503);
 
     stage = "balance-and-fee-check";
     const [treasuryBalanceBefore, recipientBalanceBefore, estimatedGas, gasPrice] = await Promise.all([
@@ -213,7 +213,7 @@ export async function POST(request: NextRequest) {
     stage = "transaction-preparation";
     const preparedTransaction = await readWithRetry(() => walletClient.prepareTransactionRequest({
       account: treasury,
-      chain: studionet,
+      chain: studioNext,
       to: recipient,
       value: FAUCET_AMOUNT,
     }));
@@ -243,7 +243,7 @@ export async function POST(request: NextRequest) {
     stage = "receipt-confirmation";
     const receipt = recoveredReceipt ?? await waitForEvmReceipt(publicClient, transactionHash);
     if (receipt.status !== "success") {
-      throw new FaucetRequestError("The Studionet faucet transfer failed.", 502);
+      throw new FaucetRequestError("The Studio Next faucet transfer failed.", 502);
     }
     stage = "balance-verification";
     await verifiedRecipientBalance(publicClient, recipient, recipientBalanceBefore);

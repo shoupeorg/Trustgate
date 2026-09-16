@@ -3,14 +3,15 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
-  connectStudionetWallet,
+  connectStudioNextWallet,
   createInspectionId,
   discoverWalletProviders,
-  getStudionetBalance,
+  getStudioNextBalance,
   inspectDealOnchain,
   resumeSubmittedInspection,
-  restoreStudionetWallet,
-  STUDIONET_CHAIN_ID,
+  restoreStudioNextWallet,
+  STUDIO_NEXT_CHAIN_ID,
+  studioNextTransactionUrl,
   walletConnectionErrorMessage,
   type ConnectedWallet,
   type ContractInspectionReport,
@@ -19,7 +20,6 @@ import {
   FinalizedInspectionFailedError,
   FinalizationPendingError,
   LifecycleStatusPendingError,
-  TransactionIdPendingError,
 } from "@/lib/genlayer";
 
 type CuratedKey = "safe" | "permission" | "multi";
@@ -477,7 +477,7 @@ function InspectionProgress({ phase, identifiers, elapsed }: { phase: OnchainPha
   const activeIndex = phaseIndex[phase];
   const overallPercent = activeIndex * 20;
   const items = [
-    { title: "Transaction submitted", detail: identifiers ? `EVM ${shortId(identifiers.evmTransactionHash)}` : "Waiting for wallet confirmation." },
+    { title: "Transaction submitted", detail: identifiers?.evmTransactionHash ? `EVM ${shortId(identifiers.evmTransactionHash)}` : identifiers ? "Submitted through Studio Next." : "Waiting for wallet confirmation." },
     { title: "GenLayer transaction identified", detail: identifiers?.genLayerTransactionId ? `TX ${shortId(identifiers.genLayerTransactionId)}` : "Resolving the consensus transaction ID." },
     { title: "AI validator consensus", detail: "GenLayer validators are independently evaluating the proposed deal." },
     { title: "Finalization", detail: "Consensus reached. Waiting for the result to become final." },
@@ -617,12 +617,12 @@ export function DealInspector() {
     setWalletSelectorOpen(false);
     setWalletStatus("connecting");
     try {
-      const connected = await connectStudionetWallet(option.provider);
+      const connected = await connectStudioNextWallet(option.provider);
       setWallet(connected);
       setSelectedWallet(option);
       setWalletStatus("connected");
       setFaucetMessage("");
-      try { setWalletBalance(await getStudionetBalance(connected.address)); } catch { setWalletBalance(null); }
+      try { setWalletBalance(await getStudioNextBalance(connected.address)); } catch { setWalletBalance(null); }
     } catch (error) {
       console.error("GenLayer wallet connection failed:", error);
       setWallet(null);
@@ -652,8 +652,8 @@ export function DealInspector() {
       if (!activeAddress || activeAddress.toLowerCase() !== wallet.address.toLowerCase()) {
         throw new Error("The selected wallet account changed. Reconnect it before requesting test GEN.");
       }
-      if (chainId !== STUDIONET_CHAIN_ID) {
-        throw new Error("Switch the selected wallet to GenLayer Studionet before requesting test GEN.");
+      if (chainId !== STUDIO_NEXT_CHAIN_ID) {
+        throw new Error("Switch the selected wallet to GenLayer Studio Next before requesting test GEN.");
       }
       const response = await fetch("/api/faucet/claim", {
         method: "POST",
@@ -665,9 +665,9 @@ export function DealInspector() {
         const stage = payload.stage ? ` (${payload.stage})` : "";
         throw new Error(`${payload.error || "The TrustGate faucet transfer could not be verified."}${stage}`);
       }
-      setWalletBalance(await getStudionetBalance(wallet.address));
+      setWalletBalance(await getStudioNextBalance(wallet.address));
       setFaucetStatus("success");
-      setFaucetMessage(`2 GEN sent to your Studionet wallet. Transaction ${payload.transactionHash.slice(0, 10)}…${payload.transactionHash.slice(-8)}`);
+      setFaucetMessage(`2 GEN sent to your Studio Next wallet. Transaction ${payload.transactionHash.slice(0, 10)}…${payload.transactionHash.slice(-8)}`);
     } catch (error) {
       setFaucetStatus("error");
       setFaucetMessage(errorMessage(error));
@@ -749,6 +749,7 @@ export function DealInspector() {
         () => { if (operationRef.current !== operationId) return; setOnchainPhase("consensus"); setInspectionLabel("AI validator consensus in progress"); },
         { signal: recoveryController.signal, onNetworkRetry: () => { if (operationRef.current !== operationId) return; setInspectionLabel("Retrying onchain status"); setFinalizationMessage("Network connection interrupted. TrustGate is retrying the existing onchain inspection."); }, onConsensusAccepted: () => { if (operationRef.current === operationId) setOnchainPhase("finalization"); }, onFinalized: () => { if (operationRef.current !== operationId) return; setPendingInspection((current) => current?.inspectionId === inspectionId ? { ...current, finalized: true } : current); setFinalizationMessage("Transaction is finalized. TrustGate is fetching the final report automatically."); setOnchainPhase("report"); setInspectionLabel("Reading finalized report"); }, onReportDelayed: () => { if (operationRef.current !== operationId) return; setFinalizationMessage("Transaction is finalized. The final TrustGate report is taking longer than usual to become readable. TrustGate is still retrying automatically."); }, onReportNetworkInterrupted: () => { if (operationRef.current !== operationId) return; setFinalizationMessage("Network connection interrupted. TrustGate will continue automatically when connectivity is restored."); } },
         parentInspectionId,
+        (quote) => window.confirm(`Approve the estimated Studio Next transaction fee of ${formatGenBalance(quote.total)}? Unused consensus fees are refundable.`),
       );
       if (operationRef.current !== operationId) return;
       setInspectionLabel("Reading finalized report");
@@ -771,10 +772,6 @@ export function DealInspector() {
         setFinalizationMessage("GenLayer finalized the transaction, but validator consensus or contract execution did not commit a TrustGate report.");
       } else if (error instanceof FinalizationPendingError || error instanceof LifecycleStatusPendingError) {
         if (error instanceof FinalizationPendingError) setOnchainPhase("finalization");
-        setStatus("pending");
-        setFinalizationMessage(error.message);
-      } else if (error instanceof TransactionIdPendingError) {
-        setTransactionIds(error.identifiers);
         setStatus("pending");
         setFinalizationMessage(error.message);
       } else if (submittedIdentifiers && !/reverted|explicit execution failure|\brejected\b/i.test(errorMessage(error))) {
@@ -869,11 +866,9 @@ export function DealInspector() {
         setStatus("pending");
         setOnchainPhase("finalization");
         setFinalizationMessage(error.message);
-      } else if (error instanceof LifecycleStatusPendingError || error instanceof TransactionIdPendingError) {
+      } else if (error instanceof LifecycleStatusPendingError) {
         setStatus("pending");
-        setFinalizationMessage(error instanceof LifecycleStatusPendingError
-          ? error.message
-          : "Onchain inspection submitted. The GenLayer transaction ID is not available yet.");
+        setFinalizationMessage(error.message);
       } else {
         setStatus("pending");
         setInspectionError(errorMessage(error));
@@ -903,14 +898,14 @@ export function DealInspector() {
       const accounts = args[0];
       const address = Array.isArray(accounts) && typeof accounts[0] === "string" ? accounts[0] : null;
       if (!address) { clearConnectedWallet(); return; }
-      void restoreStudionetWallet(provider, address).then(async (connected) => {
+      void restoreStudioNextWallet(provider, address).then(async (connected) => {
         setWallet(connected);
         setWalletStatus("connected");
-        try { setWalletBalance(await getStudionetBalance(connected.address)); } catch { setWalletBalance(null); }
+        try { setWalletBalance(await getStudioNextBalance(connected.address)); } catch { setWalletBalance(null); }
       }).catch(clearConnectedWallet);
     };
     const chainChanged = (...args: unknown[]) => {
-      if (args[0] !== STUDIONET_CHAIN_ID) clearConnectedWallet();
+      if (args[0] !== STUDIO_NEXT_CHAIN_ID) clearConnectedWallet();
     };
     const disconnected = () => clearConnectedWallet();
     provider.on?.("accountsChanged", accountsChanged);
@@ -933,7 +928,7 @@ export function DealInspector() {
 
   return <main className="site-shell">
     <header className="site-header"><div className="header-left"><div className="brand"><span>TG</span><div><strong>TrustGate</strong><small>Before an Agent Says Yes.</small></div></div><a className="thesis-link" href="https://x.com/eam__sha/status/2094519952233398337" rel="noopener noreferrer" target="_blank">Project Thesis <span aria-hidden="true">↗</span></a></div><div className="header-actions"><div className="status-badge"><i />Pre-Commitment Risk Inspection</div><button className="faucet-button" disabled={faucetStatus === "requesting"} onClick={() => void requestFaucet()} type="button">{faucetStatus === "requesting" ? "Requesting GEN..." : "Get Test GEN"}</button><button className="wallet-button" disabled={walletStatus === "connecting"} onClick={openWalletSelector} type="button">{walletStatus === "connected" && wallet ? <span><b>{selectedWallet?.name || "Wallet"}</b><small>{wallet.address.slice(0, 6)}…{wallet.address.slice(-4)}{walletBalance !== null ? ` · ${formatGenBalance(walletBalance)}` : ""}</small></span> : walletStatus === "connecting" ? "Connecting..." : "Connect Wallet"}</button></div></header>
-    {walletSelectorOpen && <section className="wallet-selector" aria-label="Select a browser wallet"><div><span>INSTALLED BROWSER WALLETS</span><h2>Choose a wallet</h2><p>The selected provider will be used for Studionet signing and transaction tracking.</p></div><div>{walletOptions.map((option) => <button key={option.id} onClick={() => void connectWallet(option)} type="button"><strong>{option.name}</strong>{option.rdns && <small>{option.rdns}</small>}</button>)}</div><button aria-label="Close wallet selector" className="wallet-selector-close" onClick={() => setWalletSelectorOpen(false)} type="button">Close</button></section>}
+    {walletSelectorOpen && <section className="wallet-selector" aria-label="Select a browser wallet"><div><span>INSTALLED BROWSER WALLETS</span><h2>Choose a wallet</h2><p>The selected provider will be used for Studio Next signing and transaction tracking.</p></div><div>{walletOptions.map((option) => <button key={option.id} onClick={() => void connectWallet(option)} type="button"><strong>{option.name}</strong>{option.rdns && <small>{option.rdns}</small>}</button>)}</div><button aria-label="Close wallet selector" className="wallet-selector-close" onClick={() => setWalletSelectorOpen(false)} type="button">Close</button></section>}
     {walletError && <div className="integration-message error" role="alert">{walletError}</div>}
     {faucetMessage && <div className={`integration-message ${faucetStatus === "error" ? "error" : faucetStatus === "success" ? "submitted" : "pending"}`} role="status">{faucetMessage}</div>}
     <section className="intro"><Image alt="TrustGate: Inspect the commitment before it becomes exposure." className="intro-image" height={727} priority sizes="(max-width: 680px) calc(100vw - 28px), (max-width: 1288px) calc(100vw - 48px), 1240px" src="/trustgate-hero-magenta.png" width={2164} /></section>
@@ -944,14 +939,14 @@ export function DealInspector() {
     <section className="deal-section" id="deal-package"><div className="deal-heading"><div><p className="eyebrow">Structured input / 02</p><h2>Deal Package</h2></div><div className="deal-heading-status">{status === "complete" && activeReport ? <RiskBadge context="current" risk={activeReport.risk} /> : <span className="current-pending">CURRENT PACKAGE: {status === "failed" ? "FINALIZED / NO REPORT COMMITTED" : status === "inspecting" ? onchainPhase === "report" ? "FINALIZED / FETCHING REPORT" : "INSPECTING" : status === "pending" ? onchainPhase === "report" ? "FINALIZED / FETCHING REPORT" : onchainPhase === "finalization" ? "FINALIZATION PENDING" : "INSPECTION SUBMITTED" : "AWAITING INSPECTION"}</span>}<p>Review or amend the selected package before inspection.</p></div></div>
       {appliedNotice && <div className="applied-banner" role="status"><b>COUNTERPROPOSAL LOADED</b><span>The proposed terms are now editable in the active deal package. They have not been accepted or submitted; inspect again when ready.</span></div>}
       <form onSubmit={(e) => { e.preventDefault(); void runInspection(); }}><div className="form-grid">{fields.map(([key, label, rows], i) => <label className={i === 0 || i === 5 ? "wide" : ""} key={key}><span><b>{String(i + 1).padStart(2, "0")}</b>{label}</span><textarea disabled={status === "inspecting" || Boolean(pendingInspection)} rows={rows} value={deal[key]} onChange={(e) => { setDeal((current) => ({ ...current, [key]: e.target.value })); setStatus("idle"); setActiveReport(null); setDecision(null); setAppliedNotice(false); setInspectionError(""); setTransactionIds(null); }} /></label>)}</div>
-        <div className="inspect-bar"><div><span>{wallet ? "ONCHAIN / STABLE STUDIONET" : "ONCHAIN WALLET REQUIRED"}</span><p>{wallet ? "Inspection will be submitted to the deployed TrustGate contract." : "Connect a compatible wallet to inspect this package through GenLayer."}</p></div><button disabled={walletStatus === "connecting" || status === "inspecting" || Boolean(pendingInspection)} type="submit"><span>{!wallet ? walletStatus === "connecting" ? "Connecting Wallet…" : "Connect Wallet to Inspect" : status === "inspecting" ? inspectionLabel : status === "pending" ? onchainPhase === "report" ? "Finalized / Fetching Report" : onchainPhase === "finalization" ? "Finalization Pending" : "Inspection Submitted" : "Inspect Before Commitment"}</span><b>{!wallet ? walletStatus === "connecting" ? "WAIT" : "CONNECT" : status === "inspecting" ? "ACTIVE" : "RUN"}</b></button></div>
+        <div className="inspect-bar"><div><span>{wallet ? "ONCHAIN / STUDIO NEXT" : "ONCHAIN WALLET REQUIRED"}</span><p>{wallet ? "Inspection will estimate the Studio Next fee for explicit approval before submission." : "Connect a compatible wallet to inspect this package through GenLayer."}</p></div><button disabled={walletStatus === "connecting" || status === "inspecting" || Boolean(pendingInspection)} type="submit"><span>{!wallet ? walletStatus === "connecting" ? "Connecting Wallet…" : "Connect Wallet to Inspect" : status === "inspecting" ? inspectionLabel : status === "pending" ? onchainPhase === "report" ? "Finalized / Fetching Report" : onchainPhase === "finalization" ? "Finalization Pending" : "Inspection Submitted" : "Inspect Before Commitment"}</span><b>{!wallet ? walletStatus === "connecting" ? "WAIT" : "CONNECT" : status === "inspecting" ? "ACTIVE" : "RUN"}</b></button></div>
         {inspectionMode === "onchain" && (status === "inspecting" || status === "pending" || status === "failed" || status === "complete") && <InspectionProgress elapsed={elapsedSeconds} identifiers={transactionIds} phase={onchainPhase} />}
-        {transactionIds && <div className="integration-message submitted transaction-identifiers" role="status"><span>EVM submission hash: <code>{transactionIds.evmTransactionHash}</code></span><span>GenLayer transaction ID: <code>{transactionIds.genLayerTransactionId ?? "Pending resolution"}</code></span></div>}
+        {transactionIds && <div className="integration-message submitted transaction-identifiers" role="status"><span>EVM submission hash: <code>{transactionIds.evmTransactionHash ?? "Not exposed by provider"}</code></span><span>GenLayer transaction ID: <code>{transactionIds.genLayerTransactionId}</code></span><a href={studioNextTransactionUrl(transactionIds.genLayerTransactionId)} rel="noopener noreferrer" target="_blank">View transaction in GenLayer Explorer</a></div>}
         {finalizationMessage && <div className={`integration-message ${status === "failed" ? "error" : "pending"}`} role="status"><span>{finalizationMessage}</span>{pendingInspection && !pendingInspection.finalized ? <button onClick={() => void checkInspectionStatus()} type="button">Check Inspection Status</button> : null}</div>}
         {inspectionError && <div className="integration-message error" role="alert">{inspectionError}</div>}
       </form>
     </section>
     <div ref={reportRef}>{status === "complete" && activeReport && <ReportView decision={decision} onApply={applyRevision} onDecision={setDecision} report={activeReport} source={inspectionMode} />}</div>
-    <footer><span>TRUSTGATE / FRONTEND PROTOTYPE</span><span>GENLAYER STUDIONET</span></footer>
+    <footer><span>TRUSTGATE / FRONTEND PROTOTYPE</span><span>GENLAYER STUDIO NEXT</span></footer>
   </main>;
 }
