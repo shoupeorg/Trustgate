@@ -1,3 +1,5 @@
+New version: TrustGate V1.3 → https://github.com/shoupeorg/TrustGate-V1.3
+
 # TrustGate
 
 ### Before an Agent Says Yes.
