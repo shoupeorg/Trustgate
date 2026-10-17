@@ -1,6 +1,6 @@
 # TrustGate V1.3
 
-Demo video: VIDEO_LINK
+<p align="center"><a href="https://www.youtube.com/watch?v=6OWEyfAEFvw"><img src="docs/media/demo-thumb.jpg" width="860" alt="Watch the TrustGate V1.3 demo (2:33)"></a></p>
 
 ### Before an Agent Says Yes.
 

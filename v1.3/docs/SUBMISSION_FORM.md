@@ -1,6 +1,6 @@
 # TrustGate V1.3: resubmission
 
-Demo video: VIDEO_LINK
+Demo video: [Watch on YouTube](https://www.youtube.com/watch?v=6OWEyfAEFvw)
 
 **Before an Agent Says Yes.**
 
