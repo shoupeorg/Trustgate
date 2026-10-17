@@ -1,0 +1,41 @@
+- no wallet: guide instead of a dead button … ok 
+- wallet discovered via EIP-6963 … ok 
+- connect error is explained: reject … ok {"message":"Wallet connection was rejected. Click Connect Wallet when you are ready to approve account access and the Studio Next network."}
+- connect error is explained: pending … ok {"message":"A wallet connection request is already pending. Open your wallet extension and approve or reject the existing request."}
+- connect error is explained: locked … ok {"message":"The wallet returned no account. Unlock it (open the extension and enter your password), then click Connect again."}
+- connect on wrong network: chain 61997 added and switched … ok {"addChain":{"rpc":"https://studio-dev.genlayer.com/api","explorer":"https://explorer-studio-dev.genlayer.com"}}
+- faucet: Get test GEN … FAILED HTTP request failed.
+
+Status: 503
+URL: https://studio-dev.genlayer.com/api
+Request body: {"method":"eth_getBalance","params":["0x73501951ebD48414AB35DD0544F24505153b10Db","latest"]}
+
+Details: "<html>\r\n<head><title>503 Service Temporarily Unavailable</title></head>\r\n<body>\r\n<center><h1>503 Serv
+- faucet: second claim is rate limited … FAILED locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('.v13-faucet small').filter({ hasText: /already received|Limit/ }) to be visible[22m
+
+- create browser agent key … ok {"agentAddress":"0x08DA14fC36692b7295C71059cdcBe599D0432aC4"}
+- template does not overwrite a typed mandate without asking … ok 
+- create vault (fee shown before signing, then finalized) … FAILED locator.waitFor: Timeout 60000ms exceeded.
+Call log:
+[2m  - waiting for getByText('Network fee up to').first() to be visible[22m
+
+- fund the agent key from the owner wallet (amount + fee shown) … FAILED locator.waitFor: Timeout 120000ms exceeded.
+Call log:
+[2m  - waiting for locator('.v13-tx code').first() to be visible[22m
+
+- agent tab: requests only by signed offer (no payee / deal text fields) … FAILED locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByText('Request a commitment against a signed offer').first() to be visible[22m
+
+- owner: take funds back, then withdraw credit (payout check) … FAILED locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: 'Take back' }).first()[22m
+[2m    - locator resolved to <button disabled type="button" class="v13-secondary">Take back</button>[22m
+[2m  - attempting click action[22m
+[2m    2 × waiting for eleme
+- live feed shows last-updated time and source … ok {"status":"7 vaults · updated 12:59:24 PM · source: transaction history · contract reads working"}
+- mobile width renders without horizontal scroll … ok {"overflow":0}
+
+10/16 steps passed. Log: experiments/e2e/full-flow-(quick|judged).json

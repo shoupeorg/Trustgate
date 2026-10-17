@@ -1,0 +1,589 @@
+{
+  "site": "https://trustgate-v13.shoupeorg.workers.dev",
+  "contract": "0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3",
+  "vault": "public-demo-mv9boi2s",
+  "seller": "0x3F567C02606CA064cEd2D49b39FD48C1B41eBfFd",
+  "buyer": "0xf02c68e73ea781cf16416e4fc7c18c71641e044b",
+  "startedAt": "2026-10-15T10:02:52.934Z",
+  "calls": [
+    {
+      "at": "2026-10-15T10:03:28.226Z",
+      "side": "seller",
+      "tool": "trustgate_post_offer",
+      "args": {
+        "vault_id": "public-demo-mv9boi2s",
+        "amount_gen": "0.6",
+        "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, 100% upfront before work starts, non-refundable."
+      },
+      "isError": false,
+      "result": {
+        "status": "pending",
+        "offer_id": "offer-mv9depp4-206035",
+        "negotiation_id": "offer-mv9depp4-206035",
+        "payee": "0x3f567c02606ca064ced2d49b39fd48c1b41ebffd",
+        "terms_hash": "af729eb0d3a2ff990bf07d5d6554872e2432e0bfa4c3259ce3183869b277a31a",
+        "tx": "0xdcafa5d491a84e78a89ae47a69e7dd6918d050eade9290d6825d96fa4cb20127",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xdcafa5d491a84e78a89ae47a69e7dd6918d050eade9290d6825d96fa4cb20127",
+        "next": "The buyer's agent can now request it. Follow with trustgate_get_negotiation."
+      }
+    },
+    {
+      "at": "2026-10-15T10:03:29.636Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:03:45.321Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:04:01.001Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:04:12.280Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:04:23.659Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:04:35.017Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:04:46.895Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:04:57.333Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:05:14.037Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:05:30.354Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:05:41.218Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:05:52.506Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:06:03.775Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:06:19.309Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:06:29.730Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:06:40.167Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:06:50.643Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:07:06.050Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:07:21.745Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:07:32.208Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:07:44.464Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:07:55.631Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:08:07.165Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:08:17.755Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:08:30.742Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:08:42.270Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:08:53.265Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:09:10.077Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:09:26.839Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:09:37.560Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:09:53.305Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:10:09.193Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:10:24.850Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:10:40.517Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:10:52.083Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:11:02.900Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:11:13.903Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:11:24.785Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T10:11:36.425Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9depp4-206035"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9depp4-206035",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    }
+  ],
+  "sellerTools": [
+    "trustgate_list_offers",
+    "trustgate_request_commitment",
+    "trustgate_get_verdict",
+    "trustgate_vault_status",
+    "trustgate_post_offer",
+    "trustgate_get_negotiation",
+    "trustgate_get_counterproposal",
+    "trustgate_accept_counterproposal",
+    "trustgate_counter_offer",
+    "trustgate_decline"
+  ]
+}

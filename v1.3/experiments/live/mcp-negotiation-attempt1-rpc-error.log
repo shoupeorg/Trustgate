@@ -1,0 +1,16 @@
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+- seller: trustgate_post_offer → ERROR Error: Submitting failed: An unknown RPC error occurred.. Check the seller wallet has test GEN for fees.
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+- seller: trustgate_get_negotiation → ERROR MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received und
+EXIT 127

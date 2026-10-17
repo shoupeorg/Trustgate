@@ -1,0 +1,280 @@
+{
+  "contract": "0x8f0B3Dd51D4cb2098f20A85B02a2B05f56AF57D7",
+  "owner": "0x73501951ebd48414ab35dd0544f24505153b10db",
+  "agent": "0x24ab7928f87cf605fa2b62313fe75e822be5cc45",
+  "startedAt": "2026-10-14T19:56:02.580Z",
+  "tests": [
+    {
+      "name": "create_vault: invalid agent address is refused and the deposit credited back",
+      "ok": true,
+      "ms": 78926,
+      "hash": "0x5860e625127b59fb1b1760da2cf2c2e9701c3891b315a78a8d9e84835c99c7ec",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "agent is not a valid address",
+        "refunded_to_credit": "10000000000000000"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "create_vault: owner == agent is refused",
+      "ok": true,
+      "ms": 57754,
+      "hash": "0xdd90c4f7cab5feb6bd03f75ee24a4d3ad4f43a1248b26921ce7eca7be2ac7f3c",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "the agent must be a different address from the owner",
+        "refunded_to_credit": "0"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "create_vault: invalid allowlist entry is refused",
+      "ok": true,
+      "ms": 46772,
+      "hash": "0x424b7b4a5446fcb5e72d80949079488277c26a7452d82b5520fed2a26febeff8",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "payee_allowlist contains an invalid address",
+        "refunded_to_credit": "0"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "create_vault: negative total cap is refused",
+      "ok": true,
+      "ms": 46111,
+      "hash": "0xdde05f958efd58c94fb66f4560d549111880fe1ae045d2d0ef0ada346ad7470c",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "total_cap must be zero (no limit) or a positive amount",
+        "refunded_to_credit": "0"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "create_vault: valid vault (cap 0.2, total cap 0.3, allowlist [payeeA], deposit 0.5)",
+      "ok": true,
+      "ms": 58753,
+      "hash": "0xe9b0564d58751256ac4814e749727f039b308aeed14f6e2489cd1f061c3eb648",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": true,
+        "vault_id": "test-1792007762580",
+        "funds": "500000000000000000"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "create_vault: duplicate vault id is refused",
+      "ok": true,
+      "ms": 51889,
+      "hash": "0x39e25cc3f3bd5a81eb153b330454a5c312012eeb969761424152b07e844475c1",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "vault_id already exists",
+        "refunded_to_credit": "0"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "top_up by a non-owner is refused and credited back",
+      "ok": true,
+      "ms": 53631,
+      "hash": "0xc652bb30caf8a3c657993f3248e5af1edc1083ece5376c8da4b619e0ab636969",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "only the vault owner can top up",
+        "refunded_to_credit": "10000000000000000"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "request_commitment from a non-agent fails",
+      "ok": true,
+      "ms": 94504,
+      "hash": "0xdc227321ee44e7793de6bea1c558bb8904d108da960209b6a906a483738013f5",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "returned": null,
+      "error": "only the vault's registered agent can request commitments",
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "zero amount: blocked deterministically (no judgment)",
+      "ok": true,
+      "ms": 48988,
+      "hash": "0x3adec651aab5f924142648f8e4f909d679491011ada66570e28a7d85085a451c",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "huge amount (2^300): blocked deterministically, no overflow",
+      "ok": true,
+      "ms": 51670,
+      "hash": "0x0662c47a459171fdcc07afeab947b14209cec56e0f467c567958cffb8e3c065c",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "payee not on the allowlist: blocked deterministically",
+      "ok": true,
+      "ms": 50627,
+      "hash": "0x6dfa9e32dcdb6069f4fb8e5f300419dd40c5f5eea1b5cf45f332f7ab45460cfb",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "request_id reuse fails",
+      "ok": true,
+      "ms": 52046,
+      "hash": "0x2161261be4cc90d5e7f8bbe9a5a18429335bbf1b4d60e397265efbd5ce3ad256",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "returned": null,
+      "error": "request_id already exists",
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "deal text over 6000 characters fails (no silent truncation)",
+      "ok": true,
+      "ms": 78879,
+      "hash": "0xa9b555c13de5db94aa9e3b879d0a43c352fe6f6f40caa92e2d6110ec69e57fc8",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "returned": null,
+      "error": "deal_text must be 1-6000 characters",
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "parent request from another vault fails",
+      "ok": true,
+      "ms": 38490,
+      "hash": "0x6c562d4493af038dbbb998405d7677ed2904f00c156b2a1cc2dfbb4a8050bbcb",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "returned": null,
+      "error": "parent request does not exist",
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "unicode deal text to an allowlisted payee is judged (expect ACCEPT, total cap then binds)",
+      "ok": true,
+      "ms": 47161,
+      "hash": "0x3b1504444eb4a24301f92c0757c4ce1bc482f3e83c69fc98d973ed749117facb",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": {
+        "confidence": "HIGH",
+        "counterproposal": {
+          "deal_text": "",
+          "notes": ""
+        },
+        "decision": "ACCEPT",
+        "mandate_violations": [],
+        "risk": "LOW",
+        "summary": "The request is for a research dataset that includes a clear refund policy, adhering to both the purpose and safety requirements of the mandate. The payee is on the owner's allowlist and the amount is within the specified cap."
+      },
+      "ranJudgment": true,
+      "verdict": "ACCEPT (LOW)"
+    },
+    {
+      "name": "second request would exceed the total spend cap: blocked deterministically if the first was accepted",
+      "ok": true,
+      "ms": 36923,
+      "hash": "0xe98ac78277456d6b3abca03bb6a6b5ebf9c6868535f6d696d6c5169feb94b978",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false,
+      "firstVerdict": "ACCEPT (LOW)"
+    },
+    {
+      "name": "owner_reclaim more than the vault holds fails",
+      "ok": true,
+      "ms": 41626,
+      "hash": "0x096bd1b9417d2a907b8f4c582521072c92fb2e3e40b266a0de8c28eeaa5094c0",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "returned": null,
+      "error": "invalid amount",
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "owner_reclaim a valid amount credits the owner",
+      "ok": true,
+      "ms": 35452,
+      "hash": "0x825efef412afcd4a9f5930015ce98c46d477ba14811c3cd6e1d65d6ff003e71b",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": true,
+        "credited": "100000000000000000"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "withdraw more than the credit fails",
+      "ok": true,
+      "ms": 42968,
+      "hash": "0x4304cc4bc707b535d1670355acc131d79dd4977b2ef8460b7dd8bc7d09391ae7",
+      "status": "FINALIZED",
+      "execution": "ERROR",
+      "returned": null,
+      "error": "insufficient credit",
+      "judgment": null,
+      "ranJudgment": false
+    }
+  ],
+  "finishedAt": "2026-10-14T20:12:59.170Z"
+}

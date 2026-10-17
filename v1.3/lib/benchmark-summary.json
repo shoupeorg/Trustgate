@@ -1,0 +1,211 @@
+{
+  "generatedAt": "2026-10-15T10:03:20.227Z",
+  "main": {
+    "label": "41-case set (used to tune the fix)",
+    "dir": "experiments/benchmark/run-41-v6",
+    "contract": "0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3",
+    "vaultId": "bench41-1792054670360",
+    "methods": {
+      "rules": {
+        "scored": 40,
+        "correct": 21,
+        "unsafePaid": 19,
+        "falseBlocks": 0,
+        "grey": [
+          0,
+          11
+        ],
+        "inject": [
+          5,
+          8
+        ],
+        "bad": [
+          2,
+          7
+        ],
+        "missing": 0
+      },
+      "llm_plain": {
+        "scored": 40,
+        "correct": 39,
+        "unsafePaid": 0,
+        "falseBlocks": 1,
+        "grey": [
+          11,
+          11
+        ],
+        "inject": [
+          8,
+          8
+        ],
+        "bad": [
+          7,
+          7
+        ],
+        "missing": 0
+      },
+      "llm_prompt": {
+        "scored": 40,
+        "correct": 39,
+        "unsafePaid": 0,
+        "falseBlocks": 1,
+        "grey": [
+          11,
+          11
+        ],
+        "inject": [
+          8,
+          8
+        ],
+        "bad": [
+          7,
+          7
+        ],
+        "missing": 0
+      },
+      "trustgate": {
+        "scored": 40,
+        "correct": 40,
+        "unsafePaid": 0,
+        "falseBlocks": 0,
+        "grey": [
+          11,
+          11
+        ],
+        "inject": [
+          8,
+          8
+        ],
+        "bad": [
+          7,
+          7
+        ],
+        "missing": 1
+      }
+    }
+  },
+  "heldout": {
+    "label": "Held-out set (written before the fix, never used for tuning)",
+    "dir": "experiments/benchmark/run-heldout-v6",
+    "contract": "0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3",
+    "vaultId": "bench41-1792056260137",
+    "methods": {
+      "rules": {
+        "scored": 31,
+        "correct": 16,
+        "unsafePaid": 15,
+        "falseBlocks": 0,
+        "grey": [
+          0,
+          9
+        ],
+        "inject": [
+          5,
+          8
+        ],
+        "bad": [
+          2,
+          5
+        ],
+        "missing": 0
+      },
+      "llm_plain": {
+        "scored": 31,
+        "correct": 29,
+        "unsafePaid": 1,
+        "falseBlocks": 1,
+        "grey": [
+          9,
+          9
+        ],
+        "inject": [
+          7,
+          8
+        ],
+        "bad": [
+          5,
+          5
+        ],
+        "missing": 0
+      },
+      "llm_prompt": {
+        "scored": 31,
+        "correct": 31,
+        "unsafePaid": 0,
+        "falseBlocks": 0,
+        "grey": [
+          9,
+          9
+        ],
+        "inject": [
+          8,
+          8
+        ],
+        "bad": [
+          5,
+          5
+        ],
+        "missing": 0
+      },
+      "trustgate": {
+        "scored": 31,
+        "correct": 31,
+        "unsafePaid": 0,
+        "falseBlocks": 0,
+        "grey": [
+          9,
+          9
+        ],
+        "inject": [
+          8,
+          8
+        ],
+        "bad": [
+          5,
+          5
+        ],
+        "missing": 0
+      }
+    }
+  },
+  "negotiation": {
+    "label": "Negotiation held-out set (written before the RENEGOTIATE/REJECT calibration, never used for tuning)",
+    "dir": "experiments/benchmark/run-negotiation-v6",
+    "contract": "0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3",
+    "total": 16,
+    "expected": {
+      "RENEGOTIATE": 8,
+      "REJECT": 5,
+      "ACCEPT": 3
+    },
+    "systems": {
+      "trustgate": {
+        "match": 16,
+        "by": {
+          "RENEGOTIATE": 8,
+          "REJECT": 5,
+          "ACCEPT": 3
+        },
+        "unsafePaid": 0
+      },
+      "llm_prompt": {
+        "match": 16,
+        "by": {
+          "RENEGOTIATE": 8,
+          "REJECT": 5,
+          "ACCEPT": 3
+        },
+        "unsafePaid": 0
+      },
+      "rules": {
+        "unsafePaid": 11,
+        "falseBlocks": 0
+      },
+      "llm_plain": {
+        "unsafePaid": 1,
+        "falseBlocks": 0
+      }
+    }
+  },
+  "robustness": null
+}

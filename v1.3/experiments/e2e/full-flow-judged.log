@@ -1,0 +1,24 @@
+- no wallet: guide instead of a dead button … ok 
+- wallet discovered via EIP-6963 … ok 
+- connect error is explained: reject … ok {"message":"Wallet connection was rejected. Click Connect Wallet when you are ready to approve account access and the Studio Next network."}
+- connect error is explained: pending … ok {"message":"A wallet connection request is already pending. Open your wallet extension and approve or reject the existing request."}
+- connect error is explained: locked … ok {"message":"The wallet returned no account. Unlock it (open the extension and enter your password), then click Connect again."}
+- connect on wrong network: chain 61997 added and switched … ok {"addChain":{"rpc":"https://studio-dev.genlayer.com/api","explorer":"https://explorer-studio-dev.genlayer.com"}}
+- faucet: Get test GEN … ok {"msg":"3 test GEN sent. tx ↗","tx":"https://explorer-studio-dev.genlayer.com/tx/0xf8593357d1790cf47175eeb9debfe9e7e70253591ecd2e0a70b878e8c207ecb9","before":3.
+- faucet: second claim is rate limited … ok {"msg":"This address already received test GEN. Try again in 24 h."}
+- create browser agent key … ok {"agentAddress":"0xd86dE871B8398411dD485cBBC8fc60838c087643"}
+- template does not overwrite a typed mandate without asking … FAILED locator.waitFor: Timeout 5000ms exceeded.
+Call log:
+[2m  - waiting for getByText('Replace your mandate text').first() to be visible[22m
+
+- create vault (fee shown before signing, then finalized) … ok {"feeText":"Create vault. Network fee up to 0.1750 GEN (unused fee is refunded) + deposit 1.2 GEN. Your wallet will ask you to confirm.Confirm in walletCancel",
+- fund the agent key from the owner wallet (amount + fee shown) … ok {"hash":"0x0656fbed352a1c5652d8cc1b602f757eb0a15a897cdb594b3021bd5771431bf3","agentBal":1,"label":"Send 1 GEN to your agent key (network fee under 0.0001 GEN)"}
+- agent: grey-case request judged by GenLayer (elapsed shown, then verdict) … ok {"hash":"0x8a7dbbfe632c5fb2b08bec96cfda1e5715775b2f7776f92e0ce436f9836f6af0","verdict":"REJECT"}
+- agent: request expected to get RENEGOTIATE (try 1) … ok {"hash":"0x493a7a5464ba8ba10d9ccab074d9b40f73342855945b8c8236b7c9a9ce007a65","verdict":"RENEGOTIATE"}
+- agent: resubmit TrustGate's counterproposal … ok {"hash":"0x077351377e4f2c8fec7999b1ad9649a6b345c9064d02100feea968c4fc43e9ad","verdict":"ACCEPT"}
+- owner: take funds back, then withdraw credit (payout check) … ok {"reclaimHash":"0x33a7a5508e5d8bfb0d7941a00805b750d15869e019a152836479bcbf70a2c413","withdrawHash":"0x02ec263e2efea33a63764bb72113d3d52c01f595786fbcc452fdf891bc
+- live feed shows last-updated time and source … ok {"status":"5 vaults · updated 10:55:50 PM · source: transaction history · contract reads failing (An internal error was received.)"}
+- mobile width renders without horizontal scroll … ok {"overflow":0}
+
+17/18 steps passed. Log: experiments/e2e/full-flow.json
+EXIT 1

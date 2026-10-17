@@ -1,0 +1,6 @@
+- connect as seller and open Seller mode … ok 
+- post a signed offer from the site (wallet signs post_offer) … FAILED locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: /Confirm in wallet/ })[22m
+
+- Seller mode shows the verdict (and the counterproposal if RENEGOTIATE) … EXIT 127

@@ -1,0 +1,8 @@
+Vault public-demo-mv9boi2s on 0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3 · buyer agent 0xf02c68e73ea781cf16416e4fc7c18c71641e044b · seller agent 0x3672a680febb7af3a7ce1932803a770d28d1fc22
+- seller agent: wrote its first offer
+- seller: posted offer v1 (1.8 GEN), signed by its wallet · https://explorer-studio-dev.genlayer.com/tx/0xed6e880a86592ba3c3171b62b524f0eace2418fb0db17907e8b2cc0ba2efdf6e
+- buyer agent: decided not to request
+- buyer: withdrew from the negotiation · https://explorer-studio-dev.genlayer.com/tx/0x7c695bdcef31fc0699b336f3b6d776faf462fd8e7dbd799ee889b2aaeaedc5b5
+
+Outcome: BUYER_WITHDREW. Transcript: experiments/negotiation-demo/seller-refuses-2026-10-15T09-19-29-854Z.md
+EXIT 0

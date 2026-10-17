@@ -1,0 +1,28 @@
+- seller: trustgate_post_offer → {"status":"pending","offer_id":"offer-mv9jmbj0-87b19d","negotiation_id":"offer-mv9jmbj0-87b19d","payee":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","terms_hash
+- seller: trustgate_get_negotiation → {"negotiation_id":"offer-mv9jmbj0-87b19d","status":"pending","note":"Not in the history yet. Try again in a minute."}
+- seller: trustgate_get_negotiation → {"negotiation_id":"offer-mv9jmbj0-87b19d","status":"pending","note":"Not in the history yet. Try again in a minute."}
+- seller: trustgate_get_negotiation → {"negotiation_id":"offer-mv9jmbj0-87b19d","vault_id":"site-demo-mv9j9po2","seller":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","status":"OPEN","latest_offer_id
+- buyer: trustgate_list_offers → [{"offer_id":"offer-mv9jmbj0-87b19d","negotiation_id":"offer-mv9jmbj0-87b19d","vault_id":"site-demo-mv9j9po2","version":1,"origin":"posted","seller":"0xa1fdfea7
+- buyer: trustgate_request_commitment → {"status":"pending","request_id":"mcp-mv9jn0rh-4348e3","offer_id":"offer-mv9jmbj0-87b19d","payee":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","amount_gen":"0.6
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jn0rh-4348e3","status":"pending","note":"Not in the history yet (or refused by the contract). Try again in a minute."}
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jn0rh-4348e3","status":"pending","note":"Not in the history yet (or refused by the contract). Try again in a minute."}
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jn0rh-4348e3","offer_id":"offer-mv9jmbj0-87b19d","vault_id":"site-demo-mv9j9po2","payee":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","amo
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jn0rh-4348e3","offer_id":"offer-mv9jmbj0-87b19d","vault_id":"site-demo-mv9j9po2","payee":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","amo
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jn0rh-4348e3","offer_id":"offer-mv9jmbj0-87b19d","vault_id":"site-demo-mv9j9po2","payee":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","amo
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jn0rh-4348e3","offer_id":"offer-mv9jmbj0-87b19d","vault_id":"site-demo-mv9j9po2","payee":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","amo
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jn0rh-4348e3","offer_id":"offer-mv9jmbj0-87b19d","vault_id":"site-demo-mv9j9po2","payee":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","amo
+- seller: trustgate_get_counterproposal → {"negotiation_id":"offer-mv9jmbj0-87b19d","offer_id":"offer-mv9jmbj0-87b19d","your_terms":"TagWorks - 3,000 named-entity labels on Persian news sentences for NL
+- seller: trustgate_accept_counterproposal → {"status":"pending","offer_id":"offer-mv9jomhx-d78bf7","version":2,"terms_hash":"e01b6b027b1877385e65b3678e027e87732cfa349f590c454be1e80e8e2da19f","tx":"0x6ae3c
+- buyer: trustgate_list_offers → []
+- buyer: trustgate_list_offers → [{"offer_id":"offer-mv9jmbj0-87b19d","negotiation_id":"offer-mv9jmbj0-87b19d","vault_id":"site-demo-mv9j9po2","version":1,"origin":"posted","seller":"0xa1fdfea7
+- buyer: trustgate_list_offers → []
+- buyer: trustgate_list_offers → [{"offer_id":"offer-mv9jomhx-d78bf7","negotiation_id":"offer-mv9jmbj0-87b19d","vault_id":"site-demo-mv9j9po2","version":2,"origin":"accepted_counterproposal","s
+- buyer: trustgate_request_commitment → {"status":"pending","request_id":"mcp-mv9jpj5n-80cb03","offer_id":"offer-mv9jomhx-d78bf7","payee":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","amount_gen":"0.6
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jpj5n-80cb03","status":"pending","note":"Not in the history yet (or refused by the contract). Try again in a minute."}
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jpj5n-80cb03","status":"pending","note":"Not in the history yet (or refused by the contract). Try again in a minute."}
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jpj5n-80cb03","offer_id":"offer-mv9jomhx-d78bf7","vault_id":"site-demo-mv9j9po2","payee":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","amo
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jpj5n-80cb03","status":"pending","note":"Not in the history yet (or refused by the contract). Try again in a minute."}
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv9jpj5n-80cb03","offer_id":"offer-mv9jomhx-d78bf7","vault_id":"site-demo-mv9j9po2","payee":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","amo
+- seller: trustgate_get_negotiation → {"negotiation_id":"offer-mv9jmbj0-87b19d","vault_id":"site-demo-mv9j9po2","seller":"0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db","status":"ACCEPTED","latest_offe
+- buyer: trustgate_decline → ERROR Error: TRUSTGATE_SELLER_PRIVATE_KEY is not set (or not a 0x-prefixed 64-hex key) in this MCP server's environment.
+EXIT 0

@@ -1,0 +1,47 @@
+Topped up the agent wallet.
+Benchmark vault bench-1791995365197
+clean-01  rules:ok           llm:ok           trustgate:ok           ACCEPT
+clean-02  rules:ok           llm:ok           trustgate:ok           ACCEPT
+clean-03  rules:ok           llm:ok           trustgate:ok           ACCEPT
+GenLayer RPC error (eth_estimateGas): fetch failed
+Gas estimation failed, using default 200_000: UnknownRpcError: An unknown RPC error occurred.
+
+Details: fetch failed
+Version: viem@2.56.3
+    at withRetry.delay.count.count (file:///F:/Trustgate%20V1.3/Trustgate/node_modules/viem/_esm/utils/buildRequest.js:127:31)
+    at async attemptRetry (file:///F:/Trustgate%20V1.3/Trustgate/node_modules/viem/_esm/utils/promise/withRetry.js:24:30) {
+  details: 'fetch failed',
+  docsPath: undefined,
+  metaMessages: undefined,
+  shortMessage: 'An unknown RPC error occurred.',
+  version: '2.56.3',
+  code: -1,
+  [cause]: [TypeError: fetch failed] {
+    [cause]: Error: read ECONNRESET
+        at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+      errno: -4077,
+      code: 'ECONNRESET',
+      syscall: 'read'
+    }
+  }
+}
+clean-04  rules:ok           llm:ok           trustgate:ok           ACCEPT
+clean-05  rules:ok           llm:ok           trustgate:ok           ACCEPT
+clean-06  rules:ok           llm:ok           trustgate:blocked-safe RENEGOTIATE
+bad-01    rules:ok           llm:ok           trustgate:ok           REJECT
+bad-02    rules:ok           llm:ok           trustgate:ok           RENEGOTIATE
+bad-03    rules:PAID-UNSAFE  llm:ok           trustgate:ok           REJECT
+bad-04    rules:PAID-UNSAFE  llm:ok           trustgate:ok           REJECT
+bad-05    rules:PAID-UNSAFE  llm:ok           trustgate:ok           REJECT
+grey-01   rules:PAID-UNSAFE  llm:ok           trustgate:ok           REJECT
+grey-02   rules:PAID-UNSAFE  llm:ok           trustgate:ok           RENEGOTIATE
+grey-03   rules:PAID-UNSAFE  llm:ok           trustgate:ok           RENEGOTIATE
+grey-04   rules:PAID-UNSAFE  llm:ok           trustgate:ok           RENEGOTIATE
+grey-05   rules:PAID-UNSAFE  llm:ok           trustgate:ok           RENEGOTIATE
+grey-06   rules:PAID-UNSAFE  llm:ok           trustgate:ok           REJECT
+limit-01  rules:ok           llm:ok           trustgate:ok           REJECT
+limit-02  rules:ok           llm:ok           trustgate:ok           REJECT
+limit-03  rules:ok           llm:PAID-UNSAFE  trustgate:ok           REJECT
+
+Report: experiments\benchmark\results.md
+EXIT 0

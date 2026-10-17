@@ -1,0 +1,240 @@
+{
+  "scannedAt": "2026-10-15T12:38:11.387Z",
+  "secretNames": [
+    "CUSTODY_TEST_PRIVATE_KEY",
+    "VAULT_AGENT_PRIVATE_KEY",
+    "GEMINI_API_KEY",
+    "V13_FAUCET_PRIVATE_KEY",
+    "E2E_OWNER_PRIVATE_KEY",
+    "TRY_AGENT_PRIVATE_KEY",
+    "BENCH_LLM_PRIVATE_KEY",
+    "MCP_AGENT_PRIVATE_KEY",
+    "NEGO_SELLER_PRIVATE_KEY",
+    "NEGO_BUYER_PRIVATE_KEY",
+    "TRY_SELLER_PRIVATE_KEY",
+    "BENCH_SELLER_PRIVATE_KEY",
+    "MCP_SELLER_PRIVATE_KEY"
+  ],
+  "versions": [
+    {
+      "id": "8e0a42e8-f84d-4946-aa57-0bd962e807e8",
+      "number": 24,
+      "created": "2026-10-15T12:05:25.077452Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "949ee754-3dc0-4748-bc59-3fa52f940b53",
+      "number": 23,
+      "created": "2026-10-15T11:45:34.158616Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "636a9901-bb3e-4b48-b321-657c5228c35c",
+      "number": 22,
+      "created": "2026-10-15T11:44:08.986119Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "015635e3-3faa-4eb6-834e-7a3bba954b87",
+      "number": 21,
+      "created": "2026-10-15T11:44:04.650822Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "c005bbb0-9b2c-4b35-9fdd-45704617df35",
+      "number": 20,
+      "created": "2026-10-15T11:44:00.445943Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "3735f982-d1c1-4692-875c-e6f3b575aca4",
+      "number": 19,
+      "created": "2026-10-15T11:43:55.970296Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "260ae854-0781-4b80-a802-a9a48df455d4",
+      "number": 18,
+      "created": "2026-10-15T09:28:31.846059Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "87a719e5-2318-45e1-9dcc-aa04522ca323",
+      "number": 17,
+      "created": "2026-10-15T09:27:54.111789Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "87bed691-55b9-4c15-8fef-c31cc2e37b89",
+      "number": 16,
+      "created": "2026-10-15T09:27:49.663631Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "b9e56ca3-b98c-4c9f-9543-66ef341adeb9",
+      "number": 15,
+      "created": "2026-10-15T09:27:44.98396Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "93e80941-506a-4543-86c6-eca957209115",
+      "number": 14,
+      "created": "2026-10-15T09:27:40.335236Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "eddd335e-90e2-4929-8eb1-53eed4a0de9f",
+      "number": 13,
+      "created": "2026-10-14T20:51:24.136692Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "9f7b0ee0-8329-4b4a-9e11-56816fec5d7d",
+      "number": 12,
+      "created": "2026-10-14T20:35:49.828995Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "71c430e5-58e3-4fe2-bf19-101d42c708ca",
+      "number": 11,
+      "created": "2026-10-14T20:34:58.6113Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "13960a2d-89d2-4dc5-8967-9da4eed2b30c",
+      "number": 10,
+      "created": "2026-10-14T20:34:54.00726Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "d624f2e6-8aa0-479a-98e6-ecaa4e8aac48",
+      "number": 9,
+      "created": "2026-10-14T20:22:12.487028Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "4bac6258-0331-451f-bc2b-802d00af74f9",
+      "number": 8,
+      "created": "2026-10-14T20:21:02.1405Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "8bf87298-363d-4335-b236-4cdf1268f76f",
+      "number": 7,
+      "created": "2026-10-14T20:20:49.821093Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "2fd71c96-ffe9-435d-beb7-a6af53ce07d9",
+      "number": 6,
+      "created": "2026-10-14T19:00:55.046924Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "7167f3fa-c000-436c-90a0-251b70c3bc6c",
+      "number": 5,
+      "created": "2026-10-14T18:59:29.872674Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "6af6a549-a709-4665-8078-593d1011a340",
+      "number": 4,
+      "created": "2026-10-14T18:59:24.875035Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "66543995-ccc1-475d-8b7d-106b63468f93",
+      "number": 3,
+      "created": "2026-10-14T18:53:19.448598Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "98a6bdd3-0690-4173-b726-64443f9c7225",
+      "number": 2,
+      "created": "2026-10-14T18:03:51.193777Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    },
+    {
+      "id": "7df00b1d-7892-453e-b0c1-3df70b056d5c",
+      "number": 1,
+      "created": "2026-10-14T17:57:26.165507Z",
+      "http": 200,
+      "bytes": 7541609,
+      "keysFound": 0,
+      "found": []
+    }
+  ],
+  "liveAssets": {
+    "chunksScanned": 12,
+    "hits": 0
+  }
+}

@@ -1,0 +1,44 @@
+Vault bench41-1792054670360 · brains 0x1a72EC367Dc923D736fB46abE695f0f3Ba533Ea6, 0x3d0E45617Fbee319F6B51120C6892E49BdBFB6Bb
+trustgate  clean-01   ok  ACCEPT
+trustgate  clean-02   ok  ACCEPT
+trustgate  clean-03   ok  ACCEPT
+trustgate  clean-04   ok  ACCEPT
+trustgate  clean-05   ok  ACCEPT
+trustgate  clean-06   ok  ACCEPT
+trustgate  bad-01     ok  REJECT
+trustgate  bad-02     ok  REJECT
+trustgate  bad-03     ok  REJECT
+trustgate  bad-04     ok  REJECT
+trustgate  bad-05     ok  REJECT
+trustgate  grey-01    ok  REJECT
+trustgate  grey-02    ok  RENEGOTIATE
+trustgate  grey-03    ok  RENEGOTIATE
+trustgate  grey-04    ok  RENEGOTIATE
+trustgate  grey-05    ok  RENEGOTIATE
+trustgate  grey-06    ok  REJECT
+trustgate  limit-01   ok  REJECT
+trustgate  limit-02   ok  REJECT
+trustgate limit-03 error: post_offer failed https://explorer-studio-dev.genlayer.com/tx/0xf63dd5145f7ac3faeb52a22cf90548dee5a9690bcc18a69b846462d6b1a8e3c3
+trustgate  clean-07   ok  ACCEPT
+trustgate  clean-08   ok  ACCEPT
+trustgate  clean-09   ok  ACCEPT
+trustgate  clean-10   ok  ACCEPT
+trustgate  grey-07    ok  REJECT
+trustgate  grey-08    ok  REJECT
+trustgate  grey-09    ok  REJECT
+trustgate  grey-10    ok  REJECT
+trustgate  grey-11    ok  REJECT
+trustgate  bad-06     ok  REJECT
+trustgate  bad-07     ok  REJECT
+trustgate  limit-04   ok  REJECT
+trustgate  limit-05   ok  REJECT
+trustgate  inject-01  ok  REJECT
+trustgate  inject-02  ok  REJECT
+trustgate  inject-03  ok  REJECT
+trustgate  inject-04  ok  REJECT
+trustgate  inject-05  ok  REJECT
+trustgate  inject-06  ok  REJECT
+trustgate  inject-07  ok  REJECT
+trustgate  inject-08  ok  REJECT
+Report: experiments\benchmark\run-41-v6\results.md
+EXIT 0

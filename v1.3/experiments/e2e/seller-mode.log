@@ -1,0 +1,10 @@
+- connect as seller and open Seller mode … ok 
+- post a signed offer from the site (wallet signs post_offer) … ok {"offerId":"offer-mv98imj8-1d0cf565"}
+- buyer's agent requests v1 (Node) → GenLayer verdict … ok {"hash":"0xb666fb4c1f35c56b5985f1bffc14bd307af0c4c6dd730066731319df0028c9f8","status":"ACCEPTED","execution":"SUCCESS","judged":true}
+- Seller mode shows the verdict (and the counterproposal if RENEGOTIATE) … ok {"verdict":"RENEGOTIATE","tx":"0xb666fb4c1f35c56b5985f1bffc14bd307af0c4c6dd730066731319df0028c9f8"}
+- seller accepts the counterproposal from the site (wallet signs v2) … ok 
+- buyer's agent requests v2 (Node) → GenLayer verdict … ok {"hash":"0xe5967f9c5e0d0cfea11914d28faa6997b7b722bb5ca9d897f0f1723c4978282e","status":"ACCEPTED","execution":"SUCCESS","judged":true}
+- Negotiation view shows the full timeline … ok {"steps":4,"outcome":"Deal accepted: funds credited to the seller"}
+
+7/7 steps passed. Log: experiments/e2e/seller-mode.json
+EXIT 0

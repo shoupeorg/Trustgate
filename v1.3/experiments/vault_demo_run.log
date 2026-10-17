@@ -1,0 +1,50 @@
+Created Throwaway TrustGate demo agent wallet; key saved to .env.local only.
+Owner 0x8F9726eA4aE0B479c6f4D4fB26982F3b44607398: 50.999476 GEN
+Agent 0x0592B1F3567E887EDb04517C3e412997eE3d5a9B: 0 GEN
+Schema pre-check OK: create_vault, credit_of, get_request, get_vault, owner_reclaim, request_commitment, top_up, withdraw
+
+== deploy
+{
+  "tx": "0x9bd7356ea16f64406b9a6dbe7a48f6c6dd073df522f8d9e584d744dbbe616d21",
+  "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x9bd7356ea16f64406b9a6dbe7a48f6c6dd073df522f8d9e584d744dbbe616d21",
+  "status": 5,
+  "execution": "SUCCESS",
+  "returned": "null",
+  "votes": {
+    "0x05d8aFc66B515038712537f99cAAEA73d16f0007": "agree",
+    "0x5A4230B920b18c4AFD3A28F99Eae669B7F2cdC1e": "agree",
+    "0xE52dDB85587585930b1E5f1Fe88fef21CcA49829": "agree",
+    "0xEEcEC5D1E07Ee40f5cb85aF922178Dc01278013C": "idle",
+    "0xcbC79F96B7A275b23EE64d80a98325107F6E1b77": "idle"
+  },
+  "judgment": null
+}
+eq_outputs (raw, truncated): {}
+Vault contract: 0x290c2ef005e3f7683e38c23C1CA69697f60aC053
+
+== fund agent
+{
+  "tx": "0xcb8059455f3bbcc5428dc87c1836e8b5b00264abbe05929e561b8735b47a5c54",
+  "status": "success",
+  "amount_gen": "2"
+}
+
+== create_vault
+{
+  "tx": "0xf29c0e3db061f6d53d9d839ded8984fad55ba3d2f98ce5fce5b5bf603f567c19",
+  "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xf29c0e3db061f6d53d9d839ded8984fad55ba3d2f98ce5fce5b5bf603f567c19",
+  "status": 5,
+  "execution": "SUCCESS",
+  "returned": "\"{\\\"ok\\\": true, \\\"vault_id\\\": \\\"demo-1791985847564\\\", \\\"funds\\\": \\\"10000000000000000000\\\"}\"",
+  "votes": {
+    "0x5A4230B920b18c4AFD3A28F99Eae669B7F2cdC1e": "idle",
+    "0x8142E5D1b04f84c3cD995C25AAe31B31F8e0379E": "agree",
+    "0xE52dDB85587585930b1E5f1Fe88fef21CcA49829": "agree",
+    "0xEEcEC5D1E07Ee40f5cb85aF922178Dc01278013C": "idle",
+    "0xa0435f618c1F27B254998018AEa8Da5C77187852": "agree"
+  },
+  "judgment": null,
+  "vault_id": "demo-1791985847564",
+  "contract_native_gen": "10"
+}
+eq_outputs (raw, truncated): {}

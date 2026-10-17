@@ -1,0 +1,70 @@
+{
+  "base": "https://trustgate-v13.shoupeorg.workers.dev",
+  "contract": "0x53E6f0eC998d9BfAd1CA3753252EE94b2cd16BF0",
+  "vault": "site-demo-mv9dxv4k",
+  "seller": "0xD3B2aF689EC67D4fad8ca36D705Da51792A1BA62",
+  "startedAt": "2026-10-15T11:48:28.143Z",
+  "steps": [
+    {
+      "name": "connect as seller and open Seller mode",
+      "ok": true,
+      "ms": 934,
+      "detail": null
+    },
+    {
+      "name": "post a signed offer from the site (wallet signs post_offer)",
+      "ok": true,
+      "ms": 15675,
+      "detail": {
+        "offerId": "offer-mv9h6lbq-872b360e"
+      }
+    },
+    {
+      "name": "buyer's agent requests v1 (Node) → GenLayer verdict",
+      "ok": true,
+      "ms": 21734,
+      "detail": {
+        "hash": "0xca68e9c368fb5f5149202e2bd6eae789f5d5ab108aa4635f565d34996a6d652a",
+        "status": "ACCEPTED",
+        "execution": "SUCCESS",
+        "judged": true
+      }
+    },
+    {
+      "name": "Seller mode shows the verdict (and the counterproposal if RENEGOTIATE)",
+      "ok": true,
+      "ms": 15119,
+      "detail": {
+        "verdict": "RENEGOTIATE",
+        "tx": "0xca68e9c368fb5f5149202e2bd6eae789f5d5ab108aa4635f565d34996a6d652a"
+      }
+    },
+    {
+      "name": "seller accepts the counterproposal from the site (wallet signs v2)",
+      "ok": true,
+      "ms": 16492,
+      "detail": null
+    },
+    {
+      "name": "buyer's agent requests v2 (Node) → GenLayer verdict",
+      "ok": true,
+      "ms": 26414,
+      "detail": {
+        "hash": "0xfe7de10c88e207d604bb23c9b73aa968e4c3f4adbe27f28db6f7e0fc6f87ab5b",
+        "status": "ACCEPTED",
+        "execution": "SUCCESS",
+        "judged": true
+      }
+    },
+    {
+      "name": "Negotiation view shows the full timeline",
+      "ok": true,
+      "ms": 6632,
+      "detail": {
+        "steps": 4,
+        "outcome": "Deal accepted: funds credited to the seller"
+      }
+    }
+  ],
+  "finishedAt": "2026-10-15T11:50:18.597Z"
+}

@@ -1,0 +1,194 @@
+{
+  "clean-02": {
+    "tx": "0x882ea2d739ec634081eb7d39b4a3df1ffecbb515181d5a4a5f67b10a850538e9",
+    "status": "FINALIZED",
+    "rotation_count": 0,
+    "rounds": 1,
+    "votes": {
+      "0x5cDf4BdDeEDa0e32ED596b94f69AcC0FbB57f264": "agree",
+      "0x6760cDeC573cf38568C59872ee48B6fED41F8A4c": "idle",
+      "0xA793D9dc0ED9edC1f9F732bB68b5D3AFA934F52D": "agree",
+      "0xEEcEC5D1E07Ee40f5cb85aF922178Dc01278013C": "idle",
+      "0xcF5Fd792Df0Dc9d297af75c82B4A0011e8FA1A4A": "agree"
+    },
+    "leader": {
+      "decision": "REJECT",
+      "risk": "HIGH",
+      "summary": "The request violates the mandate's explicit prohibition on paying an address supplied by the counterparty at the last minute. The payment structure and purpose otherwise align but the address risk cannot be mitigated without a pre-approved or published address",
+      "violations": [
+        "Never pay an address the counterparty supplies at the last minute"
+      ]
+    },
+    "validators": [
+      {
+        "node": "0xEEcEC5D1",
+        "vote": "idle",
+        "exec": "ERROR"
+      },
+      {
+        "node": "0x6760cDeC",
+        "vote": "idle",
+        "exec": "ERROR"
+      },
+      {
+        "node": "0x5cDf4BdD",
+        "vote": "agree",
+        "exec": "SUCCESS"
+      },
+      {
+        "node": "0xcF5Fd792",
+        "vote": "agree",
+        "exec": "SUCCESS"
+      }
+    ],
+    "cause": "(a) leader REJECT (address treated as counterparty-supplied); validators agreed"
+  },
+  "clean-05": {
+    "tx": "0xff158d9f6cd70b4cdb9db1589aefa08ea438007e825194f8916b5ccfe22c2b22",
+    "status": "FINALIZED",
+    "rotation_count": 0,
+    "rounds": 1,
+    "votes": {
+      "0x05d8aFc66B515038712537f99cAAEA73d16f0007": "idle",
+      "0xA793D9dc0ED9edC1f9F732bB68b5D3AFA934F52D": "idle",
+      "0xE52dDB85587585930b1E5f1Fe88fef21CcA49829": "agree",
+      "0xa0435f618c1F27B254998018AEa8Da5C77187852": "agree",
+      "0xf13c3DfE38C8E206C33F750C24a1b043b63Cb810": "agree"
+    },
+    "leader": {
+      "decision": "RENEGOTIATE",
+      "risk": "MEDIUM",
+      "summary": "The deal purpose (data labeling for research) and refund condition fit the mandate, but the payee address cannot be verified as Coral Labeling's established account since no owner allowlist exists and the address is agent-supplied. The mandate explicitly prohi",
+      "violations": [
+        "Never pay an address the counterparty supplies at the last minute."
+      ]
+    },
+    "validators": [
+      {
+        "node": "0xf13c3DfE",
+        "vote": "agree",
+        "exec": "SUCCESS"
+      },
+      {
+        "node": "0xA793D9dc",
+        "vote": "idle",
+        "exec": "ERROR"
+      },
+      {
+        "node": "0xa0435f61",
+        "vote": "agree",
+        "exec": "SUCCESS"
+      },
+      {
+        "node": "0x05d8aFc6",
+        "vote": "idle",
+        "exec": "ERROR"
+      }
+    ],
+    "cause": "(a) leader RENEGOTIATE (payee address not verifiable); validators agreed"
+  },
+  "clean-09": {
+    "tx": "0xc7ea343774a05218a1af54e4978e848fbcaa760e42ca86c0bf7d2938f07ce886",
+    "status": "FINALIZED",
+    "rotation_count": 0,
+    "rounds": 1,
+    "votes": {
+      "0x05d8aFc66B515038712537f99cAAEA73d16f0007": "agree",
+      "0x5A4230B920b18c4AFD3A28F99Eae669B7F2cdC1e": "agree",
+      "0x6760cDeC573cf38568C59872ee48B6fED41F8A4c": "idle",
+      "0xE52dDB85587585930b1E5f1Fe88fef21CcA49829": "agree",
+      "0xf13c3DfE38C8E206C33F750C24a1b043b63Cb810": "idle"
+    },
+    "leader": {
+      "decision": "REJECT",
+      "risk": "HIGH",
+      "summary": "The request is for translation services, which is outside the scope of the mandate's allowed categories. The mandate explicitly limits spending to data or compute services for research.",
+      "violations": [
+        "Buy data or compute services for research"
+      ]
+    },
+    "validators": [
+      {
+        "node": "0x6760cDeC",
+        "vote": "idle",
+        "exec": "ERROR"
+      },
+      {
+        "node": "0x05d8aFc6",
+        "vote": "agree",
+        "exec": "SUCCESS"
+      },
+      {
+        "node": "0xE52dDB85",
+        "vote": "agree",
+        "exec": "SUCCESS"
+      },
+      {
+        "node": "0x5A4230B9",
+        "vote": "agree",
+        "exec": "SUCCESS"
+      }
+    ],
+    "cause": "(a) leader REJECT (translation outside data/compute); validators agreed"
+  },
+  "clean-10": {
+    "tx": "0xf76ff15b44d20197258e141eac29b07a5186fb44ee583cba0444827857e72f04",
+    "status": "FINALIZED",
+    "rotation_count": 1,
+    "rounds": 2,
+    "votes": {
+      "0x5A4230B920b18c4AFD3A28F99Eae669B7F2cdC1e": "agree",
+      "0x5cDf4BdDeEDa0e32ED596b94f69AcC0FbB57f264": "idle",
+      "0x6760cDeC573cf38568C59872ee48B6fED41F8A4c": "agree",
+      "0xE4E106086F167D75E2270fa5f3680f6ac598d179": "agree",
+      "0xcF5Fd792Df0Dc9d297af75c82B4A0011e8FA1A4A": "idle"
+    },
+    "leader": {
+      "decision": "RENEGOTIATE",
+      "risk": "MEDIUM",
+      "summary": "The request's purpose fits the mandate to buy data for research, but the payment terms lack the required escrow or refund mechanism as defined by the mandate. The payee address, while described as long-standing, cannot be verified and introduces counterparty r",
+      "violations": [
+        "Only refundable or escrowed payments.",
+        "Never pay an address the counterparty supplies at the last minute."
+      ]
+    },
+    "validators": [
+      {
+        "node": "0x6760cDeC",
+        "vote": "agree",
+        "exec": "SUCCESS"
+      },
+      {
+        "node": "0x5A4230B9",
+        "vote": "agree",
+        "exec": "SUCCESS"
+      },
+      {
+        "node": "0xE4E10608",
+        "vote": "agree",
+        "exec": "SUCCESS"
+      },
+      {
+        "node": "0xcF5Fd792",
+        "vote": "idle",
+        "exec": "ERROR"
+      }
+    ],
+    "rounds_detail": [
+      {
+        "round": 0,
+        "leader": "ACCEPT LOW",
+        "validators": "disagree, disagree, agree, idle(ERROR)",
+        "outcome": "leader rotation"
+      },
+      {
+        "round": 1,
+        "leader": "RENEGOTIATE MEDIUM",
+        "validators": "agree, agree, agree, idle(ERROR)",
+        "outcome": "accepted"
+      }
+    ],
+    "cause": "(b) then (a): first leader ACCEPT LOW, 2 of 3 working validators disagreed -> rotation; second leader RENEGOTIATE, validators agreed"
+  },
+  "_note": "idle votes are validators whose execution ended in ERROR (they did not vote). Diagnosis written before any code change."
+}

@@ -1,0 +1,45 @@
+{
+  "base": "http://localhost:3100",
+  "preset": "Refunds at vendor",
+  "startedAt": "2026-10-15T07:41:55.649Z",
+  "steps": [
+    {
+      "name": "Try it loads the demo vault (mandate, cap, funds)",
+      "ok": true,
+      "ms": 249,
+      "detail": {
+        "mandate": "Demo vault mandate · hard cap 1 GEN · holds 6 GENBuy data or compute services for research. Only refundable or escrowed payments. Never pay an address the count"
+      }
+    },
+    {
+      "name": "over-long offer is refused visibly, nothing cut",
+      "ok": true,
+      "ms": 19,
+      "detail": null
+    },
+    {
+      "name": "example \"Refunds at vendor\": demo seller signs v1, demo agent requests it, GenLayer verdict",
+      "ok": true,
+      "ms": 67599,
+      "detail": {
+        "verdict": "REJECT",
+        "tx": "https://explorer-studio-dev.genlayer.com/tx/0xfa6a806bf82a766c6c2eb7ceaa4c042ccc83eb81af87e86c75598e3997881c7d"
+      }
+    },
+    {
+      "name": "seller-accepts round",
+      "ok": true,
+      "skipped": "first verdict was REJECT"
+    },
+    {
+      "name": "open the negotiation timeline (shareable link) from Try it",
+      "ok": true,
+      "ms": 1647,
+      "detail": {
+        "url": "http://localhost:3100/?negotiation=try-mv98dcsi-ff464e#negotiation",
+        "steps": 2
+      }
+    }
+  ],
+  "finishedAt": "2026-10-15T07:43:05.700Z"
+}

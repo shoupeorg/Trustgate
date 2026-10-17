@@ -1,0 +1,7 @@
+- seller: posted offer v1 (1.8 GEN), signed by its wallet · https://explorer-studio-dev.genlayer.com/tx/0xed6e880a86592ba3c3171b62b524f0eace2418fb0db17907e8b2cc0ba2efdf6e
+Outcome: BUYER_WITHDREW. Transcript: experiments/negotiation-demo/seller-refuses-2026-10-15T09-19-29-854Z.md
+- seller: posted offer v1 (1.8 GEN), signed by its wallet · https://explorer-studio-dev.genlayer.com/tx/0x8ae54e07d31fa093be55034c5708fe2678cf17f4e18fde5d1d6aadcfc9f4040f
+- GenLayer validators: verdict on v1: RENEGOTIATE (MEDIUM) · https://explorer-studio-dev.genlayer.com/tx/0xa8082eeac70692844721fdf160b6266a83390e7c6f75332bbf3aef21fa48f7b8
+- seller agent: chose "counter"
+- seller: signed counter offer v2 (1.8 GEN) · https://explorer-studio-dev.genlayer.com/tx/0x066413a0bce98cad20c072ed30ab034d9fc4d43beaf28f64a4964867967e7161
+Outcome: BUYER_WITHDREW. Transcript: experiments/negotiation-demo/seller-refuses-2026-10-15T09-20-26-680Z.md

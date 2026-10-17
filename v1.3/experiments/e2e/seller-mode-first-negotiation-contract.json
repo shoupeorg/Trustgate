@@ -1,0 +1,70 @@
+{
+  "base": "http://localhost:3100",
+  "contract": "0xdF2FEeED57870803f2707E02F7F568d39ccA8C05",
+  "vault": "public-demo-mv989lyt",
+  "seller": "0xdf28d40Cf143dA827d21Bc0351522846C527e017",
+  "startedAt": "2026-10-15T07:46:00.595Z",
+  "steps": [
+    {
+      "name": "connect as seller and open Seller mode",
+      "ok": true,
+      "ms": 211,
+      "detail": null
+    },
+    {
+      "name": "post a signed offer from the site (wallet signs post_offer)",
+      "ok": true,
+      "ms": 24888,
+      "detail": {
+        "offerId": "offer-mv98imj8-1d0cf565"
+      }
+    },
+    {
+      "name": "buyer's agent requests v1 (Node) → GenLayer verdict",
+      "ok": true,
+      "ms": 22002,
+      "detail": {
+        "hash": "0xb666fb4c1f35c56b5985f1bffc14bd307af0c4c6dd730066731319df0028c9f8",
+        "status": "ACCEPTED",
+        "execution": "SUCCESS",
+        "judged": true
+      }
+    },
+    {
+      "name": "Seller mode shows the verdict (and the counterproposal if RENEGOTIATE)",
+      "ok": true,
+      "ms": 10126,
+      "detail": {
+        "verdict": "RENEGOTIATE",
+        "tx": "0xb666fb4c1f35c56b5985f1bffc14bd307af0c4c6dd730066731319df0028c9f8"
+      }
+    },
+    {
+      "name": "seller accepts the counterproposal from the site (wallet signs v2)",
+      "ok": true,
+      "ms": 21135,
+      "detail": null
+    },
+    {
+      "name": "buyer's agent requests v2 (Node) → GenLayer verdict",
+      "ok": true,
+      "ms": 33134,
+      "detail": {
+        "hash": "0xe5967f9c5e0d0cfea11914d28faa6997b7b722bb5ca9d897f0f1723c4978282e",
+        "status": "ACCEPTED",
+        "execution": "SUCCESS",
+        "judged": true
+      }
+    },
+    {
+      "name": "Negotiation view shows the full timeline",
+      "ok": true,
+      "ms": 11678,
+      "detail": {
+        "steps": 4,
+        "outcome": "Deal accepted: funds credited to the seller"
+      }
+    }
+  ],
+  "finishedAt": "2026-10-15T07:48:06.978Z"
+}

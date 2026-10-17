@@ -1,0 +1,53 @@
+{
+  "base": "https://trustgatecheck.xyz",
+  "startedAt": "2026-10-15T14:11:06.746Z",
+  "steps": [
+    {
+      "name": "main domain loads V1.3 (title, slogan, contract)",
+      "ok": true,
+      "detail": {
+        "title": "TrustGate V1.3",
+        "url": "https://trustgatecheck.xyz/"
+      }
+    },
+    {
+      "name": "wallet connect (chain 61997 added and switched)",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "faucet answers (sent, or the per-network daily limit)",
+      "ok": true,
+      "detail": {
+        "message": "Limit reached: 3 claims per network per 24 h."
+      }
+    },
+    {
+      "name": "negotiation share link",
+      "ok": true,
+      "detail": {
+        "outcome": "Deal accepted: funds credited to the seller"
+      }
+    },
+    {
+      "name": "/v1 loads V1 with the notice and the link back",
+      "ok": true,
+      "detail": {
+        "url": "https://trustgatecheck.xyz/v1",
+        "title": "TrustGate Version 1 · Deal inspector"
+      }
+    },
+    {
+      "name": "old workers.dev URL redirects here",
+      "ok": true,
+      "detail": {
+        "status": 307,
+        "location": "https://trustgatecheck.xyz/"
+      }
+    }
+  ],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 429 ()"
+  ],
+  "finishedAt": "2026-10-15T14:11:26.758Z"
+}

@@ -1,0 +1,34 @@
+Vault public-demo-mv9boi2s on 0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3 · buyer agent 0xf02c68e73ea781cf16416e4fc7c18c71641e044b · seller agent 0x3672a680febb7af3a7ce1932803a770d28d1fc22
+- seller agent: wrote its first offer
+- seller: posted offer v1 (1.8 GEN), signed by its wallet · https://explorer-studio-dev.genlayer.com/tx/0x8ae54e07d31fa093be55034c5708fe2678cf17f4e18fde5d1d6aadcfc9f4040f
+- buyer agent: decided to request the offer
+- GenLayer validators: verdict on v1: RENEGOTIATE (MEDIUM) · https://explorer-studio-dev.genlayer.com/tx/0xa8082eeac70692844721fdf160b6266a83390e7c6f75332bbf3aef21fa48f7b8
+- seller agent: chose "counter"
+- seller: signed counter offer v2 (1.8 GEN) · https://explorer-studio-dev.genlayer.com/tx/0x066413a0bce98cad20c072ed30ab034d9fc4d43beaf28f64a4964867967e7161
+GenLayer RPC error (eth_estimateGas): fetch failed
+Gas estimation failed, using default 200_000: UnknownRpcError: An unknown RPC error occurred.
+
+Details: fetch failed
+Version: viem@2.56.3
+    at withRetry.delay.count.count (file:///F:/Trustgate%20V1.3/Trustgate/node_modules/viem/_esm/utils/buildRequest.js:127:31)
+    at async attemptRetry (file:///F:/Trustgate%20V1.3/Trustgate/node_modules/viem/_esm/utils/promise/withRetry.js:24:30) {
+  details: 'fetch failed',
+  docsPath: undefined,
+  metaMessages: undefined,
+  shortMessage: 'An unknown RPC error occurred.',
+  version: '2.56.3',
+  code: -1,
+  [cause]: [TypeError: fetch failed] {
+    [cause]: Error: read ECONNRESET
+        at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+      errno: -4077,
+      code: 'ECONNRESET',
+      syscall: 'read'
+    }
+  }
+}
+- buyer agent: decided not to request
+- buyer: withdrew from the negotiation · https://explorer-studio-dev.genlayer.com/tx/0xb46d66123a922732c8a4b010583d14f4ababe2dfe21c15a183407249306c1187
+
+Outcome: BUYER_WITHDREW. Transcript: experiments/negotiation-demo/seller-refuses-2026-10-15T09-20-26-680Z.md
+EXIT 0

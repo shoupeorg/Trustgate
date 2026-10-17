@@ -1,0 +1,21 @@
+{
+  "base": "https://trustgate-v13.shoupeorg.workers.dev",
+  "contract": "0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3",
+  "vault": "public-demo-mv9boi2s",
+  "seller": "0x6088d16c19ef4eF5Feed46e7eC3251e29f4F4B03",
+  "startedAt": "2026-10-15T09:42:02.081Z",
+  "steps": [
+    {
+      "name": "connect as seller and open Seller mode",
+      "ok": true,
+      "ms": 425,
+      "detail": null
+    },
+    {
+      "name": "post a signed offer from the site (wallet signs post_offer)",
+      "ok": false,
+      "ms": 32802,
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /Confirm in wallet/ })\u001b[22m\n"
+    }
+  ]
+}

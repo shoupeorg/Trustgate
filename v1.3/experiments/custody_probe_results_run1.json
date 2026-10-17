@@ -1,0 +1,42 @@
+{
+  "chain": 61997,
+  "wallet": "0x8F9726eA4aE0B479c6f4D4fB26982F3b44607398",
+  "contract": "0x66a777CD8065918959791BCD9c26e152a9D7A75d",
+  "start_gen": "5",
+  "end_gen": "2.699921371999968121",
+  "at": "2026-10-14T13:21:29.392Z",
+  "steps": [
+    {
+      "step": "deploy custody_probe.py",
+      "tx": "0xa7ee8e860d30b8014d3f77bd97fdd46ae278b3c94715d0efd2b6cd90e2af67c8",
+      "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xa7ee8e860d30b8014d3f77bd97fdd46ae278b3c94715d0efd2b6cd90e2af67c8",
+      "fee_gen": "0.100000000000010352",
+      "estimate_note": null,
+      "status": 5,
+      "result": 1,
+      "execution": "ERROR",
+      "returned": {
+        "status": "contract_error",
+        "payload": "invalid_contract runner malformed"
+      },
+      "error": null,
+      "ok": false,
+      "contract": "0x66a777CD8065918959791BCD9c26e152a9D7A75d"
+    },
+    {
+      "step": "deposit 2 GEN",
+      "ok": false,
+      "error": "An internal error was received."
+    },
+    {
+      "step": "move_internal 0.5 GEN",
+      "ok": false,
+      "error": "An internal error was received."
+    },
+    {
+      "step": "withdraw 1 GEN",
+      "ok": false,
+      "error": "An internal error was received."
+    }
+  ]
+}

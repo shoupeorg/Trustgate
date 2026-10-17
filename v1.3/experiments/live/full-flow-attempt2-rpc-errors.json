@@ -1,0 +1,121 @@
+{
+  "base": "https://trustgate-v13.shoupeorg.workers.dev",
+  "owner": "0x73501951ebD48414AB35DD0544F24505153b10Db",
+  "startedAt": "2026-10-15T10:11:46.549Z",
+  "steps": [
+    {
+      "name": "no wallet: guide instead of a dead button",
+      "ok": true,
+      "ms": 5045,
+      "detail": null
+    },
+    {
+      "name": "wallet discovered via EIP-6963",
+      "ok": true,
+      "ms": 828,
+      "detail": null
+    },
+    {
+      "name": "connect error is explained: reject",
+      "ok": true,
+      "ms": 36,
+      "detail": {
+        "message": "Wallet connection was rejected. Click Connect Wallet when you are ready to approve account access and the Studio Next network."
+      }
+    },
+    {
+      "name": "connect error is explained: pending",
+      "ok": true,
+      "ms": 44,
+      "detail": {
+        "message": "A wallet connection request is already pending. Open your wallet extension and approve or reject the existing request."
+      }
+    },
+    {
+      "name": "connect error is explained: locked",
+      "ok": true,
+      "ms": 32,
+      "detail": {
+        "message": "The wallet returned no account. Unlock it (open the extension and enter your password), then click Connect again."
+      }
+    },
+    {
+      "name": "connect on wrong network: chain 61997 added and switched",
+      "ok": true,
+      "ms": 78,
+      "detail": {
+        "addChain": {
+          "rpc": "https://studio-dev.genlayer.com/api",
+          "explorer": "https://explorer-studio-dev.genlayer.com"
+        }
+      }
+    },
+    {
+      "name": "faucet: Get test GEN",
+      "ok": false,
+      "ms": 3170,
+      "error": "HTTP request failed.\n\nStatus: 503\nURL: https://studio-dev.genlayer.com/api\nRequest body: {\"method\":\"eth_getBalance\",\"params\":[\"0x73501951ebD48414AB35DD0544F24505153b10Db\",\"latest\"]}\n\nDetails: \"<html>\\r\\n<head><title>503 Service Temporarily Unavailable</title></head>\\r\\n<body>\\r\\n<center><h1>503 Service Temporarily Unavailable</h1></center>\\r\\n<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML=\\\"w"
+    },
+    {
+      "name": "faucet: second claim is rate limited",
+      "ok": false,
+      "ms": 30017,
+      "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.v13-faucet small').filter({ hasText: /already received|Limit/ }) to be visible\u001b[22m\n"
+    },
+    {
+      "name": "create browser agent key",
+      "ok": true,
+      "ms": 33,
+      "detail": {
+        "agentAddress": "0x08DA14fC36692b7295C71059cdcBe599D0432aC4"
+      }
+    },
+    {
+      "name": "template does not overwrite a typed mandate without asking",
+      "ok": true,
+      "ms": 133,
+      "detail": null
+    },
+    {
+      "name": "create vault (fee shown before signing, then finalized)",
+      "ok": false,
+      "ms": 60062,
+      "error": "locator.waitFor: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Network fee up to').first() to be visible\u001b[22m\n"
+    },
+    {
+      "name": "fund the agent key from the owner wallet (amount + fee shown)",
+      "ok": false,
+      "ms": 120042,
+      "error": "locator.waitFor: Timeout 120000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.v13-tx code').first() to be visible\u001b[22m\n"
+    },
+    {
+      "name": "agent tab: requests only by signed offer (no payee / deal text fields)",
+      "ok": false,
+      "ms": 30034,
+      "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Request a commitment against a signed offer').first() to be visible\u001b[22m\n"
+    },
+    {
+      "name": "owner: take funds back, then withdraw credit (payout check)",
+      "ok": false,
+      "ms": 30036,
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Take back' }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button disabled type=\"button\" class=\"v13-secondary\">Take back</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enable"
+    },
+    {
+      "name": "live feed shows last-updated time and source",
+      "ok": true,
+      "ms": 3,
+      "detail": {
+        "status": "7 vaults · updated 12:59:24 PM · source: transaction history · contract reads working"
+      }
+    },
+    {
+      "name": "mobile width renders without horizontal scroll",
+      "ok": true,
+      "ms": 565,
+      "detail": {
+        "overflow": 0
+      }
+    }
+  ],
+  "finishedAt": "2026-10-15T10:16:34.650Z"
+}

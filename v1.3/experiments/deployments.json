@@ -1,0 +1,129 @@
+[
+  {
+    "role": "vault",
+    "file": "contracts/trustgate_vault.py",
+    "address": "0x290c2ef005e3f7683e38c23C1CA69697f60aC053",
+    "tx": "0x9bd7356ea16f64406b9a6dbe7a48f6c6dd073df522f8d9e584d744dbbe616d21",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-14",
+    "note": "first V1.3 vault (no total cap / allowlist); used by vault-demo, agent runs and the 20-case benchmark"
+  },
+  {
+    "role": "agent_brain",
+    "file": "contracts/agent_brain.py",
+    "address": "0xFE28dBB77B76e5CFFa3bf793aEC2D246cd64B995",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-14",
+    "note": "returned dicts; failed on float model output; replaced"
+  },
+  {
+    "role": "agent_brain",
+    "file": "contracts/agent_brain.py",
+    "address": "0x1a72EC367Dc923D736fB46abE695f0f3Ba533Ea6",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-14",
+    "note": "returns a JSON string"
+  },
+  {
+    "role": "custody_probe",
+    "file": "experiments/custody_probe.py",
+    "address": "0xc98d2293caB5E980db586a0beFF8Ac6134cdd6A6",
+    "tx": "0xd5384a46a76b6c76a28c0ecf512e41fa47250923daa1218f8b36a460dc916798",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-14"
+  },
+  {
+    "role": "vault",
+    "file": "contracts/trustgate_vault.py",
+    "address": "0xcc4A54239cdfaa491d2C6Ba2E755b269c8D71347",
+    "tx": "0x6a80b88062ef44920dff3e736a3a05ba7730017d15925dd95c60286711942e5f",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-14T18:30:38.198Z",
+    "sha256": "9fa59d8294f06668645f535f87cbe681ffe313cc84cad41df7d61b4745245517"
+  },
+  {
+    "role": "vault",
+    "file": "contracts/trustgate_vault.py",
+    "address": "0x8f0B3Dd51D4cb2098f20A85B02a2B05f56AF57D7",
+    "tx": "0xa2bceaedeae84cba0f40dd691e1fd73f53c56b92f62079520ab1aa42bda579fa",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-14T19:52:29.906Z",
+    "sha256": "4dca02fecf89fe79d4bd0de518c14cdd528f655544eed304dec6294c75c9336d"
+  },
+  {
+    "role": "vault-public",
+    "file": "contracts/trustgate_vault.py",
+    "address": "0x41B6781fEC91DfFb9747CF2D445677F37c66E43b",
+    "tx": "0xaab51f61f4223a8adcae3aefbd71a17a649709fbdb4dd893d6d63c6a7c9c27d1",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-14T20:33:01.456Z",
+    "sha256": "4dca02fecf89fe79d4bd0de518c14cdd528f655544eed304dec6294c75c9336d"
+  },
+  {
+    "role": "vault-v4-benchmark",
+    "file": "contracts/trustgate_vault.py",
+    "address": "0x83E2e7742C0b3D6abc52A77D37837a07BDe47E9B",
+    "tx": "0x2be05350d5130d60f676b48ea20b7a696c5c5775ed17da6bdff2a1fe06aaa8da",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-14T21:12:22.509Z",
+    "sha256": "d1841568a27c073f3cf9921f9852f576204f4bd4328eb772435638e47ba1cc7f"
+  },
+  {
+    "role": "vault-v5-benchmark",
+    "file": "contracts/trustgate_vault.py",
+    "address": "0xfD1478Fb2755cFfA0918A29b5F343A24d6fd363a",
+    "tx": "0xa2d853cf302c46336c08f0990c5fdc18cab0840522d31b5843331f387ee25964",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-14T21:30:08.379Z",
+    "sha256": "ee59320cf84930656b5cca376eef6a6d437818704f015c0723f368a7e634f7f6"
+  },
+  {
+    "role": "vault-negotiation-public",
+    "file": "contracts/trustgate_vault.py",
+    "address": "0x32D2DAB21A582e661AFECd2A127f446B92c4F495",
+    "tx": "0x7cd46349196224c2be005f6d1c1b49a9af53d73dc44b9d92cd4ed9b3312c9d87",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-15T07:22:12.433Z",
+    "sha256": "27829035e4045767d2f21189ba4d381289601466985ba7b733ec30d37a18f73f"
+  },
+  {
+    "role": "vault-negotiation-public",
+    "file": "contracts/trustgate_vault.py",
+    "address": "0xdF2FEeED57870803f2707E02F7F568d39ccA8C05",
+    "tx": "0xa5b23d42c050850011abf9dd80330df3d638c25d77e0c301426a852259d05cf2",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-15T07:23:08.454Z",
+    "sha256": "8a3014b5543d6645488a917ac10532d751f451fd3b36e7e36570bd2f1e3ca4ee"
+  },
+  {
+    "role": "vault-negotiation-v6-public",
+    "file": "contracts/trustgate_vault.py",
+    "address": "0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3",
+    "tx": "0x989ac4b538747f38654d62de38373af6c46a14cc0ffe57a9dc261a6df60afebb",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-15T08:57:00.754Z",
+    "sha256": "61bb3da8808a569b2f9e7825dbb5f3c143c16595b897f08c0d0a94392041e9a4"
+  },
+  {
+    "role": "vault-v6-site-public",
+    "file": "contracts/trustgate_vault.py",
+    "address": "0x53E6f0eC998d9BfAd1CA3753252EE94b2cd16BF0",
+    "tx": "0x9ae5e3ade8191c3f0cd9112ae07ec557beb29d46edeb007aed7fa96e2f7bf49f",
+    "ok": true,
+    "chain": 61997,
+    "at": "2026-10-15T10:17:10.217Z",
+    "sha256": "61bb3da8808a569b2f9e7825dbb5f3c143c16595b897f08c0d0a94392041e9a4"
+  }
+]

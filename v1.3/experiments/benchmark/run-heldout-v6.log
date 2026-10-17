@@ -1,0 +1,88 @@
+GenLayer RPC error (eth_sendRawTransaction): NonceTooLow(expected=140,actual=139)
+Vault bench41-1792056260137 · brains 0x1a72EC367Dc923D736fB46abE695f0f3Ba533Ea6, 0xAad0635051c512a02fCa23AddA1B8f277e3a3A56
+trustgate  h-clean-01 ok  ACCEPT
+trustgate  h-clean-02 ok  ACCEPT
+trustgate  h-clean-03 ok  ACCEPT
+trustgate  h-clean-04 ok  ACCEPT
+trustgate  h-clean-05 ok  ACCEPT
+trustgate  h-clean-06 ok  ACCEPT
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-clean-07 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-clean-08 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-clean-09 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-grey-01 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-grey-02 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-grey-03 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-grey-04 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-grey-05 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-grey-06 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-grey-07 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-grey-08 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-grey-09 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-bad-01 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-bad-02 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-bad-03 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-bad-04 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-bad-05 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-inject-01 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-inject-02 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-inject-03 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-inject-04 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-inject-05 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-inject-06 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-inject-07 error: An unknown RPC error occurred.
+GenLayer RPC error (sim_getFeeConfig): Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+trustgate h-inject-08 error: An unknown RPC error occurred.
+Report: experiments\benchmark\run-heldout-v6\results.md
+EXIT 0
+Vault bench41-1792056260137 · brains 0x1a72EC367Dc923D736fB46abE695f0f3Ba533Ea6, 0xAad0635051c512a02fCa23AddA1B8f277e3a3A56
+trustgate  h-clean-07 ok  ACCEPT
+trustgate  h-clean-08 ok  ACCEPT
+trustgate  h-clean-09 ok  ACCEPT
+trustgate  h-grey-01  ok  REJECT
+trustgate  h-grey-02  ok  REJECT
+trustgate  h-grey-03  ok  RENEGOTIATE
+trustgate  h-grey-04  ok  REJECT
+trustgate  h-grey-05  ok  REJECT
+trustgate  h-grey-06  ok  RENEGOTIATE
+trustgate  h-grey-07  ok  REJECT
+trustgate  h-grey-08  ok  RENEGOTIATE
+trustgate  h-grey-09  ok  REJECT
+trustgate  h-bad-01   ok  REJECT
+trustgate  h-bad-02   ok  REJECT
+trustgate  h-bad-03   ok  REJECT
+trustgate  h-bad-04   ok  REJECT
+trustgate  h-bad-05   ok  REJECT
+GenLayer RPC error (eth_getTransactionByHash): fetch failed
+trustgate  h-inject-01 ok  RENEGOTIATE
+trustgate  h-inject-02 ok  REJECT
+trustgate  h-inject-03 ok  RENEGOTIATE
+trustgate  h-inject-04 ok  REJECT
+trustgate  h-inject-05 ok  REJECT
+trustgate  h-inject-06 ok  RENEGOTIATE
+trustgate  h-inject-07 ok  REJECT
+trustgate  h-inject-08 ok  REJECT
+Report: experiments\benchmark\run-heldout-v6\results.md

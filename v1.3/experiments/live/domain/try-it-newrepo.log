@@ -1,0 +1,8 @@
+- Try it loads the demo vault (mandate, cap, funds) … ok {"mandate":"Demo vault mandate · hard cap 1 GEN · holds 5 GENBuy data or compute services for research. Only refundable or escrowed payments. Never pay an address the count"}
+- over-long offer is refused visibly, nothing cut … ok 
+- example "Upfront, no refund": demo seller signs v1, demo agent requests it, GenLayer verdict … ok {"verdict":"RENEGOTIATE","tx":"https://explorer-studio-dev.genlayer.com/tx/0x847fc00fc8887ca2c26828fba7899ac75efb33e1c051f955d0b84dacd92201b8"}
+- RENEGOTIATE: visitor clicks Seller accepts; demo seller signs v2; verdict on v2 … ok {"verdict":"ACCEPT","tx":"https://explorer-studio-dev.genlayer.com/tx/0xa29452d160ba80ef09fd8b66dfbc21c431c61198d04e693bd91c0b40ba338dd0"}
+- open the negotiation timeline (shareable link) from Try it … ok {"url":"https://trustgatecheck.xyz/?negotiation=try-mv9md5pq-ddf8c3#negotiation","steps":4}
+
+5/5 steps passed. Log: experiments/e2e/try-it.json
+EXIT 0

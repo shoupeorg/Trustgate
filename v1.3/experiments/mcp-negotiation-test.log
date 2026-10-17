@@ -1,0 +1,25 @@
+- seller: trustgate_post_offer → {"status":"pending","offer_id":"offer-mv98lo38-6c62d3","negotiation_id":"offer-mv98lo38-6c62d3","payee":"0x3f567c02606ca064ced2d49b39fd48c1b41ebffd","terms_hash
+- seller: trustgate_get_negotiation → {"negotiation_id":"offer-mv98lo38-6c62d3","status":"pending","note":"Not in the history yet. Try again in a minute."}
+- seller: trustgate_get_negotiation → {"negotiation_id":"offer-mv98lo38-6c62d3","status":"pending","note":"Not in the history yet. Try again in a minute."}
+- seller: trustgate_get_negotiation → {"negotiation_id":"offer-mv98lo38-6c62d3","status":"pending","note":"Not in the history yet. Try again in a minute."}
+- seller: trustgate_get_negotiation → {"negotiation_id":"offer-mv98lo38-6c62d3","vault_id":"public-demo-mv989lyt","seller":"0x3f567c02606ca064ced2d49b39fd48c1b41ebffd","status":"OPEN","latest_offer_
+- buyer: trustgate_list_offers → [{"offer_id":"offer-mv98lo38-6c62d3","negotiation_id":"offer-mv98lo38-6c62d3","vault_id":"public-demo-mv989lyt","version":1,"origin":"posted","seller":"0x3f567c
+- buyer: trustgate_request_commitment → {"status":"pending","request_id":"mcp-mv98mf9l-ad117e","offer_id":"offer-mv98lo38-6c62d3","payee":"0x3f567c02606ca064ced2d49b39fd48c1b41ebffd","amount_gen":"0.6
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv98mf9l-ad117e","status":"pending","note":"Not in the history yet (or refused by the contract). Try again in a minute."}
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv98mf9l-ad117e","status":"pending","note":"Not in the history yet (or refused by the contract). Try again in a minute."}
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv98mf9l-ad117e","status":"pending","note":"Not in the history yet (or refused by the contract). Try again in a minute."}
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv98mf9l-ad117e","offer_id":"offer-mv98lo38-6c62d3","vault_id":"public-demo-mv989lyt","payee":"0x3f567c02606ca064ced2d49b39fd48c1b41ebffd","a
+- seller: trustgate_get_counterproposal → {"negotiation_id":"offer-mv98lo38-6c62d3","offer_id":"offer-mv98lo38-6c62d3","your_terms":"TagWorks - 3,000 named-entity labels on Persian news sentences for NL
+- seller: trustgate_accept_counterproposal → {"status":"pending","offer_id":"offer-mv98n68g-ebdd51","version":2,"terms_hash":"e729634377e622165c42e95bcb4595ea3eb926c84f3a06e1fe57657eb6ea7b54","tx":"0x10346
+- buyer: trustgate_list_offers → []
+- buyer: trustgate_list_offers → []
+- buyer: trustgate_list_offers → [{"offer_id":"offer-mv98n68g-ebdd51","negotiation_id":"offer-mv98lo38-6c62d3","vault_id":"public-demo-mv989lyt","version":2,"origin":"accepted_counterproposal",
+- buyer: trustgate_request_commitment → {"status":"pending","request_id":"mcp-mv98npf5-77b7c6","offer_id":"offer-mv98n68g-ebdd51","payee":"0x3f567c02606ca064ced2d49b39fd48c1b41ebffd","amount_gen":"0.6
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv98npf5-77b7c6","status":"pending","note":"Not in the history yet (or refused by the contract). Try again in a minute."}
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv98npf5-77b7c6","status":"pending","note":"Not in the history yet (or refused by the contract). Try again in a minute."}
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv98npf5-77b7c6","offer_id":"offer-mv98n68g-ebdd51","vault_id":"public-demo-mv989lyt","payee":"0x3f567c02606ca064ced2d49b39fd48c1b41ebffd","a
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv98npf5-77b7c6","offer_id":"offer-mv98n68g-ebdd51","vault_id":"public-demo-mv989lyt","payee":"0x3f567c02606ca064ced2d49b39fd48c1b41ebffd","a
+- buyer: trustgate_get_verdict → {"request_id":"mcp-mv98npf5-77b7c6","offer_id":"offer-mv98n68g-ebdd51","vault_id":"public-demo-mv989lyt","payee":"0x3f567c02606ca064ced2d49b39fd48c1b41ebffd","a
+- seller: trustgate_get_negotiation → {"negotiation_id":"offer-mv98lo38-6c62d3","vault_id":"public-demo-mv989lyt","seller":"0x3f567c02606ca064ced2d49b39fd48c1b41ebffd","status":"ACCEPTED","latest_of
+- buyer: trustgate_decline → ERROR Error: TRUSTGATE_SELLER_PRIVATE_KEY is not set (or not a 0x-prefixed 64-hex key) in this MCP server's environment.
+EXIT 0

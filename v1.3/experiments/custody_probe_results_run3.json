@@ -1,0 +1,45 @@
+{
+  "chain": 61997,
+  "wallet": "0x8F9726eA4aE0B479c6f4D4fB26982F3b44607398",
+  "contract": "0xc98d2293caB5E980db586a0beFF8Ac6134cdd6A6",
+  "start_gen": "2.999842743999982591",
+  "end_gen": "0.799842743999961887",
+  "at": "2026-10-14T13:31:36.927Z",
+  "steps": [
+    {
+      "step": "schema pre-check (free)",
+      "methods": [
+        "balance_of",
+        "deposit",
+        "move_internal",
+        "total_held",
+        "withdraw"
+      ],
+      "ok": true
+    },
+    {
+      "step": "deploy custody_probe.py",
+      "tx": "0xd5384a46a76b6c76a28c0ecf512e41fa47250923daa1218f8b36a460dc916798",
+      "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xd5384a46a76b6c76a28c0ecf512e41fa47250923daa1218f8b36a460dc916798",
+      "fee_gen": "0.100000000000010352",
+      "estimate_note": null,
+      "status": 5,
+      "result": 1,
+      "execution": "SUCCESS",
+      "returned": {
+        "status": "return",
+        "payload": {
+          "readable": "null"
+        }
+      },
+      "error": null,
+      "ok": true,
+      "contract": "0xc98d2293caB5E980db586a0beFF8Ac6134cdd6A6"
+    },
+    {
+      "step": "deposit 2 GEN",
+      "ok": false,
+      "error": "An internal error was received."
+    }
+  ]
+}

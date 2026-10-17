@@ -1,0 +1,20 @@
+- A: Get test GEN (site faucet) … ok {"msg":"Limit reached: 3 claims per network per 24 h.","tx":null}
+- B: Get test GEN (site faucet) … ok {"msg":"Limit reached: 3 claims per network per 24 h."}
+- A: create browser agent key and fund it with 1 GEN … ok {"agent":"0x3ae1f2641941F5391124a45696b4032E1A3BC80a"}
+- A: create vault (cap 1, deposit 2; fee shown before signing) … ok {"vaultId":"vault-mv9jn8n2-a6454840","hash":"0xd89f95623064a4529b925e07acbc856b3c8bde44ccf1c44fd6e4bc9a756ce937","fee":"Create vault. Network fee up to 0.1750 GEN (unused fee is re
+- B: Seller tab, post a signed offer to A's vault … ok {"negotiationId":"offer-mv9jqg9e-a9fbbaef","hash":"0x21eb8d0b039f3519d3bf3b3f3d4d760988147e36015be3d29cdfead5f9782799"}
+- A (agent key): request offer v1 from the site → GenLayer verdict … ok {"hash":"0x919107d47398c97b3a2a531abb9518f21997de2b36f5dd30fa07f31d6dc696b7","verdict":"RENEGOTIATE"}
+- B: sees the counterproposal and signs it as v2 … ok {"hash":"0x23b5803c4d4211d1986f5005b6b23982df6bbd2861dfd897eb9bd5cafe911b06"}
+- A (agent key): request v2 → ACCEPT, seller credited … ok {"hash":"0xaf3273cb3facfd295f35f54313d68b6550fcfec32c83b852e2b291f1cd74f7af","verdict":"ACCEPT"}
+- share link opens without a wallet and shows the full timeline … ok {"steps":4,"outcome":"Deal accepted: funds credited to the seller"}
+- A: top up 0.3 GEN … ok {"hash":"0xdfbd039d96da67b9b71d1a508ff0c54ae066a7e83cf19179aac6c16d98f9d0db"}
+- A: take back 0.2 GEN (credited inside the vault) … ok {"hash":"0x814ce6da7649a250446e7263c7635f4aa5644c955982d43959905a0b140b6147"}
+- B: decline path: post a second offer, then decline it … ok {"posted":"0x162385c4da9c472222b7bf4ab885cb650899c18fd351142d293a3b9e09cca981","declined":"0x93b1c6a4fc84a135cdeb7e392def9cde23b897e93291a78d22e077ab2fbc97a9","negotiationId":"offe
+- Version 1 link opens V1 with the notice … FAILED locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByText('Go to V1.3 (current)') to be visible[22m
+
+- mobile view (390 px): no horizontal scroll … ok {"overflow":0}
+
+13/14 steps passed. Log: experiments/live/checklist.json
+EXIT 1

@@ -1,0 +1,27 @@
+{
+  "chain": 61997,
+  "wallet": "0x8F9726eA4aE0B479c6f4D4fB26982F3b44607398",
+  "contract": null,
+  "start_gen": "2.999921371999983649",
+  "end_gen": "2.899921371999973297",
+  "at": "2026-10-14T13:28:20.371Z",
+  "steps": [
+    {
+      "step": "deploy custody_probe.py",
+      "tx": "0xd897d97af8bdf20ea471f9b5c21323cce5beff4e2feab427c3687a1315fb7d09",
+      "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xd897d97af8bdf20ea471f9b5c21323cce5beff4e2feab427c3687a1315fb7d09",
+      "fee_gen": "0.100000000000010352",
+      "estimate_note": null,
+      "status": 5,
+      "result": 1,
+      "execution": "ERROR",
+      "returned": {
+        "status": "contract_error",
+        "payload": "invalid_contract runner malformed"
+      },
+      "error": null,
+      "ok": false,
+      "contract": "0x8A58D529947755423eB597dE41cd839B2dFAe22e"
+    }
+  ]
+}

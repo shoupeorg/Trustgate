@@ -1,0 +1,9 @@
+- A: Get test GEN (site faucet) … ok {"msg":"3 test GEN sent. tx ↗","tx":"https://explorer-studio-dev.genlayer.com/tx/0x120dd9c874572b5c34517f73f993fe86c96dcfdfa48364c18d94457fa23c470b"}
+- B: Get test GEN (site faucet) … ok {"msg":"Limit reached: 3 claims per network per 24 h."}
+- A: create browser agent key and fund it with 1 GEN … ok {"agent":"0x2d228B7f15B535005FC39Ea4c8F1C5D4aEF0512C"}
+- A: create vault (cap 1, deposit 2; fee shown before signing) … FAILED locator.textContent: Timeout 180000ms exceeded.
+Call log:
+[2m  - waiting for locator('.v13-tx code').first()[22m
+
+- B: Seller tab, post a signed offer to A's vault … FAILED locator.fill: value: expected string, got object
+- A (agent key): request offer v1 from the site → GenLayer verdict … EXIT 127

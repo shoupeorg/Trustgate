@@ -1,0 +1,49 @@
+{
+  "base": "https://trustgate-v13.shoupeorg.workers.dev",
+  "preset": "Upfront, no refund",
+  "startedAt": "2026-10-15T09:29:48.007Z",
+  "steps": [
+    {
+      "name": "Try it loads the demo vault (mandate, cap, funds)",
+      "ok": true,
+      "ms": 1874,
+      "detail": {
+        "mandate": "Demo vault mandate · hard cap 1 GEN · holds 6 GENBuy data or compute services for research. Only refundable or escrowed payments. Never pay an address the count"
+      }
+    },
+    {
+      "name": "over-long offer is refused visibly, nothing cut",
+      "ok": true,
+      "ms": 13,
+      "detail": null
+    },
+    {
+      "name": "example \"Upfront, no refund\": demo seller signs v1, demo agent requests it, GenLayer verdict",
+      "ok": true,
+      "ms": 612210,
+      "detail": {
+        "verdict": "RENEGOTIATE",
+        "tx": "https://explorer-studio-dev.genlayer.com/tx/0x840a9839363c0264bb34ed56da2007793a77c814ec7ba259c6bb7d00c623bb06"
+      }
+    },
+    {
+      "name": "RENEGOTIATE: visitor clicks Seller accepts; demo seller signs v2; verdict on v2",
+      "ok": true,
+      "ms": 114031,
+      "detail": {
+        "verdict": "ACCEPT",
+        "tx": "https://explorer-studio-dev.genlayer.com/tx/0x5d9466ca962a3c772f33df360f3bdd6e11a07cf0d15380a5c6fd0caf969e76de"
+      }
+    },
+    {
+      "name": "open the negotiation timeline (shareable link) from Try it",
+      "ok": true,
+      "ms": 1668,
+      "detail": {
+        "url": "https://trustgate-v13.shoupeorg.workers.dev/?negotiation=try-mv9c87g1-1159ca#negotiation",
+        "steps": 4
+      }
+    }
+  ],
+  "finishedAt": "2026-10-15T09:42:01.456Z"
+}

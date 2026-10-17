@@ -1,0 +1,29 @@
+{
+	// TrustGate V1.3 - separate Worker so the live V1 site is never touched.
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"main": ".open-next/worker.js",
+	"name": "trustgate-v13",
+	"compatibility_date": "2026-09-29",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	// Workers Paid: allow up to 1 s CPU per request (a feed refresh parses a large history, about 200 ms).
+	"limits": { "cpu_ms": 1000 },
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS",
+		"run_worker_first": true
+	},
+	"kv_namespaces": [
+		{
+			// Faucet limits (per wallet, site-wide), Try it lock and site-wide cap, feed copy
+			"binding": "TG_LIMITS",
+			"id": "29d0e131403e45c3a71e7378418477be"
+		}
+	],
+	"services": [
+		{
+			// Self-reference service binding, the service name must match the worker name
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "trustgate-v13"
+		}
+	]
+}

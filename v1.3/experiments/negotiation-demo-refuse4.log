@@ -1,0 +1,12 @@
+Vault public-demo-mv989lyt on 0xdF2FEeED57870803f2707E02F7F568d39ccA8C05 · buyer agent 0xf02c68e73ea781cf16416e4fc7c18c71641e044b · seller agent 0x3672a680febb7af3a7ce1932803a770d28d1fc22
+- seller agent: wrote its first offer
+- seller: posted offer v1 (1.8 GEN), signed by its wallet · https://explorer-studio-dev.genlayer.com/tx/0x2bdeb07dbeb52e666dd5159dbe96f3644f0a73eb7603957dc1343aa0d6c9e7e9
+- buyer agent: decided to request the offer
+- GenLayer validators: verdict on v1: REJECT (HIGH) · https://explorer-studio-dev.genlayer.com/tx/0xd672b0e74ecc21f850b692035814ab5740db45fda290381bea2b9c6335538750
+- seller agent: chose "counter"
+- seller: signed counter offer v2 (1.8 GEN) · https://explorer-studio-dev.genlayer.com/tx/0xa95e43390aa13c6e5d7059c7315b29e4e8a812c5d10ce290ee0bb69dbab7a56a
+- buyer agent: decided not to request
+- buyer: withdrew from the negotiation · https://explorer-studio-dev.genlayer.com/tx/0x14e2c162fb6a4a5065f3bea9b0c8394b1c612911bd89001d8eb06a2ae880169b
+
+Outcome: BUYER_WITHDREW. Transcript: experiments/negotiation-demo/seller-refuses-2026-10-15T07-52-55-688Z.md
+EXIT 0

@@ -1,0 +1,37 @@
+{
+  "chain": 61997,
+  "wallet": "0x8F9726eA4aE0B479c6f4D4fB26982F3b44607398",
+  "contract": "0xc98d2293caB5E980db586a0beFF8Ac6134cdd6A6",
+  "start_gen": "0.999685459999980945",
+  "end_gen": "0.899685459999970593",
+  "at": "2026-10-14T13:33:46.207Z",
+  "steps": [
+    {
+      "step": "move_internal 0.5 GEN",
+      "tx": "0x52fa24ab24b99d40775991cdfe7a63d0d5ef51d16f9a4f6effe26946bd1b6380",
+      "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x52fa24ab24b99d40775991cdfe7a63d0d5ef51d16f9a4f6effe26946bd1b6380",
+      "fee_gen": "0.100000000000010352",
+      "estimate_note": "simulation estimate failed: An internal error was received.",
+      "status": 5,
+      "result": 1,
+      "execution": "SUCCESS",
+      "returned": {
+        "status": "return",
+        "payload": {
+          "readable": "\"{\\\"ok\\\": true, \\\"from\\\": \\\"0x8f9726ea4ae0b479c6f4d4fb26982f3b44607398\\\", \\\"to\\\": \\\"0x50985fb39772c010b60001e4c1a8c0730c7e27e6\\\", \\\"amount\\\": \\\"500000000000000000\\\"}\""
+        }
+      },
+      "error": null,
+      "ok": true,
+      "to": "0x50985fB39772c010B60001e4c1a8c0730c7E27E6",
+      "contract_native_gen": "2",
+      "balance_of_me": "read failed: Can't reconnect until invalid transaction is rolled back.  Please rollback() fully before proceeding (Background on this",
+      "balance_of_other": "read failed: Can't reconnect until invalid transaction is rolled back.  Please rollback() fully before proceeding (Background on this"
+    },
+    {
+      "step": "withdraw 1 GEN",
+      "ok": false,
+      "error": "An unknown RPC error occurred."
+    }
+  ]
+}

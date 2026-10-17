@@ -1,0 +1,45 @@
+{
+  "base": "http://localhost:3100",
+  "preset": "Escrow controlled by the seller",
+  "startedAt": "2026-10-15T07:40:44.773Z",
+  "steps": [
+    {
+      "name": "Try it loads the demo vault (mandate, cap, funds)",
+      "ok": true,
+      "ms": 181,
+      "detail": {
+        "mandate": "Demo vault mandate · hard cap 1 GEN · holds 6 GENBuy data or compute services for research. Only refundable or escrowed payments. Never pay an address the count"
+      }
+    },
+    {
+      "name": "over-long offer is refused visibly, nothing cut",
+      "ok": true,
+      "ms": 18,
+      "detail": null
+    },
+    {
+      "name": "example \"Escrow controlled by the seller\": demo seller signs v1, demo agent requests it, GenLayer verdict",
+      "ok": true,
+      "ms": 44851,
+      "detail": {
+        "verdict": "REJECT",
+        "tx": "https://explorer-studio-dev.genlayer.com/tx/0xbb85129d640c3e3a3e2fe6ecb7645590a00e472392de345505b8b590bc44f35c"
+      }
+    },
+    {
+      "name": "seller-accepts round",
+      "ok": true,
+      "skipped": "first verdict was REJECT"
+    },
+    {
+      "name": "open the negotiation timeline (shareable link) from Try it",
+      "ok": true,
+      "ms": 1648,
+      "detail": {
+        "url": "http://localhost:3100/?negotiation=try-mv98btkz-2eb684#negotiation",
+        "steps": 2
+      }
+    }
+  ],
+  "finishedAt": "2026-10-15T07:41:32.006Z"
+}

@@ -1,0 +1,3 @@
+- seller: trustgate_post_offer → ERROR Error: Vault "site-demo-mv9j9po2" was not found on contract 0x53E6f0eC998d9BfAd1CA3753252EE94b2cd16BF0.
+FAILED post_offer failed: Error: Vault "site-demo-mv9j9po2" was not found on contract 0x53E6f0eC998d9BfAd1CA3753252EE94b2cd16BF0.
+EXIT 1

@@ -1,0 +1,13 @@
+Vault public-demo-mv9boi2s on 0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3 · buyer agent 0xf02c68e73ea781cf16416e4fc7c18c71641e044b · seller agent 0x3672a680febb7af3a7ce1932803a770d28d1fc22
+- seller agent: wrote its first offer
+- seller: posted offer v1 (1.5 GEN), signed by its wallet · https://explorer-studio-dev.genlayer.com/tx/0xec35459f8642d8e58a61c68a30c9c457be22bb8e0794890e5664a8c1ced80074
+- buyer agent: decided to request the offer
+- GenLayer validators: verdict on v1: RENEGOTIATE (MEDIUM) · https://explorer-studio-dev.genlayer.com/tx/0x9e7c3f48be003b389115faa9ff4b24e310d5df73619c1c10bc1238c50a61f707
+- seller agent: chose "accept"
+- seller: signed TrustGate's counterproposal as v2 · https://explorer-studio-dev.genlayer.com/tx/0xeeaa80f0d3e03a28658373041596029e5c6291eb8f3287aca7e569418c5cfed2
+- buyer agent: decided to request the offer
+- GenLayer validators: verdict on v2: ACCEPT (LOW) · https://explorer-studio-dev.genlayer.com/tx/0x7ad4e5e2c0ea1983eed335550cecdf2303b309f9d941a999a5034ac213c2ddfc
+- contract: credited 1.5 GEN to the seller inside the vault (seller-signed v2)
+
+Outcome: ACCEPTED. Transcript: experiments/negotiation-demo/reneg-accept-2026-10-15T09-16-41-988Z.md
+EXIT 0

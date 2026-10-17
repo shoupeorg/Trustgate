@@ -1,0 +1,713 @@
+{
+  "site": "https://trustgate-v13.shoupeorg.workers.dev",
+  "contract": "0x53E6f0eC998d9BfAd1CA3753252EE94b2cd16BF0",
+  "vault": "site-demo-mv9j9po2",
+  "seller": "0xa1fdFea7462F2F10965145bca42e1D2E7f7bE1db",
+  "buyer": "0x1c15a3d36104399e0e7eedc57b419386ae60b6ce",
+  "startedAt": "2026-10-15T12:56:48.431Z",
+  "calls": [
+    {
+      "at": "2026-10-15T12:56:55.960Z",
+      "side": "seller",
+      "tool": "trustgate_post_offer",
+      "args": {
+        "vault_id": "site-demo-mv9j9po2",
+        "amount_gen": "0.6",
+        "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, 100% upfront before work starts, non-refundable."
+      },
+      "isError": false,
+      "result": {
+        "status": "pending",
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "negotiation_id": "offer-mv9jmbj0-87b19d",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "terms_hash": "af729eb0d3a2ff990bf07d5d6554872e2432e0bfa4c3259ce3183869b277a31a",
+        "tx": "0xc05e7450a5c876f02f194d5fe4b284cc653f9ea108158a1dd506ac1053f3b0de",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xc05e7450a5c876f02f194d5fe4b284cc653f9ea108158a1dd506ac1053f3b0de",
+        "next": "The buyer's agent can now request it. Follow with trustgate_get_negotiation."
+      }
+    },
+    {
+      "at": "2026-10-15T12:56:56.152Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T12:57:09.528Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d",
+        "status": "pending",
+        "note": "Not in the history yet. Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T12:57:22.567Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d",
+        "vault_id": "site-demo-mv9j9po2",
+        "seller": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "status": "OPEN",
+        "latest_offer_id": "offer-mv9jmbj0-87b19d",
+        "latest_status": "OPEN",
+        "link": "https://trustgate-v13.shoupeorg.workers.dev/?negotiation=offer-mv9jmbj0-87b19d",
+        "timeline": [
+          {
+            "step": "offer posted",
+            "version": 1,
+            "offer_id": "offer-mv9jmbj0-87b19d",
+            "signed_by": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+            "amount_gen": "0.6",
+            "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, 100% upfront before work starts, non-refundable.",
+            "status": "provisional",
+            "tx": "0xc05e7450a5c876f02f194d5fe4b284cc653f9ea108158a1dd506ac1053f3b0de"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-15T12:57:24.718Z",
+      "side": "buyer",
+      "tool": "trustgate_list_offers",
+      "args": {
+        "vault_id": "site-demo-mv9j9po2"
+      },
+      "isError": false,
+      "result": [
+        {
+          "offer_id": "offer-mv9jmbj0-87b19d",
+          "negotiation_id": "offer-mv9jmbj0-87b19d",
+          "vault_id": "site-demo-mv9j9po2",
+          "version": 1,
+          "origin": "posted",
+          "seller": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+          "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+          "amount_gen": "0.6",
+          "status": "OPEN",
+          "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, 100% upfront before work starts, non-refundable.",
+          "terms_hash": "af729eb0d3a2ff990bf07d5d6554872e2432e0bfa4c3259ce3183869b277a31a",
+          "previous_offer_id": null,
+          "signed_in": "https://explorer-studio-dev.genlayer.com/tx/0xc05e7450a5c876f02f194d5fe4b284cc653f9ea108158a1dd506ac1053f3b0de"
+        }
+      ]
+    },
+    {
+      "at": "2026-10-15T12:57:28.520Z",
+      "side": "buyer",
+      "tool": "trustgate_request_commitment",
+      "args": {
+        "vault_id": "site-demo-mv9j9po2",
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "justification": "NER labels for the Persian NLP study."
+      },
+      "isError": false,
+      "result": {
+        "status": "pending",
+        "request_id": "mcp-mv9jn0rh-4348e3",
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "tx": "0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67",
+        "next": "Call trustgate_get_verdict with this request_id in about a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T12:57:28.679Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jn0rh-4348e3"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jn0rh-4348e3",
+        "status": "pending",
+        "note": "Not in the history yet (or refused by the contract). Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T12:57:39.791Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jn0rh-4348e3"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jn0rh-4348e3",
+        "status": "pending",
+        "note": "Not in the history yet (or refused by the contract). Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T12:57:51.586Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jn0rh-4348e3"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jn0rh-4348e3",
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "vault_id": "site-demo-mv9j9po2",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "status": "pending",
+        "verdict": "PENDING",
+        "risk": null,
+        "summary": null,
+        "mandate_violations": [],
+        "counterproposal": null,
+        "funds_moved": "none",
+        "tx": "0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67"
+      }
+    },
+    {
+      "at": "2026-10-15T12:58:03.030Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jn0rh-4348e3"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jn0rh-4348e3",
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "vault_id": "site-demo-mv9j9po2",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "status": "pending",
+        "verdict": "PENDING",
+        "risk": null,
+        "summary": null,
+        "mandate_violations": [],
+        "counterproposal": null,
+        "funds_moved": "none",
+        "tx": "0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67"
+      }
+    },
+    {
+      "at": "2026-10-15T12:58:13.459Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jn0rh-4348e3"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jn0rh-4348e3",
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "vault_id": "site-demo-mv9j9po2",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "status": "pending",
+        "verdict": "PENDING",
+        "risk": null,
+        "summary": null,
+        "mandate_violations": [],
+        "counterproposal": null,
+        "funds_moved": "none",
+        "tx": "0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67"
+      }
+    },
+    {
+      "at": "2026-10-15T12:58:23.837Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jn0rh-4348e3"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jn0rh-4348e3",
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "vault_id": "site-demo-mv9j9po2",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "status": "pending",
+        "verdict": "PENDING",
+        "risk": null,
+        "summary": null,
+        "mandate_violations": [],
+        "counterproposal": null,
+        "funds_moved": "none",
+        "tx": "0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67"
+      }
+    },
+    {
+      "at": "2026-10-15T12:58:35.915Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jn0rh-4348e3"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jn0rh-4348e3",
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "vault_id": "site-demo-mv9j9po2",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "status": "final",
+        "verdict": "RENEGOTIATE",
+        "risk": "MEDIUM",
+        "summary": "The purchase of NLP data labels fits the research purpose of the mandate, but the payment term '100% upfront before work starts, non-refundable' violates the mandate's requirement for 'Only refundable or escrowed payments'. The payee address, while described as the provider's usual account, presents a risk that must be assessed from the deal text, which lacks this description.",
+        "mandate_violations": [
+          {
+            "evidence": "'Price 0.6 GEN, 100% upfront before work starts, non-refundable.'",
+            "explanation": "The mandate explicitly requires payments to be refundable or held in escrow. A 'non-refundable' upfront payment violates this rule.",
+            "rule": "Only refundable or escrowed payments"
+          }
+        ],
+        "counterproposal": {
+          "deal_text": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, payment held in a secure escrow releasable upon delivery of the labels, or with a clear refund right if delivery fails.",
+          "notes": "Changed the payment term from '100% upfront before work starts, non-refundable' to an escrowed or refundable structure, as required by the mandate. The core purpose, amount, and deliverable remain unchanged."
+        },
+        "funds_moved": "none",
+        "tx": "0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67"
+      }
+    },
+    {
+      "at": "2026-10-15T12:58:39.570Z",
+      "side": "seller",
+      "tool": "trustgate_get_counterproposal",
+      "args": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d",
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "your_terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, 100% upfront before work starts, non-refundable.",
+        "counterproposal": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, payment held in a secure escrow releasable upon delivery of the labels, or with a clear refund right if delivery fails.",
+        "notes": "Changed the payment term from '100% upfront before work starts, non-refundable' to an escrowed or refundable structure, as required by the mandate. The core purpose, amount, and deliverable remain unchanged.",
+        "from_request": "mcp-mv9jn0rh-4348e3",
+        "choices": [
+          "trustgate_accept_counterproposal",
+          "trustgate_counter_offer",
+          "trustgate_decline"
+        ]
+      }
+    },
+    {
+      "at": "2026-10-15T12:58:43.425Z",
+      "side": "seller",
+      "tool": "trustgate_accept_counterproposal",
+      "args": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d"
+      },
+      "isError": false,
+      "result": {
+        "status": "pending",
+        "offer_id": "offer-mv9jomhx-d78bf7",
+        "version": 2,
+        "terms_hash": "e01b6b027b1877385e65b3678e027e87732cfa349f590c454be1e80e8e2da19f",
+        "tx": "0x6ae3c33547f87b88226e20ba186e3fb4d070ee5a88998ca7e3a538ce3469c0e0",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x6ae3c33547f87b88226e20ba186e3fb4d070ee5a88998ca7e3a538ce3469c0e0",
+        "next": "Follow with trustgate_get_negotiation."
+      }
+    },
+    {
+      "at": "2026-10-15T12:58:46.031Z",
+      "side": "buyer",
+      "tool": "trustgate_list_offers",
+      "args": {
+        "vault_id": "site-demo-mv9j9po2"
+      },
+      "isError": false,
+      "result": []
+    },
+    {
+      "at": "2026-10-15T12:58:58.659Z",
+      "side": "buyer",
+      "tool": "trustgate_list_offers",
+      "args": {
+        "vault_id": "site-demo-mv9j9po2"
+      },
+      "isError": false,
+      "result": [
+        {
+          "offer_id": "offer-mv9jmbj0-87b19d",
+          "negotiation_id": "offer-mv9jmbj0-87b19d",
+          "vault_id": "site-demo-mv9j9po2",
+          "version": 1,
+          "origin": "posted",
+          "seller": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+          "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+          "amount_gen": "0.6",
+          "status": "OPEN",
+          "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, 100% upfront before work starts, non-refundable.",
+          "terms_hash": "af729eb0d3a2ff990bf07d5d6554872e2432e0bfa4c3259ce3183869b277a31a",
+          "previous_offer_id": null,
+          "signed_in": "https://explorer-studio-dev.genlayer.com/tx/0xc05e7450a5c876f02f194d5fe4b284cc653f9ea108158a1dd506ac1053f3b0de"
+        }
+      ]
+    },
+    {
+      "at": "2026-10-15T12:59:10.206Z",
+      "side": "buyer",
+      "tool": "trustgate_list_offers",
+      "args": {
+        "vault_id": "site-demo-mv9j9po2"
+      },
+      "isError": false,
+      "result": []
+    },
+    {
+      "at": "2026-10-15T12:59:21.905Z",
+      "side": "buyer",
+      "tool": "trustgate_list_offers",
+      "args": {
+        "vault_id": "site-demo-mv9j9po2"
+      },
+      "isError": false,
+      "result": [
+        {
+          "offer_id": "offer-mv9jomhx-d78bf7",
+          "negotiation_id": "offer-mv9jmbj0-87b19d",
+          "vault_id": "site-demo-mv9j9po2",
+          "version": 2,
+          "origin": "accepted_counterproposal",
+          "seller": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+          "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+          "amount_gen": "0.6",
+          "status": "OPEN",
+          "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, payment held in a secure escrow releasable upon delivery of the labels, or with a clear refund right if delivery fails.",
+          "terms_hash": "e01b6b027b1877385e65b3678e027e87732cfa349f590c454be1e80e8e2da19f",
+          "previous_offer_id": "offer-mv9jmbj0-87b19d",
+          "signed_in": "https://explorer-studio-dev.genlayer.com/tx/0x6ae3c33547f87b88226e20ba186e3fb4d070ee5a88998ca7e3a538ce3469c0e0"
+        }
+      ]
+    },
+    {
+      "at": "2026-10-15T12:59:25.491Z",
+      "side": "buyer",
+      "tool": "trustgate_request_commitment",
+      "args": {
+        "vault_id": "site-demo-mv9j9po2",
+        "offer_id": "offer-mv9jomhx-d78bf7",
+        "justification": "Revised terms signed by the seller."
+      },
+      "isError": false,
+      "result": {
+        "status": "pending",
+        "request_id": "mcp-mv9jpj5n-80cb03",
+        "offer_id": "offer-mv9jomhx-d78bf7",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "tx": "0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae",
+        "next": "Call trustgate_get_verdict with this request_id in about a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T12:59:25.686Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jpj5n-80cb03"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jpj5n-80cb03",
+        "status": "pending",
+        "note": "Not in the history yet (or refused by the contract). Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T12:59:36.073Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jpj5n-80cb03"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jpj5n-80cb03",
+        "status": "pending",
+        "note": "Not in the history yet (or refused by the contract). Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T12:59:47.645Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jpj5n-80cb03"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jpj5n-80cb03",
+        "offer_id": "offer-mv9jomhx-d78bf7",
+        "vault_id": "site-demo-mv9j9po2",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "status": "pending",
+        "verdict": "PENDING",
+        "risk": null,
+        "summary": null,
+        "mandate_violations": [],
+        "counterproposal": null,
+        "funds_moved": "none",
+        "tx": "0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae"
+      }
+    },
+    {
+      "at": "2026-10-15T12:59:58.103Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jpj5n-80cb03"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jpj5n-80cb03",
+        "status": "pending",
+        "note": "Not in the history yet (or refused by the contract). Try again in a minute."
+      }
+    },
+    {
+      "at": "2026-10-15T13:00:08.506Z",
+      "side": "buyer",
+      "tool": "trustgate_get_verdict",
+      "args": {
+        "request_id": "mcp-mv9jpj5n-80cb03"
+      },
+      "isError": false,
+      "result": {
+        "request_id": "mcp-mv9jpj5n-80cb03",
+        "offer_id": "offer-mv9jomhx-d78bf7",
+        "vault_id": "site-demo-mv9j9po2",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "status": "provisional",
+        "verdict": "ACCEPT",
+        "risk": "LOW",
+        "summary": "This deal fits the mandate because it is a research data service purchase within the 2 GEN cap and the payment is described as escrowed or refundable if delivery fails. The earlier payment-term violation appears fixed, and the deal text does not show a last-minute, changed, temporary, or personal payout address.",
+        "mandate_violations": [],
+        "counterproposal": null,
+        "funds_moved": "credited to the seller inside the vault (wallet payouts do not arrive on Studio Next yet)",
+        "tx": "0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae"
+      }
+    },
+    {
+      "at": "2026-10-15T13:00:10.807Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d"
+      },
+      "isError": false,
+      "result": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d",
+        "vault_id": "site-demo-mv9j9po2",
+        "seller": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "status": "ACCEPTED",
+        "latest_offer_id": "offer-mv9jomhx-d78bf7",
+        "latest_status": "ACCEPTED",
+        "link": "https://trustgate-v13.shoupeorg.workers.dev/?negotiation=offer-mv9jmbj0-87b19d",
+        "timeline": [
+          {
+            "step": "offer posted",
+            "version": 1,
+            "offer_id": "offer-mv9jmbj0-87b19d",
+            "signed_by": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+            "amount_gen": "0.6",
+            "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, 100% upfront before work starts, non-refundable.",
+            "status": "final",
+            "tx": "0xc05e7450a5c876f02f194d5fe4b284cc653f9ea108158a1dd506ac1053f3b0de"
+          },
+          {
+            "step": "GenLayer verdict",
+            "request_id": "mcp-mv9jn0rh-4348e3",
+            "offer_id": "offer-mv9jmbj0-87b19d",
+            "vault_id": "site-demo-mv9j9po2",
+            "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+            "amount_gen": "0.6",
+            "status": "final",
+            "verdict": "RENEGOTIATE",
+            "risk": "MEDIUM",
+            "summary": "The purchase of NLP data labels fits the research purpose of the mandate, but the payment term '100% upfront before work starts, non-refundable' violates the mandate's requirement for 'Only refundable or escrowed payments'. The payee address, while described as the provider's usual account, presents a risk that must be assessed from the deal text, which lacks this description.",
+            "mandate_violations": [
+              {
+                "evidence": "'Price 0.6 GEN, 100% upfront before work starts, non-refundable.'",
+                "explanation": "The mandate explicitly requires payments to be refundable or held in escrow. A 'non-refundable' upfront payment violates this rule.",
+                "rule": "Only refundable or escrowed payments"
+              }
+            ],
+            "counterproposal": {
+              "deal_text": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, payment held in a secure escrow releasable upon delivery of the labels, or with a clear refund right if delivery fails.",
+              "notes": "Changed the payment term from '100% upfront before work starts, non-refundable' to an escrowed or refundable structure, as required by the mandate. The core purpose, amount, and deliverable remain unchanged."
+            },
+            "funds_moved": "none",
+            "tx": "0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67",
+            "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67"
+          },
+          {
+            "step": "seller signed TrustGate's counterproposal",
+            "version": 2,
+            "offer_id": "offer-mv9jomhx-d78bf7",
+            "signed_by": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+            "amount_gen": "0.6",
+            "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, payment held in a secure escrow releasable upon delivery of the labels, or with a clear refund right if delivery fails.",
+            "status": "final",
+            "tx": "0x6ae3c33547f87b88226e20ba186e3fb4d070ee5a88998ca7e3a538ce3469c0e0"
+          },
+          {
+            "step": "GenLayer verdict",
+            "request_id": "mcp-mv9jpj5n-80cb03",
+            "offer_id": "offer-mv9jomhx-d78bf7",
+            "vault_id": "site-demo-mv9j9po2",
+            "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+            "amount_gen": "0.6",
+            "status": "provisional",
+            "verdict": "ACCEPT",
+            "risk": "LOW",
+            "summary": "This deal fits the mandate because it is a research data service purchase within the 2 GEN cap and the payment is described as escrowed or refundable if delivery fails. The earlier payment-term violation appears fixed, and the deal text does not show a last-minute, changed, temporary, or personal payout address.",
+            "mandate_violations": [],
+            "counterproposal": null,
+            "funds_moved": "credited to the seller inside the vault (wallet payouts do not arrive on Studio Next yet)",
+            "tx": "0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae",
+            "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-10-15T13:00:10.809Z",
+      "side": "buyer",
+      "tool": "trustgate_decline",
+      "args": {
+        "negotiation_id": "offer-mv9jmbj0-87b19d",
+        "reason": "not my offer"
+      },
+      "isError": true,
+      "result": "Error: TRUSTGATE_SELLER_PRIVATE_KEY is not set (or not a 0x-prefixed 64-hex key) in this MCP server's environment."
+    }
+  ],
+  "sellerTools": [
+    "trustgate_list_offers",
+    "trustgate_request_commitment",
+    "trustgate_get_verdict",
+    "trustgate_vault_status",
+    "trustgate_post_offer",
+    "trustgate_get_negotiation",
+    "trustgate_get_counterproposal",
+    "trustgate_accept_counterproposal",
+    "trustgate_counter_offer",
+    "trustgate_decline"
+  ],
+  "v1": {
+    "verdict": "RENEGOTIATE",
+    "tx": "0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67"
+  },
+  "v2": {
+    "verdict": "ACCEPT",
+    "tx": "0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae"
+  },
+  "final": {
+    "negotiation_id": "offer-mv9jmbj0-87b19d",
+    "vault_id": "site-demo-mv9j9po2",
+    "seller": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+    "status": "ACCEPTED",
+    "latest_offer_id": "offer-mv9jomhx-d78bf7",
+    "latest_status": "ACCEPTED",
+    "link": "https://trustgate-v13.shoupeorg.workers.dev/?negotiation=offer-mv9jmbj0-87b19d",
+    "timeline": [
+      {
+        "step": "offer posted",
+        "version": 1,
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "signed_by": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, 100% upfront before work starts, non-refundable.",
+        "status": "final",
+        "tx": "0xc05e7450a5c876f02f194d5fe4b284cc653f9ea108158a1dd506ac1053f3b0de"
+      },
+      {
+        "step": "GenLayer verdict",
+        "request_id": "mcp-mv9jn0rh-4348e3",
+        "offer_id": "offer-mv9jmbj0-87b19d",
+        "vault_id": "site-demo-mv9j9po2",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "status": "final",
+        "verdict": "RENEGOTIATE",
+        "risk": "MEDIUM",
+        "summary": "The purchase of NLP data labels fits the research purpose of the mandate, but the payment term '100% upfront before work starts, non-refundable' violates the mandate's requirement for 'Only refundable or escrowed payments'. The payee address, while described as the provider's usual account, presents a risk that must be assessed from the deal text, which lacks this description.",
+        "mandate_violations": [
+          {
+            "evidence": "'Price 0.6 GEN, 100% upfront before work starts, non-refundable.'",
+            "explanation": "The mandate explicitly requires payments to be refundable or held in escrow. A 'non-refundable' upfront payment violates this rule.",
+            "rule": "Only refundable or escrowed payments"
+          }
+        ],
+        "counterproposal": {
+          "deal_text": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, payment held in a secure escrow releasable upon delivery of the labels, or with a clear refund right if delivery fails.",
+          "notes": "Changed the payment term from '100% upfront before work starts, non-refundable' to an escrowed or refundable structure, as required by the mandate. The core purpose, amount, and deliverable remain unchanged."
+        },
+        "funds_moved": "none",
+        "tx": "0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0x769a4cbb066bcd7089820566a3303042ea0bfd84732ef8ced3bca056056baf67"
+      },
+      {
+        "step": "seller signed TrustGate's counterproposal",
+        "version": 2,
+        "offer_id": "offer-mv9jomhx-d78bf7",
+        "signed_by": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, payment held in a secure escrow releasable upon delivery of the labels, or with a clear refund right if delivery fails.",
+        "status": "final",
+        "tx": "0x6ae3c33547f87b88226e20ba186e3fb4d070ee5a88998ca7e3a538ce3469c0e0"
+      },
+      {
+        "step": "GenLayer verdict",
+        "request_id": "mcp-mv9jpj5n-80cb03",
+        "offer_id": "offer-mv9jomhx-d78bf7",
+        "vault_id": "site-demo-mv9j9po2",
+        "payee": "0xa1fdfea7462f2f10965145bca42e1d2e7f7be1db",
+        "amount_gen": "0.6",
+        "status": "provisional",
+        "verdict": "ACCEPT",
+        "risk": "LOW",
+        "summary": "This deal fits the mandate because it is a research data service purchase within the 2 GEN cap and the payment is described as escrowed or refundable if delivery fails. The earlier payment-term violation appears fixed, and the deal text does not show a last-minute, changed, temporary, or personal payout address.",
+        "mandate_violations": [],
+        "counterproposal": null,
+        "funds_moved": "credited to the seller inside the vault (wallet payouts do not arrive on Studio Next yet)",
+        "tx": "0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae",
+        "explorer": "https://explorer-studio-dev.genlayer.com/tx/0xdf724a83a0de0f46d0ba3af5d6e6925d397719b1903178e8ac1b6f4a1f9829ae"
+      }
+    ]
+  },
+  "ok": true,
+  "finishedAt": "2026-10-15T13:00:10.810Z"
+}

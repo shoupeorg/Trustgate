@@ -1,0 +1,45 @@
+{
+  "base": "https://trustgate-v13.shoupeorg.workers.dev",
+  "owner": "0x2b542c53920fdec0DD61C135c12B7E7Caae0EC1B",
+  "seller": "0x7062dC638aBd67Eb1fca0C3aC993Aa2867c78d50",
+  "startedAt": "2026-10-15T12:50:35.353Z",
+  "steps": [
+    {
+      "name": "A: Get test GEN (site faucet)",
+      "ok": true,
+      "ms": 2379,
+      "detail": {
+        "msg": "3 test GEN sent. tx ↗",
+        "tx": "https://explorer-studio-dev.genlayer.com/tx/0x120dd9c874572b5c34517f73f993fe86c96dcfdfa48364c18d94457fa23c470b"
+      }
+    },
+    {
+      "name": "B: Get test GEN (site faucet)",
+      "ok": true,
+      "ms": 332,
+      "detail": {
+        "msg": "Limit reached: 3 claims per network per 24 h."
+      }
+    },
+    {
+      "name": "A: create browser agent key and fund it with 1 GEN",
+      "ok": true,
+      "ms": 10667,
+      "detail": {
+        "agent": "0x2d228B7f15B535005FC39Ea4c8F1C5D4aEF0512C"
+      }
+    },
+    {
+      "name": "A: create vault (cap 1, deposit 2; fee shown before signing)",
+      "ok": false,
+      "ms": 183322,
+      "error": "locator.textContent: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.v13-tx code').first()\u001b[22m\n"
+    },
+    {
+      "name": "B: Seller tab, post a signed offer to A's vault",
+      "ok": false,
+      "ms": 784,
+      "error": "locator.fill: value: expected string, got object"
+    }
+  ]
+}

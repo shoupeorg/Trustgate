@@ -1,0 +1,9 @@
+{
+  "contract": "0x53E6f0eC998d9BfAd1CA3753252EE94b2cd16BF0",
+  "vaultId": "site-demo-mv9j9po2",
+  "buyer": "0x1c15a3d36104399e0e7eedc57b419386ae60b6ce",
+  "mandate": "Buy data or compute services for research. Only refundable or escrowed payments. Never pay an address the counterparty supplies at the last minute. Max 2 GEN per commitment.",
+  "deposit_gen": "5",
+  "createTx": "0xd03ca25696d26bd66bde1a85fffca5aaa7454492d3f27b7a72a78940e40f66aa",
+  "at": "2026-10-15T12:47:14.116Z"
+}

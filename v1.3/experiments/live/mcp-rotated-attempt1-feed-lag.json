@@ -1,0 +1,37 @@
+{
+  "site": "https://trustgate-v13.shoupeorg.workers.dev",
+  "contract": "0x53E6f0eC998d9BfAd1CA3753252EE94b2cd16BF0",
+  "vault": "site-demo-mv9j9po2",
+  "seller": "0xa1fdFea7462F2F10965145bca42e1D2E7f7bE1db",
+  "buyer": "0x1c15a3d36104399e0e7eedc57b419386ae60b6ce",
+  "startedAt": "2026-10-15T12:52:37.479Z",
+  "calls": [
+    {
+      "at": "2026-10-15T12:52:42.262Z",
+      "side": "seller",
+      "tool": "trustgate_post_offer",
+      "args": {
+        "vault_id": "site-demo-mv9j9po2",
+        "amount_gen": "0.6",
+        "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, 100% upfront before work starts, non-refundable."
+      },
+      "isError": true,
+      "result": "Error: Vault \"site-demo-mv9j9po2\" was not found on contract 0x53E6f0eC998d9BfAd1CA3753252EE94b2cd16BF0."
+    }
+  ],
+  "sellerTools": [
+    "trustgate_list_offers",
+    "trustgate_request_commitment",
+    "trustgate_get_verdict",
+    "trustgate_vault_status",
+    "trustgate_post_offer",
+    "trustgate_get_negotiation",
+    "trustgate_get_counterproposal",
+    "trustgate_accept_counterproposal",
+    "trustgate_counter_offer",
+    "trustgate_decline"
+  ],
+  "ok": false,
+  "error": "post_offer failed: Error: Vault \"site-demo-mv9j9po2\" was not found on contract 0x53E6f0eC998d9BfAd1CA3753252EE94b2cd16BF0.",
+  "finishedAt": "2026-10-15T12:52:42.263Z"
+}

@@ -1,0 +1,71 @@
+{
+  "scenario": "reneg-accept",
+  "contract": "0xdF2FEeED57870803f2707E02F7F568d39ccA8C05",
+  "vaultId": "public-demo-mv989lyt",
+  "mandate": "Buy data or compute services for research. Only refundable or escrowed payments. Never pay an address the counterparty supplies at the last minute. Max 2 GEN per commitment.",
+  "seller": "0x3672a680febb7af3a7ce1932803a770d28d1fc22",
+  "buyer": "0xf02c68e73ea781cf16416e4fc7c18c71641e044b",
+  "sellerGoal": "You would like to be paid upfront at first, because chargebacks have hurt you before. But closing this sale matters more to you than upfront payment: if the buyer's side insists on refundable or escrowed terms, you are willing to accept them.",
+  "product": "LinguaSet: a 40,000-sentence parallel English-Persian corpus with quality scores, delivered as CSV within 48 hours",
+  "startedAt": "2026-10-15T07:56:45.957Z",
+  "steps": [
+    {
+      "at": "2026-10-15T07:57:01.311Z",
+      "who": "seller agent",
+      "what": "wrote its first offer",
+      "brainTx": "0x8567319296cb6df9b8dc53ae367f15c5d0db2059b598f3d4e8fd8a848f60ad3d",
+      "output": {
+        "amount_gen": 1.5,
+        "terms": "I will deliver LinguaSet: a 40,000-sentence parallel English-Persian corpus with sentence-level quality scores, as a CSV file, within 48 hours of confirmed payment. The total price is 1.5 GEN. I require full upfront payment to release the dataset. However, if the buyer insists on escrowed or conditional terms through TrustGate, I am willing to accept payment held in escrow, to be released to me upon successful delivery of the CSV file as described. No refunds will be issued after the file has been delivered and confirmed as valid."
+      }
+    },
+    {
+      "at": "2026-10-15T07:57:12.510Z",
+      "who": "seller",
+      "what": "posted offer v1 (1.5 GEN), signed by its wallet",
+      "tx": "0xc666fcb991b606d0985e5601f3c33c4d09a97504c0b4a0f1c06c9b39502f1382",
+      "offerId": "nego-reneg-accept-mv98wpof",
+      "version": 1,
+      "terms": "I will deliver LinguaSet: a 40,000-sentence parallel English-Persian corpus with sentence-level quality scores, as a CSV file, within 48 hours of confirmed payment. The total price is 1.5 GEN. I require full upfront payment to release the dataset. However, if the buyer insists on escrowed or conditional terms through TrustGate, I am willing to accept payment held in escrow, to be released to me upon successful delivery of the CSV file as described. No refunds will be issued after the file has been delivered and confirmed as valid.",
+      "termsHash": "8c8d86a5c26ae2c4cf3c9d0b2ac24f9d37847b15761cc739e301232e5a21c376"
+    },
+    {
+      "at": "2026-10-15T07:57:28.401Z",
+      "who": "buyer agent",
+      "what": "decided to request the offer",
+      "brainTx": "0xbf1470054422a735be3cf789ca0ad398d8baf0ff2ec264308dcc13e9f0806451",
+      "output": {
+        "request": true,
+        "justification": "LinguaSet provides 40k English-Persian parallel sentences with quality scores — valuable for NLP/MT research. Escrow terms protect the lab. No prior refusal by TrustGate. Relevant multilingual training data for an AI research lab.",
+        "reason": "The dataset is directly relevant to an AI research lab's NLP work. The seller accepts escrow/conditional payment through TrustGate, mitigating risk. This is a first-time offer (version 1) with no prior TrustGate refusal. Per agent policy, requesting is always safe as TrustGate will validate against the owner's mandate."
+      }
+    },
+    {
+      "at": "2026-10-15T07:57:43.126Z",
+      "who": "GenLayer validators",
+      "what": "verdict on v1: ACCEPT (LOW)",
+      "tx": "0x05be43901c0b63bf5448b6b5973133b52df8a9f948da5b5edb0b103361b03091",
+      "status": "ACCEPTED",
+      "requestId": "nego-reneg-accept-mv98wpof-req",
+      "judgment": {
+        "confidence": "HIGH",
+        "counterproposal": {
+          "deal_text": "",
+          "notes": ""
+        },
+        "decision": "ACCEPT",
+        "mandate_violations": [],
+        "risk": "LOW",
+        "summary": "The request for the LinguaSet dataset aligns with the mandate's purpose of buying research data and falls within the specified budget. The seller explicitly agrees to use an escrow mechanism where funds are released only upon successful delivery, satisfying the mandate's requirement for escrowed payments."
+      }
+    },
+    {
+      "at": "2026-10-15T07:57:43.127Z",
+      "who": "contract",
+      "what": "credited 1.5 GEN to the seller inside the vault (seller-signed v1)"
+    }
+  ],
+  "negotiationId": "nego-reneg-accept-mv98wpof",
+  "outcome": "ACCEPTED",
+  "finishedAt": "2026-10-15T07:57:43.127Z"
+}

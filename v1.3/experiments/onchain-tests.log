@@ -1,0 +1,54 @@
+- create_vault: invalid agent address is refused and the deposit credited back … ok 0x5f521819d7c2066b21a477cd264d8957219e008292654fa8cfd563894130c17e
+- create_vault: owner == agent is refused … ok 0xeabf1091a6c1f7e2f387ac2ba62f7afbb0558375eb22a2b047751af9fe83782e
+- create_vault: negative total cap is refused … ok 0x373b019d86095e850b3370ebf4458b89dc630e1677d10731aa9ff5a789c7e872
+- create_vault: vault A (cap 0.2, total cap 0.3, no allowlist, deposit 0.4) … ok 0xeca340e456f0d404249a24403ba22150d4375a1551bb2c5875f58710efa55537
+- create_vault: vault B (allowlist = [seller2], deposit 0.05) … ok 0x10e9276690c20117ae7f7a3a6cc228043f4773ec0e0e16eb91b635dc58c57535
+- create_vault: duplicate vault id is refused … ok 0x01f5bea3e3008c95f49affa3f83bd0e4300b21c8407fa782facc35b507d1b14f
+- top_up by a non-owner is refused and credited back … ok 0x95ea4b3589ad839f805fb11fd6f2420e491c0340c30a76d5d5873654e795f1aa
+- post_offer to a vault that does not exist fails … ok 
+- post_offer with zero amount fails … ok 
+- post_offer with terms over 6000 characters fails … ok 
+- post_offer: seller posts offer v1; payee is the signer and the hash matches the exact text … ok 0x56c619fdbc15edb8bd871ec4df956d4480e1042f874b5dfecb83a7f55cde8dee
+- post_offer: duplicate offer_id fails … ok 
+- someone else cannot change the seller's offer (counter_offer by seller2) … ok 
+- someone else cannot decline the seller's offer … ok 
+- accept_counterproposal before any verdict fails … ok 
+- request_commitment from a non-agent fails … ok 
+- request against an offer that does not exist (unsigned text) fails … ok 
+- request with a hash of edited text fails … ok 
+- request referencing an offer of another vault fails … ok 
+- justification over 1500 characters fails … ok 
+- offer over the cap: request is blocked by hard limits (no judgment) … ok 0xfd6ed4569d8a231b5309c57daebe21198b4ef1dc6c65cc8dbe3653c8a668a3c1
+- seller counters twice (v2, v3); versions are linked … ok 0xe965a32029a346d3e5746297309790f6f600e9d732d28fb7ff43f13d2d806901
+- request on an old version after a newer one exists fails … ok 
+- counter on an old version fails … ok 
+- seller declines v3: negotiation closed … ok 0xe2e178f2038cd9a2a77ecfc975c17478307a7f4af0c4be0aad803527a83ac57c
+- request after the seller declined fails … GenLayer RPC error (eth_getTransactionByHash): fetch failed
+ok 
+- vault B: payee not on the owner's allowlist is blocked by hard limits … ok 0xd7ec6593a38dd03d198a2563e4ac6482214375c559b260359914e3a7675f5ab6
+- offer spam limit: a 4th open negotiation by the same seller on the same vault fails … ok 0x80c0e5dea1b60cab6d76c555f9b6785fb27eeaf64a0971f87545fec5d05921de
+- offer spam limit: counter offers do not count; the limit is per vault … ok 
+- offer spam limit: declining one frees a slot … ok 0x70efa151a0bff7cf13cbc014e2fc4f89168149dc4ca8bfaa0fc4686854a5f057
+- seller tries to pay the agent: the agent posting an offer is blocked (agent cannot pay itself) … ok 0x86392b13e296b1aa919c59e2ec6aa7a0c066a70621fbf0b58d6b8dec9d1505d3
+- N1: buyer requests offer v1 → GenLayer verdict (expect RENEGOTIATE with a counterproposal) … ok 0x4f821becd119a4b257be9e948ee14679f47d95e07249fe48bd2c8d81db25fd49
+- N1: replayed request_id fails … ok 
+- N1: a second request on the same version fails (verdict already given) … ok 
+- N1: seller signing a different text than the counterproposal fails … ok 
+- N1: someone other than the seller cannot accept the counterproposal … ok 
+- N1: seller never responds; nothing is credited to the seller … ok 
+- N1: a stranger cannot close the negotiation … ok 
+- N1: the buyer's agent withdraws after no response … ok 0x65fe15b09e7c1433638a978207f25f5a2eed07c16dfaff4c2393708cf764a229
+- N1: the seller can no longer accept after the buyer withdrew … ok 
+- N2: seller posts v1, buyer requests → verdict (expect RENEGOTIATE) … ok 0xe8d2d1bac4a8e64dc2a84ec6e9d674f0c669ce22da118d14cdc063e468cdd261
+- N2: seller accepts the counterproposal word for word → v2 signed by the seller … ok 0xd031931a4cd1a89d6bca6f7e63c2c03f0f441bf89e5ef51fe5754aab2ce18ed4
+- N2: request on v1 after v2 exists fails (no ACCEPT on an old version) … ok 
+- N2: buyer requests v2 → verdict (expect ACCEPT, seller credited) … ok 0xea85b3edd31f636dabff3081b57650b5c8a1d25cd95011735329614618dabf64
+- N2: after ACCEPT the seller's credit is withdrawable (proves the credit) … ok 0xf8e68adb9c4812c59939472d938fd40cb5f8a0b5c0ab95cd490248b73aa17daf
+- N2: negotiation is closed after ACCEPT; no second payment … ok 
+- N2: total spend cap binds: a further 0.2 GEN offer is blocked by hard limits … ok 0xc5bbde85e828b292276d2a6039f04c20880c0785f26af0e0ae6f6259f97e9045
+- owner_reclaim more than the vault holds fails … ok 
+- owner_reclaim a valid amount credits the owner … ok 0x67dd86d059862f218cffbbb653d4c3fe7be2a4335bd6ee8f4ea15bec088290ae
+- withdraw more than the credit fails … ok 
+
+50/50 on-chain tests passed (0 skipped). Log: experiments/onchain-tests.json
+EXIT 0

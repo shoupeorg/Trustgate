@@ -1,0 +1,9 @@
+Vault public-demo-mv9boi2s on 0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3 · buyer agent 0xf02c68e73ea781cf16416e4fc7c18c71641e044b · seller agent 0x3672a680febb7af3a7ce1932803a770d28d1fc22
+- seller agent: wrote its first offer
+- seller: posted offer v1 (1.5 GEN), signed by its wallet · https://explorer-studio-dev.genlayer.com/tx/0x4fc0e94695a9cf72fa48b75e3b9085e8166c3784b5479d3f01b3d5c0302d2a7d
+- buyer agent: decided to request the offer
+- GenLayer validators: verdict on v1: ACCEPT (LOW) · https://explorer-studio-dev.genlayer.com/tx/0xf948cc47b78ec2de2cc828a38aacc859d74206144ceb515c00702f7a6c752324
+- contract: credited 1.5 GEN to the seller inside the vault (seller-signed v1)
+
+Outcome: ACCEPTED. Transcript: experiments/negotiation-demo/reneg-accept-2026-10-15T09-14-46-049Z.md
+EXIT 0

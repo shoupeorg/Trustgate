@@ -1,0 +1,22 @@
+{
+  "name": "trustgate-mcp",
+  "version": "1.3.0",
+  "private": true,
+  "description": "MCP server that lets an AI agent request payments from a TrustGate V1.3 vault on GenLayer Studio Next.",
+  "type": "module",
+  "bin": { "trustgate-mcp": "dist/index.js" },
+  "scripts": {
+    "build": "node scripts/sync.mjs && tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "test:live": "node test/live.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.31.0",
+    "genlayer-js": "2.0.0-rc.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "26.4.1",
+    "typescript": "6.0.3"
+  }
+}

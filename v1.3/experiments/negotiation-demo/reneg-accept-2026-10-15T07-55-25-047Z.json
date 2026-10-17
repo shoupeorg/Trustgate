@@ -1,0 +1,71 @@
+{
+  "scenario": "reneg-accept",
+  "contract": "0xdF2FEeED57870803f2707E02F7F568d39ccA8C05",
+  "vaultId": "public-demo-mv989lyt",
+  "mandate": "Buy data or compute services for research. Only refundable or escrowed payments. Never pay an address the counterparty supplies at the last minute. Max 2 GEN per commitment.",
+  "seller": "0x3672a680febb7af3a7ce1932803a770d28d1fc22",
+  "buyer": "0xf02c68e73ea781cf16416e4fc7c18c71641e044b",
+  "sellerGoal": "You would like to be paid upfront at first, because chargebacks have hurt you before. But closing this sale matters more to you than upfront payment: if the buyer's side insists on refundable or escrowed terms, you are willing to accept them.",
+  "product": "LinguaSet: a 40,000-sentence parallel English-Persian corpus with quality scores, delivered as CSV within 48 hours",
+  "startedAt": "2026-10-15T07:55:25.046Z",
+  "steps": [
+    {
+      "at": "2026-10-15T07:55:41.286Z",
+      "who": "seller agent",
+      "what": "wrote its first offer",
+      "brainTx": "0xbed4d387dc78b092d3f60cb1eef83ba6e3799669238026c96e8af3ca356a31a5",
+      "output": {
+        "amount_gen": 1.5,
+        "terms": "Offer v1 — LinguaSet\n\nDeliverable: LinguaSet, a parallel English-Persian corpus containing 40,000 sentence pairs, with per-row quality scores, delivered as CSV.\n\nDelivery deadline: within 48 hours after contract funding/acceptance through TrustGate.\n\nPrice: 1.5 GEN.\n\nPayment terms: Seller requests full payment upfront into TrustGate at acceptance. Funds may be released to seller upon confirmed delivery of the CSV matching the description above.\n\nRefund terms: If seller does not deliver within 48 hours, buyer receives a full refund from TrustGate. If the delivered file is materially incomplete or does not match the stated deliverable (40,000 English-Persian sentence pairs with quality scores in CSV format), buyer may reject delivery and receive a full refund through TrustGate’s dispute process.\n\nGood-faith flexibility: Seller prefers upfront funding due to prior chargeback risk, but is willing to proceed under refundable or escrowed TrustGate terms if required to close."
+      }
+    },
+    {
+      "at": "2026-10-15T07:55:57.723Z",
+      "who": "seller",
+      "what": "posted offer v1 (1.5 GEN), signed by its wallet",
+      "tx": "0xd1e4620e75cb9eb4035ce9a65296a0bdc141162a3fba8316aa71bb55edafd094",
+      "offerId": "nego-reneg-accept-mv98uzxi",
+      "version": 1,
+      "terms": "Offer v1 — LinguaSet\n\nDeliverable: LinguaSet, a parallel English-Persian corpus containing 40,000 sentence pairs, with per-row quality scores, delivered as CSV.\n\nDelivery deadline: within 48 hours after contract funding/acceptance through TrustGate.\n\nPrice: 1.5 GEN.\n\nPayment terms: Seller requests full payment upfront into TrustGate at acceptance. Funds may be released to seller upon confirmed delivery of the CSV matching the description above.\n\nRefund terms: If seller does not deliver within 48 hours, buyer receives a full refund from TrustGate. If the delivered file is materially incomplete or does not match the stated deliverable (40,000 English-Persian sentence pairs with quality scores in CSV format), buyer may reject delivery and receive a full refund through TrustGate’s dispute process.\n\nGood-faith flexibility: Seller prefers upfront funding due to prior chargeback risk, but is willing to proceed under refundable or escrowed TrustGate terms if required to close.",
+      "termsHash": "e10ca39923188a6c45b9e18634cbe84c8bd3d357556d10a49404eb9778079b81"
+    },
+    {
+      "at": "2026-10-15T07:56:13.032Z",
+      "who": "buyer agent",
+      "what": "decided to request the offer",
+      "brainTx": "0x35c31673da93031a6a9bb69f7a0c611ceca87e4f30a2b673571a4aed96c06d8b",
+      "output": {
+        "request": true,
+        "justification": "Useful multilingual NLP data: 40k English-Persian parallel pairs with quality scores can support translation, alignment, evaluation, and low-resource language research. Escrow/refund terms and 48h delivery limit risk.",
+        "reason": "Relevant research dataset for the lab; no prior refusal indicated, and TrustGate/GenLayer will enforce mandate and payment safeguards."
+      }
+    },
+    {
+      "at": "2026-10-15T07:56:44.169Z",
+      "who": "GenLayer validators",
+      "what": "verdict on v1: ACCEPT (LOW)",
+      "tx": "0xd92dfed69f53fdb0aab74a4dbcff10c627975cb4993dd52cde0a3bca1b55e869",
+      "status": "ACCEPTED",
+      "requestId": "nego-reneg-accept-mv98uzxi-req",
+      "judgment": {
+        "confidence": "HIGH",
+        "counterproposal": {
+          "deal_text": "",
+          "notes": ""
+        },
+        "decision": "ACCEPT",
+        "mandate_violations": [],
+        "risk": "LOW",
+        "summary": "The commitment fits the mandate because it purchases research data, costs 1.5 GEN which is within the 2 GEN cap, and uses TrustGate refund/escrow terms. The deal text does not show a last-minute, changed, temporary, or personal payee address, so there is no stated address violation under the mandate."
+      }
+    },
+    {
+      "at": "2026-10-15T07:56:44.169Z",
+      "who": "contract",
+      "what": "credited 1.5 GEN to the seller inside the vault (seller-signed v1)"
+    }
+  ],
+  "negotiationId": "nego-reneg-accept-mv98uzxi",
+  "outcome": "ACCEPTED",
+  "finishedAt": "2026-10-15T07:56:44.170Z"
+}

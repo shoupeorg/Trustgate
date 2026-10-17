@@ -1,0 +1,129 @@
+{
+  "scenario": "reneg-accept",
+  "contract": "0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3",
+  "vaultId": "public-demo-mv9boi2s",
+  "mandate": "Buy data or compute services for research. Only refundable or escrowed payments. Never pay an address the counterparty supplies at the last minute. Max 2 GEN per commitment.",
+  "seller": "0x3672a680febb7af3a7ce1932803a770d28d1fc22",
+  "buyer": "0xf02c68e73ea781cf16416e4fc7c18c71641e044b",
+  "sellerGoal": "You would like to be paid upfront at first, because chargebacks have hurt you before. But closing this sale matters more to you than upfront payment: if the buyer's side insists on refundable or escrowed terms, you are willing to accept them.",
+  "product": "LinguaSet: a 40,000-sentence parallel English-Persian corpus with quality scores, delivered as CSV within 48 hours",
+  "startedAt": "2026-10-15T09:16:41.987Z",
+  "steps": [
+    {
+      "at": "2026-10-15T09:16:59.292Z",
+      "who": "seller agent",
+      "what": "wrote its first offer",
+      "brainTx": "0xd23d436552b1bc1116f638eae7bd4cccd6efe4a42413f36d697625a1413a95b6",
+      "output": {
+        "amount_gen": 1.5,
+        "terms": "Delivery of LinguaSet, a parallel English-Persian corpus consisting of 40,000 sentences with associated quality scores. The product will be delivered in CSV format via the buyer's registered email or secure download link within 48 hours of contract execution. Payment of 1.5 GEN is due upfront. Due to the digital nature of the product, all sales are final and non-refundable once the data has been delivered."
+      }
+    },
+    {
+      "at": "2026-10-15T09:17:08.051Z",
+      "who": "seller",
+      "what": "posted offer v1 (1.5 GEN), signed by its wallet",
+      "tx": "0xec35459f8642d8e58a61c68a30c9c457be22bb8e0794890e5664a8c1ced80074",
+      "offerId": "nego-reneg-accept-mv9brjtn",
+      "version": 1,
+      "terms": "Delivery of LinguaSet, a parallel English-Persian corpus consisting of 40,000 sentences with associated quality scores. The product will be delivered in CSV format via the buyer's registered email or secure download link within 48 hours of contract execution. Payment of 1.5 GEN is due upfront. Due to the digital nature of the product, all sales are final and non-refundable once the data has been delivered.",
+      "termsHash": "c713c35993dc9d108fa0f96bd7f92285cd7395013e300868a5b37a1ba0e67218"
+    },
+    {
+      "at": "2026-10-15T09:17:23.549Z",
+      "who": "buyer agent",
+      "what": "decided to request the offer",
+      "brainTx": "0x6113ab96e0de324e87f49abb02adb67830e3bf7206814c0888df6860b8d982e9",
+      "output": {
+        "request": true,
+        "justification": "LinguaSet enhances NLP research with high-quality parallel English-Persian data, improving multilingual model training and evaluation. Useful for cross-lingual transfer, translation, and low-resource language studies.",
+        "reason": "The dataset aligns with the lab's focus on multilingual AI and low-resource language research, offering immediate utility for ongoing projects."
+      }
+    },
+    {
+      "at": "2026-10-15T09:17:44.231Z",
+      "who": "GenLayer validators",
+      "what": "verdict on v1: RENEGOTIATE (MEDIUM)",
+      "tx": "0x9e7c3f48be003b389115faa9ff4b24e310d5df73619c1c10bc1238c50a61f707",
+      "status": "ACCEPTED",
+      "requestId": "nego-reneg-accept-mv9brjtn-req",
+      "judgment": {
+        "confidence": "HIGH",
+        "counterproposal": {
+          "deal_text": "Delivery of LinguaSet, a parallel English-Persian corpus consisting of 40,000 sentences with associated quality scores. The product will be delivered in CSV format via the buyer's registered email or secure download link within 48 hours of contract execution. Payment of 1.5 GEN will be made through escrow and released to the seller only after delivery of the dataset as described, or the payment will be fully refundable if delivery does not occur within 48 hours.",
+          "notes": "This keeps the same research data purchase and price, but changes the payment term to satisfy the mandate by making the payment escrowed or fully refundable upon non-delivery."
+        },
+        "decision": "RENEGOTIATE",
+        "mandate_violations": [
+          {
+            "evidence": "The deal text states: \"Payment of 1.5 GEN is due upfront\" and \"all sales are final and non-refundable once the data has been delivered.\"",
+            "explanation": "The mandate permits research data purchases, but it requires the payment to be refundable or escrowed. An upfront payment with no refund right is neither refundable nor escrowed.",
+            "rule": "Only refundable or escrowed payments."
+          }
+        ],
+        "risk": "MEDIUM",
+        "summary": "The purchase purpose fits the mandate because it is research data, and the amount is within the 2 GEN cap. However, the current terms violate the mandate requirement for refundable or escrowed payments because payment is due upfront and the deal says all sales are final and non-refundable."
+      }
+    },
+    {
+      "at": "2026-10-15T09:17:54.280Z",
+      "who": "seller agent",
+      "what": "chose \"accept\"",
+      "brainTx": "0x3068af2b57b1aa10bc1a46c0396638383cfb1bfc3e33dd07a81355cf6956da97",
+      "output": {
+        "action": "accept",
+        "amount_gen": 1.5,
+        "terms": "",
+        "reason": "Closing the sale is the priority, and the escrow/refundable terms proposed by TrustGate align with the buyer's mandate while still ensuring payment upon delivery."
+      }
+    },
+    {
+      "at": "2026-10-15T09:18:06.469Z",
+      "who": "seller",
+      "what": "signed TrustGate's counterproposal as v2",
+      "tx": "0xeeaa80f0d3e03a28658373041596029e5c6291eb8f3287aca7e569418c5cfed2",
+      "offerId": "nego-reneg-accept-mv9brjtn-v2",
+      "version": 2,
+      "terms": "Delivery of LinguaSet, a parallel English-Persian corpus consisting of 40,000 sentences with associated quality scores. The product will be delivered in CSV format via the buyer's registered email or secure download link within 48 hours of contract execution. Payment of 1.5 GEN will be made through escrow and released to the seller only after delivery of the dataset as described, or the payment will be fully refundable if delivery does not occur within 48 hours.",
+      "termsHash": "9f7cd1029b7e33b9a861e53b2876895661a3ad76937b4f1083d86a2d65657e66"
+    },
+    {
+      "at": "2026-10-15T09:18:27.286Z",
+      "who": "buyer agent",
+      "what": "decided to request the offer",
+      "brainTx": "0x31965553090475d798a9fdbd0ca6e9ad6457dc3df93861daf63f65389bc50186",
+      "output": {
+        "request": true,
+        "justification": "Valuable parallel corpus for NLP research. Mandate-compliant escrow with refund if not delivered in 48 hours.",
+        "reason": "Seller's current offer (version 2) now includes a payment escrow and refund clause if delivery fails, directly addressing TrustGate's prior renegotiation reason. The product is relevant research data and the price is within cap."
+      }
+    },
+    {
+      "at": "2026-10-15T09:18:48.623Z",
+      "who": "GenLayer validators",
+      "what": "verdict on v2: ACCEPT (LOW)",
+      "tx": "0x7ad4e5e2c0ea1983eed335550cecdf2303b309f9d941a999a5034ac213c2ddfc",
+      "status": "ACCEPTED",
+      "requestId": "nego-reneg-accept-mv9brjtn-v2-req",
+      "judgment": {
+        "confidence": "HIGH",
+        "counterproposal": {
+          "deal_text": "",
+          "notes": ""
+        },
+        "decision": "ACCEPT",
+        "mandate_violations": [],
+        "risk": "LOW",
+        "summary": "The deal fits the mandate because it purchases research data and uses escrow with release only after delivery, with a full refund if delivery does not occur within 48 hours. The amount is within the 2 GEN cap, and the current revision fixes the earlier payment-term violation noted in the parent judgment."
+      }
+    },
+    {
+      "at": "2026-10-15T09:18:48.624Z",
+      "who": "contract",
+      "what": "credited 1.5 GEN to the seller inside the vault (seller-signed v2)"
+    }
+  ],
+  "negotiationId": "nego-reneg-accept-mv9brjtn",
+  "outcome": "ACCEPTED",
+  "finishedAt": "2026-10-15T09:18:48.624Z"
+}

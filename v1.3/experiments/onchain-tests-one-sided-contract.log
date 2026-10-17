@@ -1,0 +1,24 @@
+- create_vault: invalid agent address is refused and the deposit credited back … ok 0x5860e625127b59fb1b1760da2cf2c2e9701c3891b315a78a8d9e84835c99c7ec
+- create_vault: owner == agent is refused … GenLayer RPC error (eth_getTransactionByHash): fetch failed
+ok 0xdd90c4f7cab5feb6bd03f75ee24a4d3ad4f43a1248b26921ce7eca7be2ac7f3c
+- create_vault: invalid allowlist entry is refused … ok 0x424b7b4a5446fcb5e72d80949079488277c26a7452d82b5520fed2a26febeff8
+- create_vault: negative total cap is refused … ok 0xdde05f958efd58c94fb66f4560d549111880fe1ae045d2d0ef0ada346ad7470c
+- create_vault: valid vault (cap 0.2, total cap 0.3, allowlist [payeeA], deposit 0.5) … ok 0xe9b0564d58751256ac4814e749727f039b308aeed14f6e2489cd1f061c3eb648
+- create_vault: duplicate vault id is refused … ok 0x39e25cc3f3bd5a81eb153b330454a5c312012eeb969761424152b07e844475c1
+- top_up by a non-owner is refused and credited back … ok 0xc652bb30caf8a3c657993f3248e5af1edc1083ece5376c8da4b619e0ab636969
+- request_commitment from a non-agent fails … ok 0xdc227321ee44e7793de6bea1c558bb8904d108da960209b6a906a483738013f5
+- zero amount: blocked deterministically (no judgment) … ok 0x3adec651aab5f924142648f8e4f909d679491011ada66570e28a7d85085a451c
+- huge amount (2^300): blocked deterministically, no overflow … ok 0x0662c47a459171fdcc07afeab947b14209cec56e0f467c567958cffb8e3c065c
+- payee not on the allowlist: blocked deterministically … ok 0x6dfa9e32dcdb6069f4fb8e5f300419dd40c5f5eea1b5cf45f332f7ab45460cfb
+- request_id reuse fails … ok 0x2161261be4cc90d5e7f8bbe9a5a18429335bbf1b4d60e397265efbd5ce3ad256
+- deal text over 6000 characters fails (no silent truncation) … GenLayer RPC error (eth_sendRawTransaction): fetch failed
+ok 0xa9b555c13de5db94aa9e3b879d0a43c352fe6f6f40caa92e2d6110ec69e57fc8
+- parent request from another vault fails … ok 0x6c562d4493af038dbbb998405d7677ed2904f00c156b2a1cc2dfbb4a8050bbcb
+- unicode deal text to an allowlisted payee is judged (expect ACCEPT, total cap then binds) … ok 0x3b1504444eb4a24301f92c0757c4ce1bc482f3e83c69fc98d973ed749117facb
+- second request would exceed the total spend cap: blocked deterministically if the first was accepted … ok 0xe98ac78277456d6b3abca03bb6a6b5ebf9c6868535f6d696d6c5169feb94b978
+- owner_reclaim more than the vault holds fails … ok 0x096bd1b9417d2a907b8f4c582521072c92fb2e3e40b266a0de8c28eeaa5094c0
+- owner_reclaim a valid amount credits the owner … ok 0x825efef412afcd4a9f5930015ce98c46d477ba14811c3cd6e1d65d6ff003e71b
+- withdraw more than the credit fails … ok 0x4304cc4bc707b535d1670355acc131d79dd4977b2ef8460b7dd8bc7d09391ae7
+
+19/19 on-chain tests passed. Log: experiments/onchain-tests.json
+EXIT 0

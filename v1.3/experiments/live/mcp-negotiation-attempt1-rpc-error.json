@@ -1,0 +1,138 @@
+{
+  "site": "https://trustgate-v13.shoupeorg.workers.dev",
+  "contract": "0x3C61e0C6634d78f6a38efFA6B1872AC11A76f7f3",
+  "vault": "public-demo-mv9boi2s",
+  "seller": "0x3F567C02606CA064cEd2D49b39FD48C1B41eBfFd",
+  "buyer": "0xf02c68e73ea781cf16416e4fc7c18c71641e044b",
+  "startedAt": "2026-10-15T09:30:19.234Z",
+  "calls": [
+    {
+      "at": "2026-10-15T09:31:17.285Z",
+      "side": "seller",
+      "tool": "trustgate_post_offer",
+      "args": {
+        "vault_id": "public-demo-mv9boi2s",
+        "amount_gen": "0.6",
+        "terms": "TagWorks - 3,000 named-entity labels on Persian news sentences for NLP research, delivered within 4 days. Price 0.6 GEN, 100% upfront before work starts, non-refundable."
+      },
+      "isError": true,
+      "result": "Error: Submitting failed: An unknown RPC error occurred.. Check the seller wallet has test GEN for fees."
+    },
+    {
+      "at": "2026-10-15T09:31:17.287Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:31:27.294Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:31:37.301Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:31:47.311Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:31:57.316Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:32:07.324Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:32:17.332Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:32:27.348Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:32:37.350Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:32:47.361Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:32:57.375Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:33:07.379Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    },
+    {
+      "at": "2026-10-15T09:33:17.397Z",
+      "side": "seller",
+      "tool": "trustgate_get_negotiation",
+      "args": {},
+      "isError": true,
+      "result": "MCP error -32602: Input validation error: Invalid arguments for tool trustgate_get_negotiation: Invalid input: expected string, received undefined at negotiation_id"
+    }
+  ],
+  "sellerTools": [
+    "trustgate_list_offers",
+    "trustgate_request_commitment",
+    "trustgate_get_verdict",
+    "trustgate_vault_status",
+    "trustgate_post_offer",
+    "trustgate_get_negotiation",
+    "trustgate_get_counterproposal",
+    "trustgate_accept_counterproposal",
+    "trustgate_counter_offer",
+    "trustgate_decline"
+  ]
+}

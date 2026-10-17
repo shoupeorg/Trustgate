@@ -1,0 +1,487 @@
+{
+  "contract": "0xdF2FEeED57870803f2707E02F7F568d39ccA8C05",
+  "owner": "0x73501951ebd48414ab35dd0544f24505153b10db",
+  "agent": "0x56680439c38336573536643111fcc579773fddf7",
+  "seller": "0x66aa04c115b67fa72ca951293ae532099a45674b",
+  "seller2": "0xac5274cc62d7cd61ded64e9e7c1bbdf40118076b",
+  "startedAt": "2026-10-15T07:24:34.528Z",
+  "tests": [
+    {
+      "name": "create_vault: invalid agent address is refused and the deposit credited back",
+      "ok": true,
+      "ms": 9678,
+      "hash": "0x70d7c4c54266014c9c18b9d853766acfff8d6f324c020b29686d1285a1d8707f",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "agent is not a valid address",
+        "refunded_to_credit": "10000000000000000"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "create_vault: owner == agent is refused",
+      "ok": true,
+      "ms": 9168,
+      "hash": "0xa9683339b295c4825fa5f04706d3635985bcc2ef43ca5190d9c98db4920bfd5c",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "the agent must be a different address from the owner",
+        "refunded_to_credit": "0"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "create_vault: negative total cap is refused",
+      "ok": true,
+      "ms": 8485,
+      "hash": "0x8584e70646d9393dd5559be7bf2875e2521e60c7d3b0bd068e43b7d5d58316d2",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "total_cap must be zero (no limit) or a positive amount",
+        "refunded_to_credit": "0"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "create_vault: vault A (cap 0.2, total cap 0.3, no allowlist, deposit 0.4)",
+      "ok": true,
+      "ms": 8892,
+      "hash": "0xe3d0a17691546162111a006dcee0619348cb519a0a305ec1bddb23be1e84c0ee",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": true,
+        "vault_id": "test-1792049074528",
+        "funds": "400000000000000000"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "create_vault: vault B (allowlist = [seller2], deposit 0.05)",
+      "ok": true,
+      "ms": 9482,
+      "hash": "0xcb926abe43843245605efcfd5e09f67d58ba4fe7e6dc3b4c024ad3ac0dd69c23",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": true,
+        "vault_id": "test-1792049074528-b",
+        "funds": "50000000000000000"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "create_vault: duplicate vault id is refused",
+      "ok": true,
+      "ms": 15359,
+      "hash": "0xbee2572ed4c28133e0c6b7e4d24384dd5d566ebcd701d2848ceefb044c6abd12",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "vault_id already exists",
+        "refunded_to_credit": "0"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "top_up by a non-owner is refused and credited back",
+      "ok": true,
+      "ms": 7806,
+      "hash": "0x718c16f8abc59f9828514ff7d0f7eb8d5a64ab3ac3f25ad6d7584530ebaca550",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": false,
+        "reason": "only the vault owner can top up",
+        "refunded_to_credit": "10000000000000000"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "post_offer to a vault that does not exist fails",
+      "ok": true,
+      "ms": 9201
+    },
+    {
+      "name": "post_offer with zero amount fails",
+      "ok": true,
+      "ms": 15260
+    },
+    {
+      "name": "post_offer with terms over 6000 characters fails",
+      "ok": true,
+      "ms": 15013
+    },
+    {
+      "name": "post_offer: seller posts offer v1; payee is the signer and the hash matches the exact text",
+      "ok": true,
+      "ms": 9912,
+      "hash": "0xf0d3b8b394551950bfe05052fc9ab1bb17217b719b19b5265fe0c7b5a89758b6",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": true,
+        "offer_id": "test-1792049074528-o1",
+        "payee": "0x66aa04c115b67fa72ca951293ae532099a45674b",
+        "terms_hash": "91befa2dfea1b87a1e4f45604a08f2afb61890417817147c1ca58da67d380ae6"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "post_offer: duplicate offer_id fails",
+      "ok": true,
+      "ms": 8355
+    },
+    {
+      "name": "someone else cannot change the seller's offer (counter_offer by seller2)",
+      "ok": true,
+      "ms": 9402
+    },
+    {
+      "name": "someone else cannot decline the seller's offer",
+      "ok": true,
+      "ms": 9875
+    },
+    {
+      "name": "accept_counterproposal before any verdict fails",
+      "ok": true,
+      "ms": 9781
+    },
+    {
+      "name": "request_commitment from a non-agent fails",
+      "ok": true,
+      "ms": 7506
+    },
+    {
+      "name": "request against an offer that does not exist (unsigned text) fails",
+      "ok": true,
+      "ms": 9601
+    },
+    {
+      "name": "request with a hash of edited text fails",
+      "ok": true,
+      "ms": 9534
+    },
+    {
+      "name": "request referencing an offer of another vault fails",
+      "ok": true,
+      "ms": 9281
+    },
+    {
+      "name": "justification over 1500 characters fails",
+      "ok": true,
+      "ms": 11652
+    },
+    {
+      "name": "offer over the cap: request is blocked by hard limits (no judgment)",
+      "ok": true,
+      "ms": 17801,
+      "hash": "0xf4d3030985e5e830d65f46f1cc4816f98bb4a27a289e4508bdc6af359872ed08",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "seller counters twice (v2, v3); versions are linked",
+      "ok": true,
+      "ms": 18915,
+      "hash": "0x7f45f7666babfd6dc61ac8090cea81e58e7a61e32c5645fdc390d07c2476d23e",
+      "v2": "0x632add192ca1e92cf7fdbb1d74eb03baec29d56f8a7bf9f63c235acb9ca53f75"
+    },
+    {
+      "name": "request on an old version after a newer one exists fails",
+      "ok": true,
+      "ms": 8566
+    },
+    {
+      "name": "counter on an old version fails",
+      "ok": true,
+      "ms": 8088
+    },
+    {
+      "name": "seller declines v3: negotiation closed",
+      "ok": true,
+      "ms": 15066,
+      "hash": "0x914943c493bbb7d0f55ae0fb7118da3b7fae1a511a09a684fc3b835f928e7684",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": true,
+        "negotiation_id": "test-1792049074528-n3",
+        "status": "DECLINED"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "request after the seller declined fails",
+      "ok": true,
+      "ms": 9472
+    },
+    {
+      "name": "vault B: payee not on the owner's allowlist is blocked by hard limits",
+      "ok": true,
+      "ms": 28232,
+      "hash": "0x83630a32716e63e12bce9a4d506099ffa03dada61d0f1c90a565e00b6062c314",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "seller tries to pay the agent: the agent posting an offer is blocked (agent cannot pay itself)",
+      "ok": true,
+      "ms": 17162,
+      "hash": "0xc6aaf2f6213459fc7f6b1ad383026e8ae75ecb8f630f5abf2c0814b99ba03d54",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "N1: buyer requests offer v1 → GenLayer verdict (expect RENEGOTIATE with a counterproposal)",
+      "ok": true,
+      "ms": 25571,
+      "hash": "0x62694347cc9dd715d395d8f8a852e8a6d70378e99588f699567ec16d85b66cbb",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": {
+        "confidence": "HIGH",
+        "counterproposal": {
+          "deal_text": "Research dataset: 10,000 labelled Persian sentences for an NLP study, CSV, delivered within 3 days. Price 0.1 GEN. Funds will be held in a secure escrow, releasable to the provider only upon successful delivery of the dataset to the buyer's specified address. If delivery is not confirmed within 3 days, funds are automatically refunded to the buyer.",
+          "notes": "Replaced the 'paid in full upfront... No refund' clause with an escrow mechanism. Payment is now conditional on delivery, and a clear refund trigger is added, aligning with the mandate's requirement for 'refundable or escrowed payments.' The core purpose, dataset, price, and delivery window are unchanged."
+        },
+        "decision": "RENEGOTIATE",
+        "mandate_violations": [
+          {
+            "evidence": "Deal text states: 'Price 0.1 GEN, paid in full upfront before delivery. No refund.'",
+            "explanation": "The mandate explicitly requires that payments are either refundable or placed in escrow. This deal requires full payment before delivery and explicitly states 'No refund,' which provides no refund right and does not mention an escrow, thus violating the mandate.",
+            "rule": "Only refundable or escrowed payments."
+          }
+        ],
+        "risk": "MEDIUM",
+        "summary": "The deal's purpose fits the mandate for buying a research dataset, but the payment term 'paid in full upfront before delivery. No refund' violates the mandate's requirement for refundable or escrowed payments. A revised deal requiring an escrow agent or a true refund right would satisfy the mandate."
+      },
+      "ranJudgment": true,
+      "verdict": "RENEGOTIATE (MEDIUM)"
+    },
+    {
+      "name": "N1: replayed request_id fails",
+      "ok": true,
+      "ms": 11438
+    },
+    {
+      "name": "N1: a second request on the same version fails (verdict already given)",
+      "ok": true,
+      "ms": 10265
+    },
+    {
+      "name": "N1: seller signing a different text than the counterproposal fails",
+      "ok": true,
+      "ms": 14573
+    },
+    {
+      "name": "N1: someone other than the seller cannot accept the counterproposal",
+      "ok": true,
+      "ms": 8564
+    },
+    {
+      "name": "N1: seller never responds; nothing is credited to the seller",
+      "ok": true,
+      "ms": 11082
+    },
+    {
+      "name": "N1: a stranger cannot close the negotiation",
+      "ok": true,
+      "ms": 9786
+    },
+    {
+      "name": "N1: the buyer's agent withdraws after no response",
+      "ok": true,
+      "ms": 9129,
+      "hash": "0x0f03e091add247b9366c62f1e97bc37a493a3c6efe228411a72dbc0f2db108fe",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": true,
+        "negotiation_id": "test-1792049074528-o1",
+        "status": "WITHDRAWN"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "N1: the seller can no longer accept after the buyer withdrew",
+      "ok": true,
+      "ms": 12834
+    },
+    {
+      "name": "N2: seller posts v1, buyer requests → verdict (expect RENEGOTIATE)",
+      "ok": true,
+      "ms": 36948,
+      "hash": "0x49c01c23d931cb24dca8683f2d24fac47a9f8c6f66c1faafd1c37c8d5e1cae45",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": {
+        "confidence": "HIGH",
+        "counterproposal": {
+          "deal_text": "Research dataset: 5,000 annotated satellite image tiles for a land-use study, delivered within 5 days. Price 0.15 GEN. Payment to be held in a neutral escrow and released only upon delivery and verification of the dataset, or payment is fully refundable if delivery fails.",
+          "notes": "Changed the payment terms from 'All sales final' to an escrow or refundable structure to comply with the safety requirements of the mandate."
+        },
+        "decision": "RENEGOTIATE",
+        "mandate_violations": [
+          {
+            "evidence": "paid in full upfront. All sales final.",
+            "explanation": "The mandate strictly requires that payments be either refundable or held in escrow to protect the owner's funds, but the deal text explicitly states all sales are final and requires non-refundable upfront payment.",
+            "rule": "Only refundable or escrowed payments."
+          }
+        ],
+        "risk": "MEDIUM",
+        "summary": "The request is for a research dataset which fits the mandate's purpose, but the payment terms violate the safety requirements. The deal specifies 'All sales final' and 'paid in full upfront', which contradicts the mandate's requirement for refundable or escrowed payments."
+      },
+      "ranJudgment": true,
+      "verdict": "RENEGOTIATE (MEDIUM)"
+    },
+    {
+      "name": "N2: seller accepts the counterproposal word for word → v2 signed by the seller",
+      "ok": true,
+      "ms": 10435,
+      "hash": "0x0a5677a9fa9c9458a2d8030fc85ba4fba7fbd8223622e87212d2e1a692cfdccc",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": true,
+        "offer_id": "test-1792049074528-n2-v2",
+        "payee": "0x66aa04c115b67fa72ca951293ae532099a45674b",
+        "version": 2,
+        "terms_hash": "51203bf17c1c7a366c1e4010b384bf7e20530cfac3be996e8ca2b333f56af2d0"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "N2: request on v1 after v2 exists fails (no ACCEPT on an old version)",
+      "ok": true,
+      "ms": 14690
+    },
+    {
+      "name": "N2: buyer requests v2 → verdict (expect ACCEPT, seller credited)",
+      "ok": true,
+      "ms": 20850,
+      "hash": "0x065fe8426a3cd4bf9e7235a03be44d447db22d04a27d309764f357525a85b978",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": {
+        "confidence": "HIGH",
+        "counterproposal": {
+          "deal_text": "",
+          "notes": ""
+        },
+        "decision": "ACCEPT",
+        "mandate_violations": [],
+        "risk": "LOW",
+        "summary": "The commitment fits the mandate: it is a research dataset purchase for 0.15 GEN, within the 0.2 GEN cap. The payment terms are compliant because they provide neutral escrow with release only upon delivery and verification, or a full refund if delivery fails."
+      },
+      "ranJudgment": true,
+      "verdict": "ACCEPT (LOW)"
+    },
+    {
+      "name": "N2: after ACCEPT the seller's credit is withdrawable (proves the credit)",
+      "ok": true,
+      "ms": 10407,
+      "hash": "0x3b5195bcad84bf3b7781fdb190efcabd3ed19289e49f1273b63cb1ab38ef6f27",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": true,
+        "paid": "150000000000000000",
+        "to": "0x66aa04c115b67fa72ca951293ae532099a45674b"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "N2: negotiation is closed after ACCEPT; no second payment",
+      "ok": true,
+      "ms": 9236
+    },
+    {
+      "name": "N2: total spend cap binds: a further 0.2 GEN offer is blocked by hard limits",
+      "ok": true,
+      "ms": 18819,
+      "hash": "0x831cb377a2a7d210fe72d3d2dacc9695b50122b9513a57ac661c983451d020ce",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": null,
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "owner_reclaim more than the vault holds fails",
+      "ok": true,
+      "ms": 9558
+    },
+    {
+      "name": "owner_reclaim a valid amount credits the owner",
+      "ok": true,
+      "ms": 8636,
+      "hash": "0x12dae6508d21c749125138e32f4cab125f8461f3e2720f74382ce0fe0415f397",
+      "status": "ACCEPTED",
+      "execution": "SUCCESS",
+      "returned": {
+        "ok": true,
+        "credited": "50000000000000000"
+      },
+      "error": null,
+      "judgment": null,
+      "ranJudgment": false
+    },
+    {
+      "name": "withdraw more than the credit fails",
+      "ok": true,
+      "ms": 8843
+    }
+  ],
+  "finishedAt": "2026-10-15T07:34:29.821Z"
+}

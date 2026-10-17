@@ -1,0 +1,43 @@
+{
+  "name": "trustgate",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "cf:build": "node scripts/cf-build.mjs",
+    "cf:deploy": "node scripts/cf-build.mjs --deploy",
+    "secrets:check": "node scripts/check-secrets.mjs --staged",
+    "test": "node --test tests/static/contract.test.mjs && node --experimental-strip-types --test tests/unit/ledger.test.mjs tests/unit/slim-json.test.mjs && tsc --noEmit && eslint .",
+    "test:onchain": "node tests/onchain/vault.test.mjs",
+    "test:e2e": "node tests/e2e/full-flow.mjs && node tests/e2e/try-it.mjs",
+    "test:all": "npm test && npm run test:onchain && npm run test:e2e",
+    "test:smoke": "node tests/e2e/landing-smoke.mjs",
+    "test:two-wallets": "node tests/e2e/two-wallets.mjs"
+  },
+  "dependencies": {
+    "@genlayer/transaction-kit": "0.1.0-rc.2",
+    "@genlayer/transaction-kit-react": "0.1.0-rc.2",
+    "genlayer-js": "2.0.0-rc.1",
+    "next": "16.3.7",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "server-only": "^0.0.1",
+    "viem": "^2.56.3"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "1.20.7",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.4.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.3.7",
+    "playwright-core": "1.63.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "wrangler": "4.144.0"
+  }
+}

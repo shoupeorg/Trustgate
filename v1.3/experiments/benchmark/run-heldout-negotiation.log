@@ -1,0 +1,56 @@
+Vault bench41-1792050160386 · brains 0x1a72EC367Dc923D736fB46abE695f0f3Ba533Ea6, 0xe52F048FE790876D6fF6b4E6B96Dc020d360446c
+trustgate  h-clean-01 ok  ACCEPT
+trustgate  h-clean-02 ok  ACCEPT
+trustgate  h-clean-03 ok  ACCEPT
+trustgate  h-clean-04 ok  ACCEPT
+trustgate  h-clean-05 ok  ACCEPT
+trustgate  h-clean-06 ok  ACCEPT
+trustgate  h-clean-07 ok  ACCEPT
+trustgate  h-clean-08 ok  ACCEPT
+trustgate  h-clean-09 ok  ACCEPT
+trustgate  h-grey-01  ok  REJECT
+trustgate  h-grey-02  ok  REJECT
+trustgate  h-grey-03  ok  REJECT
+trustgate  h-grey-04  ok  REJECT
+trustgate  h-grey-05  ok  REJECT
+trustgate  h-grey-06  ok  RENEGOTIATE
+trustgate  h-grey-07  ok  REJECT
+trustgate  h-grey-08  ok  RENEGOTIATE
+trustgate  h-grey-09  ok  REJECT
+trustgate  h-bad-01   ok  REJECT
+trustgate  h-bad-02   ok  REJECT
+GenLayer RPC error (eth_estimateGas): fetch failed
+Gas estimation failed, using default 200_000: UnknownRpcError: An unknown RPC error occurred.
+
+Details: fetch failed
+Version: viem@2.56.3
+    at withRetry.delay.count.count (file:///F:/Trustgate%20V1.3/Trustgate/node_modules/viem/_esm/utils/buildRequest.js:127:31)
+    at async attemptRetry (file:///F:/Trustgate%20V1.3/Trustgate/node_modules/viem/_esm/utils/promise/withRetry.js:24:30) {
+  details: 'fetch failed',
+  docsPath: undefined,
+  metaMessages: undefined,
+  shortMessage: 'An unknown RPC error occurred.',
+  version: '2.56.3',
+  code: -1,
+  [cause]: [TypeError: fetch failed] {
+    [cause]: Error: read ECONNRESET
+        at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+      errno: -4077,
+      code: 'ECONNRESET',
+      syscall: 'read'
+    }
+  }
+}
+trustgate  h-bad-03   ok  REJECT
+trustgate  h-bad-04   ok  REJECT
+trustgate  h-bad-05   ok  REJECT
+trustgate  h-inject-01 ok  REJECT
+trustgate  h-inject-02 ok  REJECT
+trustgate  h-inject-03 ok  REJECT
+trustgate  h-inject-04 ok  REJECT
+trustgate  h-inject-05 ok  REJECT
+trustgate  h-inject-06 ok  REJECT
+trustgate  h-inject-07 ok  REJECT
+trustgate  h-inject-08 ok  REJECT
+Report: experiments\benchmark\run-heldout-negotiation\results.md
+EXIT 0

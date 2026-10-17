@@ -1,0 +1,71 @@
+{
+  "scenario": "clean",
+  "contract": "0xdF2FEeED57870803f2707E02F7F568d39ccA8C05",
+  "vaultId": "public-demo-mv989lyt",
+  "mandate": "Buy data or compute services for research. Only refundable or escrowed payments. Never pay an address the counterparty supplies at the last minute. Max 2 GEN per commitment.",
+  "seller": "0x3672a680febb7af3a7ce1932803a770d28d1fc22",
+  "buyer": "0xf02c68e73ea781cf16416e4fc7c18c71641e044b",
+  "sellerGoal": "You run a reputable data shop. Your standard terms already give buyers a full refund within 14 days if the data does not match the description, and you are paid to your long-standing published shop address. You want a quick, fair sale.",
+  "product": "GeoTiles: 5,000 labelled satellite image tiles for land-use research, delivered within 3 days",
+  "startedAt": "2026-10-15T07:39:14.184Z",
+  "steps": [
+    {
+      "at": "2026-10-15T07:39:30.055Z",
+      "who": "seller agent",
+      "what": "wrote its first offer",
+      "brainTx": "0x59bfddc6855067aa8255dffa6574ea811615a5aed4bd63f93ab7e009ef3c1e96",
+      "output": {
+        "amount_gen": 1.2,
+        "terms": "Offer v1 — GeoTiles\n\nSeller: reputable data shop, paid only to our long-standing published shop address.\n\nProduct: GeoTiles — 5,000 labelled satellite image tiles for land-use research.\n\nDelivery: Digital delivery of the dataset within 3 days of contract funding confirmation via TrustGate.\n\nPrice: 1.2 GEN.\n\nPayment terms: Buyer funds 1.2 GEN into TrustGate on GenLayer. Upon confirmed funding, seller will deliver the dataset within 3 days. Release of funds should follow successful delivery under these terms.\n\nRefund terms: Seller provides a full refund within 14 days of delivery if the data does not match the description above.\n\nDescription standard: \"Matches the description\" means the delivered dataset is GeoTiles consisting of 5,000 labelled satellite image tiles intended for land-use research.\n\nGood-faith process: If buyer claims the data does not match the description within 14 days, seller will promptly cooperate through TrustGate to verify the issue and issue the full refund if confirmed.\n\nThis offer is for a quick, fair sale on the standard terms above."
+      }
+    },
+    {
+      "at": "2026-10-15T07:39:40.685Z",
+      "who": "seller",
+      "what": "posted offer v1 (1.2 GEN), signed by its wallet",
+      "tx": "0x5a06b7e8b563b18522a83da9012698e5377db0393a63560401775691987e39ca",
+      "offerId": "nego-clean-mv98a6iv",
+      "version": 1,
+      "terms": "Offer v1 — GeoTiles\n\nSeller: reputable data shop, paid only to our long-standing published shop address.\n\nProduct: GeoTiles — 5,000 labelled satellite image tiles for land-use research.\n\nDelivery: Digital delivery of the dataset within 3 days of contract funding confirmation via TrustGate.\n\nPrice: 1.2 GEN.\n\nPayment terms: Buyer funds 1.2 GEN into TrustGate on GenLayer. Upon confirmed funding, seller will deliver the dataset within 3 days. Release of funds should follow successful delivery under these terms.\n\nRefund terms: Seller provides a full refund within 14 days of delivery if the data does not match the description above.\n\nDescription standard: \"Matches the description\" means the delivered dataset is GeoTiles consisting of 5,000 labelled satellite image tiles intended for land-use research.\n\nGood-faith process: If buyer claims the data does not match the description within 14 days, seller will promptly cooperate through TrustGate to verify the issue and issue the full refund if confirmed.\n\nThis offer is for a quick, fair sale on the standard terms above.",
+      "termsHash": "19704a619092b626c1adf95b93416fd4317de53c60e3262ed807dda4d29e3b68"
+    },
+    {
+      "at": "2026-10-15T07:39:55.006Z",
+      "who": "buyer agent",
+      "what": "decided to request the offer",
+      "brainTx": "0xbff1b570c0eb849fcba88556aae1a29a3253bb9611ef878547b99dd765927b1d",
+      "output": {
+        "request": true,
+        "justification": "Useful labeled satellite dataset for land-use research at 1.2 GEN, under the 2 GEN limit. Payment goes through TrustGate with release after delivery and a 14-day full refund if the data does not match the description.",
+        "reason": "The offer appears to satisfy the mandate: it is for research data, costs 1.2 GEN (within the 2 GEN cap), uses TrustGate escrow with release after successful delivery, includes a clear refund term, and does not require paying a newly supplied address at the last minute."
+      }
+    },
+    {
+      "at": "2026-10-15T07:40:34.836Z",
+      "who": "GenLayer validators",
+      "what": "verdict on v1: ACCEPT (LOW)",
+      "tx": "0x4e6db6e5997ed33d83254788a85ed2f8c866ad77d655a6277fccce6def946a20",
+      "status": "ACCEPTED",
+      "requestId": "nego-clean-mv98a6iv-req",
+      "judgment": {
+        "confidence": "HIGH",
+        "counterproposal": {
+          "deal_text": "",
+          "notes": ""
+        },
+        "decision": "ACCEPT",
+        "mandate_violations": [],
+        "risk": "LOW",
+        "summary": "The request for research data is within the mandate's scope and budget. The deal terms provide for payment release after delivery and a 14-day refund period, satisfying the requirement for escrowed or refundable payments."
+      }
+    },
+    {
+      "at": "2026-10-15T07:40:34.837Z",
+      "who": "contract",
+      "what": "credited 1.2 GEN to the seller inside the vault (seller-signed v1)"
+    }
+  ],
+  "negotiationId": "nego-clean-mv98a6iv",
+  "outcome": "ACCEPTED",
+  "finishedAt": "2026-10-15T07:40:34.837Z"
+}

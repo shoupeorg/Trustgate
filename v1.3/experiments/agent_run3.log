@@ -1,0 +1,36 @@
+Agent 0x0592B1F3567E887EDb04517C3e412997eE3d5a9B · vault demo-1791985847564 on 0x290c2ef005e3f7683e38c23C1CA69697f60aC053
+Mandate: Buy data or compute services for research. Only refundable or escrowed payments. Never pay an address the counterparty supplies at the last minute. Max 5 GEN per commitment.
+Cap 5 GEN · vault holds ~5 GEN
+
+Asking the agent's LLM for 3 fresh offers…
+  (agent thinking on GenLayer)...
+
+================ Offer 1/3
+High-Quality Synthetic Conversational Dataset - 10M Annotated Dialogues
+We offer a meticulously curated synthetic conversational dataset with 10 million annotated dialogues across 50+ domains. Each entry includes intent, sentiment, and contextual metadata. Delivered in JSONL format within 7 business days of payment. Price: 3.5 GEN to 0x98D3D87460239aB6219a470b6646f992670Bd394. Full refund available if the dataset does not meet the specifications outlined in the attached sample. Payment must be made in full before delivery. Contact us for a sample and contract details.
+
+GenLayer RPC error (eth_estimateGas): fetch failed
+Gas estimation failed, using default 200_000: UnknownRpcError: An unknown RPC error occurred.
+
+Details: fetch failed
+Version: viem@2.56.3
+    at withRetry.delay.count.count (file:///F:/Trustgate%20V1.3/Trustgate/node_modules/viem/_esm/utils/buildRequest.js:127:31)
+    at async attemptRetry (file:///F:/Trustgate%20V1.3/Trustgate/node_modules/viem/_esm/utils/promise/withRetry.js:24:30) {
+  details: 'fetch failed',
+  docsPath: undefined,
+  metaMessages: undefined,
+  shortMessage: 'An unknown RPC error occurred.',
+  version: '2.56.3',
+  code: -1,
+  [cause]: [TypeError: fetch failed] {
+    [cause]: Error: read ECONNRESET
+        at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {
+      errno: -4077,
+      code: 'ECONNRESET',
+      syscall: 'read'
+    }
+  }
+}
+  (agent thinking on GenLayer).......
+Agent brain returned no answer: https://explorer-studio-dev.genlayer.com/tx/0xf8ab78cf3b89bbbf3d3ec4d7fe8ee763425cff7d66a36e1014426e9248b2b239
+EXIT 1

@@ -1,0 +1,12 @@
+Vault mcp-demo-1792010863125 for agent 0xb4cCcaF668bf43Efc1A720e723271a3c4BFF2302
+- list tools: {"tools":["trustgate_request_payment","trustgate_get_verdict","trustgate_vault_status","trustgate_list_requests"]}
+- vault status: {"isError":false,"result":{"vault_id":"mcp-demo-1792010863125","contract":"0x41B6781fEC91DfFb9747CF2D445677F37c66E43b","owner":"0x8f9726ea4ae0b479c6f4d4fb26982f3b44607398","agent":"0xb4cccaf668bf43efc1a720e723271a3c4bff2
+- error: unknown vault: {"isError":true,"result":"Error: Vault \"no-such-vault\" was not found on contract 0x41B6781fEC91DfFb9747CF2D445677F37c66E43b."}
+- error: over the hard cap (nothing sent): {"isError":true,"result":"Error: 2 GEN is over the vault's hard cap of 1 GEN; the contract would reject it. Nothing was sent."}
+- clean offer (expect ACCEPT): request: {"isError":false,"result":{"request_id":"mcp-mv8l09zm-3ff011","status":"pending","tx":"0x6cb89ed9f6fd3cf707815bfc40e1b67515cfacfa6710eb1494fe2940ae6d59ac","explorer":"https://explorer-studio-dev.genlayer.com/tx/0x6cb89ed
+- clean offer (expect ACCEPT): verdict: {"isError":false,"result":{"request_id":"mcp-mv8l09zm-3ff011","vault_id":"","amount_gen":"0","payee":"","parent_request_id":null,"status":"provisional (validators agreed; not finalized yet)","network_status":"ACCEPTED","
+- poisoned offer (expect blocked): request: {"isError":false,"result":{"request_id":"mcp-mv8l0ubl-68e1c3","status":"pending","tx":"0x70a65b9ed7fd058ee42e33432f064e4c7a075838b962c79f8a2f43bfc7523177","explorer":"https://explorer-studio-dev.genlayer.com/tx/0x70a65b9
+- poisoned offer (expect blocked): verdict: {"isError":false,"result":{"request_id":"mcp-mv8l0ubl-68e1c3","vault_id":"","amount_gen":"0","payee":"","parent_request_id":null,"status":"provisional (validators agreed; not finalized yet)","network_status":"ACCEPTED","
+- list requests: {"isError":false,"result":[{"request_id":"mcp-mv8l0ubl-68e1c3","amount_gen":"0.5","payee":"0x27d8d805d4277f85be2423ed6c97ebac3d988c58","status":"provisional (validators agreed; not finalized yet)","verdict":"REJECT","ris
+Saved experiments\mcp-live-test.json
+EXIT 0

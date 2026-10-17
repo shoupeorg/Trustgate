@@ -1,0 +1,150 @@
+{
+  "base": "https://trustgate-v13.shoupeorg.workers.dev",
+  "owner": "0x73501951ebD48414AB35DD0544F24505153b10Db",
+  "startedAt": "2026-10-15T11:50:19.303Z",
+  "steps": [
+    {
+      "name": "no wallet: guide instead of a dead button",
+      "ok": true,
+      "ms": 4820,
+      "detail": null
+    },
+    {
+      "name": "wallet discovered via EIP-6963",
+      "ok": true,
+      "ms": 362,
+      "detail": null
+    },
+    {
+      "name": "connect error is explained: reject",
+      "ok": true,
+      "ms": 60,
+      "detail": {
+        "message": "Wallet connection was rejected. Click Connect Wallet when you are ready to approve account access and the Studio Next network."
+      }
+    },
+    {
+      "name": "connect error is explained: pending",
+      "ok": true,
+      "ms": 45,
+      "detail": {
+        "message": "A wallet connection request is already pending. Open your wallet extension and approve or reject the existing request."
+      }
+    },
+    {
+      "name": "connect error is explained: locked",
+      "ok": true,
+      "ms": 44,
+      "detail": {
+        "message": "The wallet returned no account. Unlock it (open the extension and enter your password), then click Connect again."
+      }
+    },
+    {
+      "name": "connect on wrong network: chain 61997 added and switched",
+      "ok": true,
+      "ms": 77,
+      "detail": {
+        "addChain": {
+          "rpc": "https://studio-dev.genlayer.com/api",
+          "explorer": "https://explorer-studio-dev.genlayer.com"
+        }
+      }
+    },
+    {
+      "name": "faucet: Get test GEN",
+      "ok": true,
+      "ms": 4444,
+      "detail": {
+        "msg": "3 test GEN sent. tx ↗",
+        "tx": "https://explorer-studio-dev.genlayer.com/tx/0xf3fc45a872cb0a12bc380e84b77c9430411905deb71a1ae64f427fdd8a2aa102",
+        "before": 1.5385846707500368,
+        "after": 4.538584670750036
+      }
+    },
+    {
+      "name": "faucet: second claim is rate limited",
+      "ok": true,
+      "ms": 324,
+      "detail": {
+        "msg": "This address already received test GEN. Try again in 24 h."
+      }
+    },
+    {
+      "name": "create browser agent key",
+      "ok": true,
+      "ms": 40,
+      "detail": {
+        "agentAddress": "0x33Cc20168b15eA59d66DB90bDc3D18050672550f"
+      }
+    },
+    {
+      "name": "template does not overwrite a typed mandate without asking",
+      "ok": true,
+      "ms": 106,
+      "detail": null
+    },
+    {
+      "name": "create vault (fee shown before signing, then finalized)",
+      "ok": true,
+      "ms": 19317,
+      "detail": {
+        "feeText": "Create vault. Network fee up to 0.1750 GEN (unused fee is refunded) + deposit 1.2 GEN. Your wallet will ask you to confirm.Confirm in walletCancel",
+        "hash": "0xd7df5711a5878a60bd04d68c9882eb3723ee02e7ba58c2b0e3e0023f11c3883f",
+        "vaultId": "vault-mv9h90kt-2d13914c"
+      }
+    },
+    {
+      "name": "fund the agent key from the owner wallet (amount + fee shown)",
+      "ok": true,
+      "ms": 6747,
+      "detail": {
+        "hash": "0xd7df5711a5878a60bd04d68c9882eb3723ee02e7ba58c2b0e3e0023f11c3883f",
+        "agentBal": 1,
+        "label": "Send 1 GEN to your agent key (network fee under 0.0001 GEN)"
+      }
+    },
+    {
+      "name": "agent tab: requests only by signed offer (no payee / deal text fields)",
+      "ok": true,
+      "ms": 70,
+      "detail": {
+        "note": "Buyer's agentRequest a commitment against a signed offerSellers post offers to vault vault-mv9h90kt-2d13914c (Seller tab). You pick one; the payee, the amount and the text come from the seller's signe"
+      }
+    },
+    {
+      "name": "owner: take funds back, then withdraw credit (payout check)",
+      "ok": true,
+      "ms": 67154,
+      "detail": {
+        "reclaimHash": "0xa590e1318270f7ded8b5f14a50f9a9c5ddd3a4da6c0ee1489660ea5faa740f9a",
+        "withdrawHash": "0x4fea8c6db446831b384d31a18addb5bfb161813ab232dd7e9592a961a93fc572",
+        "walletBefore": 2.163506036999923,
+        "walletAfter": 2.163427406749922,
+        "note": "after - before includes fees; +0.3 would mean the payout arrived"
+      }
+    },
+    {
+      "name": "live feed shows last-updated time and source",
+      "ok": true,
+      "ms": 3,
+      "detail": {
+        "status": "3 vaults · updated 3:21:58 PM · source: transaction history · contract reads working"
+      }
+    },
+    {
+      "name": "mobile width renders without horizontal scroll",
+      "ok": true,
+      "ms": 545,
+      "detail": {
+        "overflow": 0
+      }
+    }
+  ],
+  "sent": [
+    "0xd7df5711a5878a60bd04d68c9882eb3723ee02e7ba58c2b0e3e0023f11c3883f",
+    "0x531664a127942fd171dcf102855711e19180861bf5fdea5eadc1ca9703af4c5e",
+    "0xa590e1318270f7ded8b5f14a50f9a9c5ddd3a4da6c0ee1489660ea5faa740f9a",
+    "0x4fea8c6db446831b384d31a18addb5bfb161813ab232dd7e9592a961a93fc572"
+  ],
+  "finishedAt": "2026-10-15T11:52:06.028Z"
+}

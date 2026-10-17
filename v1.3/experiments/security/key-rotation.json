@@ -1,0 +1,190 @@
+{
+  "rotatedAt": "2026-10-15T12:43:23.107Z",
+  "wallets": [
+    {
+      "name": "CUSTODY_TEST_PRIVATE_KEY",
+      "oldAddress": "0x8F9726eA4aE0B479c6f4D4fB26982F3b44607398",
+      "newAddress": "0xE2CbAa7f0B9e110746f31E2bBF692e2a69d24Dcf",
+      "oldBalanceGen": 47.18909833799987,
+      "movedGen": 47.16909833799987,
+      "tx": "0xa7f8103981fab4c8c9b001e30b2fc03ef466dc872a7ce87ce535b38b62b8ef92",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "VAULT_AGENT_PRIVATE_KEY",
+      "oldAddress": "0x0592B1F3567E887EDb04517C3e412997eE3d5a9B",
+      "newAddress": "0xeDB089d49710098Be875d01C774532B8a38Fff76",
+      "oldBalanceGen": 4.962021411499619,
+      "movedGen": 4.94202141149962,
+      "tx": "0x370d482c84d9725519789b173be89c00ac55e57f89c602a8e4bc5f268f5d03dd",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "V13_FAUCET_PRIVATE_KEY",
+      "oldAddress": "0xEaB6415475960348BAEA20c59765B57F238FA5C8",
+      "newAddress": "0x62D2b2A2c1c5f5953a5d470863733c428672e246",
+      "oldBalanceGen": 11,
+      "movedGen": 10.98,
+      "tx": "0xbee2b6f322067036d8573f5925f825128331489c42e727f7d7d0defea87c0cea",
+      "newBalanceGen": 10.98
+    },
+    {
+      "name": "E2E_OWNER_PRIVATE_KEY",
+      "oldAddress": "0x73501951ebD48414AB35DD0544F24505153b10Db",
+      "newAddress": "0xD86200c2721D69cD920Cd7d93915245b1FbfBB20",
+      "oldBalanceGen": 2.3382967502500343,
+      "movedGen": 2.3182967502500342,
+      "tx": "0xe3c9a7e0cd7ee894d7c59a627353a06c010a44d720fbefa836056f8d21532ebe",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "TRY_AGENT_PRIVATE_KEY",
+      "oldAddress": "0x5d0437891F36344619F630f19F6CFf3D1383fb4b",
+      "newAddress": "0x7F4632353A4529DaA60312F9886637210eaCE4AA",
+      "oldBalanceGen": 4.99901334349999,
+      "movedGen": 4.97901334349999,
+      "tx": "0xaf7f9ca778b59b224b9406ee9d2f4dfc081dbf4427ea102b6d7d688de529daf8",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "BENCH_LLM_PRIVATE_KEY",
+      "oldAddress": "0xFdcAc268eadb9288e96b9ce90dd5A8037EAa34E9",
+      "newAddress": "0xb01B3efdC5f76571AA50838Ea17fcCfc151c2Db6",
+      "oldBalanceGen": 5.978348562749784,
+      "movedGen": 5.958348562749784,
+      "tx": "0x2dc57a2c055d8202984d096da9230c7f3af07a2828373dfa440a8586b179411f",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "MCP_AGENT_PRIVATE_KEY",
+      "oldAddress": "0xb4cCcaF668bf43Efc1A720e723271a3c4BFF2302",
+      "newAddress": "0xFf16d29C00c09262F4f5Ce41c271eF843510B0FC",
+      "oldBalanceGen": 0.9998362489999983,
+      "movedGen": 0.9798362489999983,
+      "tx": "0xa14c57ee667aff7d2c485cd8671ab268110617a29eabe54ea48c188fa899d258",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "ROBUST_TG_0",
+      "oldAddress": "0x013996546A72b308E6b31C051d8A885821775523",
+      "newAddress": "0xcCc6d8373B7191dF5df351a2a40b3DC46eE7284D",
+      "oldBalanceGen": 1.9983444304999836,
+      "movedGen": 1.9783444304999835,
+      "tx": "0xb540c4fba4d69e83b048874b31fc7dec4fe362f947c64acecd487bfc4f33e07b",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "ROBUST_LLM_0",
+      "oldAddress": "0x4dff96C338f29076BbCd4a1B05B28439c5da8E80",
+      "newAddress": "0x1D0dDa15B9684b210e15862Cc527Bc17803405bd",
+      "oldBalanceGen": 2.9952348272499507,
+      "movedGen": 2.9752348272499507,
+      "tx": "0x05d93aa6bdc03c06221645175d09104066cf21db9309544023b6172b23ccef10",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "ROBUST_TG_1",
+      "oldAddress": "0xa24a438CFa57092AB303b67cfaf617405879527D",
+      "newAddress": "0x6181e149A31ed930550478236d721F3Bd7cf5FEb",
+      "oldBalanceGen": 1.998506134499985,
+      "movedGen": 1.9785061344999852,
+      "tx": "0x2f64617fca06dfbf262ff005235c87facf3b81fe0ea7bfdb508400c16ffc6a24",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "ROBUST_LLM_1",
+      "oldAddress": "0x4f175E8545C1fAB8E60b6D13DBEEd9C9ae599631",
+      "newAddress": "0xEBa65fA03Fb2eFC7984048676dd715fd5CAB80Af",
+      "oldBalanceGen": 2.9947567097499457,
+      "movedGen": 2.9747567097499457,
+      "tx": "0xa99a69949671084aefb5503dc7114a3605b28439880ab6c2c84d2c0995fcecd9",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "ROBUST_TG_2",
+      "oldAddress": "0x2684F1aCEE00960f992752d0fB4134C6Bd9c0DCB",
+      "newAddress": "0x19c0d7EDB7F3bA361AFCf79469C100D0de5569c5",
+      "oldBalanceGen": 1.9983356469999836,
+      "movedGen": 1.9783356469999835,
+      "tx": "0x04905d5b8bdf0c96687eee77be22eb9935565ed2da32a5fa98f3d457d9009fd9",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "ROBUST_LLM_2",
+      "oldAddress": "0x2405cd2f598073779b090D175B4D6Bc3B3a1165E",
+      "newAddress": "0xc824F988350135f15C892796EF3b577E3297CB7b",
+      "oldBalanceGen": 2.994922006249947,
+      "movedGen": 2.974922006249947,
+      "tx": "0x3aff9c9ed221334f0849c4b6dc119cb625ce63c82bdf98ee68f2a07fb2da5ec5",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "ROBUST_TG_3",
+      "oldAddress": "0x04b4929d87113313fB39d46F3BB888fEa1Db5431",
+      "newAddress": "0x68eBAb8735105756459aD2cE6E90583B529ec979",
+      "oldBalanceGen": 1.9983428389999836,
+      "movedGen": 1.9783428389999835,
+      "tx": "0x3d314108f02f2159bd2b65313c7fcd71cbe9fdb15fa353a851ffa835175553ca",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "ROBUST_LLM_3",
+      "oldAddress": "0xAa0b840Ec7a7907c22e112cB17FbB9b14A723610",
+      "newAddress": "0x4bef314FCDEFBC266Ce11DF11B9F279dF8ff7bC0",
+      "oldBalanceGen": 2.995078550749949,
+      "movedGen": 2.975078550749949,
+      "tx": "0x317a33b2d2ba1cbc5cfa97c665b3c1eec62bb51c1af2491a315098e5f7795e0e",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "NEGO_SELLER_PRIVATE_KEY",
+      "oldAddress": "0x3672a680Febb7aF3a7cE1932803a770d28d1Fc22",
+      "newAddress": "0x7FF272a8Cf63D28dD8adbB81a52e6527FD8867E5",
+      "oldBalanceGen": 1.9966404137499654,
+      "movedGen": 1.9766404137499654,
+      "tx": "0x65fd73af6d09a4fc2835721bf6225ea54b476f84555767dc1377c3761b1e6d81",
+      "newBalanceGen": 1.9766404137499654
+    },
+    {
+      "name": "NEGO_BUYER_PRIVATE_KEY",
+      "oldAddress": "0xf02c68e73EA781cf16416e4fc7C18c71641e044B",
+      "newAddress": "0x1c15A3d36104399e0e7eeDc57B419386Ae60B6ce",
+      "oldBalanceGen": 1.9957311022499569,
+      "movedGen": 1.9757311022499568,
+      "tx": "0x1bfa83c5d2e54cffe69730ce100481c528e4fcfa97784685703711b781479aea",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "TRY_SELLER_PRIVATE_KEY",
+      "oldAddress": "0x4FF63E95cE622f4Bef97e0b5243Af3f955D26d58",
+      "newAddress": "0x9a2FF5267690a94a6c88af68D2696B6a69e6e2ef",
+      "oldBalanceGen": 2.9993708542499933,
+      "movedGen": 2.9793708542499933,
+      "tx": "0xfea1840c9f4db7f9b1842c6638255c2d031da23ed5c6cbb2707cede9e2b26647",
+      "newBalanceGen": 0
+    },
+    {
+      "name": "BENCH_SELLER_PRIVATE_KEY",
+      "oldAddress": "0x0f0D21a7Eedd781e33c37ca6F76A2953e8A26a1a",
+      "newAddress": "0xAC2fc033129da1c0562f25322c2C160a8Cf7D7F0",
+      "oldBalanceGen": 5.985294206499846,
+      "movedGen": 5.965294206499846,
+      "tx": "0xa8b3c29c0e3fcac43dc7c0bb9d0b846512ba7c33e6bcb140d1392d120ad57311",
+      "newBalanceGen": 5.965294206499846
+    },
+    {
+      "name": "MCP_SELLER_PRIVATE_KEY",
+      "oldAddress": "0x3F567C02606CA064cEd2D49b39FD48C1B41eBfFd",
+      "newAddress": "0xa1fdFea7462F2F10965145bca42e1D2E7f7bE1db",
+      "oldBalanceGen": 0.999528136249995,
+      "movedGen": 0.979528136249995,
+      "tx": "0xaa7296b37cc429dfe748c48c1b6517405fe16eb44907e33b70e0663e4ae32bc4",
+      "newBalanceGen": 0
+    }
+  ],
+  "removed": [
+    "GEMINI_API_KEY"
+  ],
+  "verifiedAt": "2026-10-15T12:45:49.029Z",
+  "verification": "New-wallet balances re-read after the run: every transfer arrived; old wallets hold <= 0.05 GEN."
+}

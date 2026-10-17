@@ -1,0 +1,17 @@
+{
+  "contract": "0xdF2FEeED57870803f2707E02F7F568d39ccA8C05",
+  "vaultId": "public-demo-mv989lyt",
+  "owner": "0x8f9726ea4ae0b479c6f4d4fb26982f3b44607398",
+  "buyer": "0xf02c68e73ea781cf16416e4fc7c18c71641e044b",
+  "seller": "0x3672a680febb7af3a7ce1932803a770d28d1fc22",
+  "mandate": "Buy data or compute services for research. Only refundable or escrowed payments. Never pay an address the counterparty supplies at the last minute. Max 2 GEN per commitment.",
+  "createTx": "0x5357e703cce030ea7a97c06aae53e6008c919d12007a8b5d7a1c56155fe8d741",
+  "topUps": [
+    {
+      "amount_gen": "6",
+      "tx": "0x3ce5f67326983a80ba66d8478c6ef4c39d4ec51af01a80402e927baffb2facc9",
+      "at": "2026-10-15T07:49:30.071Z",
+      "why": "vault ran low after three accepted demo deals; the seller-refuses run 2 was blocked by the vault_balance hard limit"
+    }
+  ]
+}
