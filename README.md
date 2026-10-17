@@ -1,3 +1,5 @@
+TrustGate V1.3 (current): code in the v1.3/ folder, also at https://github.com/shoupeorg/TrustGate-V1.3 · live at https://trustgatecheck.xyz · V1 below is unchanged and still live at https://trustgatecheck.xyz/v1
+
 New version: TrustGate V1.3 → https://github.com/shoupeorg/TrustGate-V1.3
 
 # TrustGate
