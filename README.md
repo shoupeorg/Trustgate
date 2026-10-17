@@ -1,6 +1,23 @@
-TrustGate V1.3 (current): code in the v1.3/ folder, also at https://github.com/shoupeorg/TrustGate-V1.3 · live at https://trustgatecheck.xyz · V1 below is unchanged and still live at https://trustgatecheck.xyz/v1
+<h1 align="center">TrustGate V1.3</h1>
+<p align="center"><b>Before an Agent Says Yes.</b><br>A commitment vault on GenLayer: an AI agent can only pay a seller-signed offer that GenLayer validators accept.</p>
+<p align="center"><a href="https://www.youtube.com/watch?v=6OWEyfAEFvw"><img src="v1.3/docs/media/demo-thumb.jpg" width="860" alt="Watch the TrustGate V1.3 demo (2:33)"></a></p>
+<p align="center"><a href="https://trustgatecheck.xyz"><b>Live site</b></a> · <a href="https://www.youtube.com/watch?v=6OWEyfAEFvw"><b>Demo video</b></a> · <a href="v1.3/"><b>Code (v1.3/)</b></a> · <a href="https://github.com/shoupeorg/TrustGate-V1.3"><b>V1.3 repo</b></a> · <a href="v1.3/docs/SUBMISSION_FORM.md"><b>Submission</b></a></p>
 
-New version: TrustGate V1.3 → https://github.com/shoupeorg/TrustGate-V1.3
+## What is new in V1.3
+- **Vault contract on GenLayer.** The owner's funds, a plain-language mandate and a hard cap. The agent cannot move money, it can only request payment for a seller-signed offer.
+- **Two-sided negotiation.** GenLayer validators answer ACCEPT, REJECT or RENEGOTIATE, and write safer terms themselves. The seller signs v2, counters or declines. Money moves only for terms the seller signed and GenLayer accepted.
+- **Live site.** 3D gate, Try it with no wallet, a two-wallet flow, and a live timeline both sides can share by link.
+- **MCP server.** 4 buyer tools and 6 seller tools, so any AI agent can act on either side.
+- **Benchmark.** On the held-out set a normal smart contract made 15 unsafe payments, TrustGate made 0. Negotiation set 16/16. On-chain tests 50/50.
+
+## Try it in 2 minutes
+1. Open https://trustgatecheck.xyz and scroll to the gate.
+2. In **Try it · no wallet**, pick **Upfront · no refund** and click **Start the negotiation**.
+3. GenLayer answers RENEGOTIATE with safer terms. Click **Seller accepts**, then **Open the full negotiation timeline**.
+
+---
+
+## TrustGate V1 (original, unchanged · live at https://trustgatecheck.xyz/v1)
 
 # TrustGate
 
